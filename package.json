@@ -10,13 +10,17 @@
     "test": "vitest run",
     "typecheck": "tsc -b",
     "webhook:test": "node --disable-warning=ExperimentalWarning scripts/send-test-webhook.ts",
-    "icons": "node --disable-warning=ExperimentalWarning scripts/make-icons.ts"
+    "icons": "node --disable-warning=ExperimentalWarning scripts/make-icons.ts",
+    "model:check": "node --disable-warning=ExperimentalWarning scripts/model-check.ts",
+    "lid:words": "node --disable-warning=ExperimentalWarning scripts/build-kik-function-words.ts"
   },
   "dependencies": {
     "@fontsource/lexend": "^5.3.0",
+    "@huggingface/transformers": "^4.3.0",
     "@upstash/redis": "^1.39.0",
     "dexie": "^4.4.6",
     "dexie-react-hooks": "^4.4.0",
+    "franc": "^6.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "twilio": "^6.1.2"

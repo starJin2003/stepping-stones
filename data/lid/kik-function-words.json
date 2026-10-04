@@ -1,0 +1,331 @@
+{
+  "description": "Gĩkũyũ function words for the rule-based language detector: frequent in Gĩkũyũ, rare in English, Kiswahili, German and French.",
+  "source": "FLORES-200 (NLLB Team, Meta AI), dev split, file kik_Latn.dev",
+  "url": "https://dl.fbaipublicfiles.com/nllb/flores200_dataset.tar.gz",
+  "license": "CC BY-SA 4.0",
+  "split_used": "dev only (997 kik_Latn sentences). devtest is held out for evaluation.",
+  "method": "Words in at least 2.5% of kik_Latn dev sentences and at most 0.3% of each of eng_Latn, swh_Latn, deu_Latn, fra_Latn dev sentences, compared without accents. Top 80 by Gĩkũyũ share.",
+  "generated_by": "scripts/build-kik-function-words.ts",
+  "words": [
+    {
+      "word": "inĩ",
+      "kik_sentence_share": 0.351
+    },
+    {
+      "word": "cia",
+      "kik_sentence_share": 0.282
+    },
+    {
+      "word": "ũrĩa",
+      "kik_sentence_share": 0.15
+    },
+    {
+      "word": "mũno",
+      "kik_sentence_share": 0.129
+    },
+    {
+      "word": "kũrĩ",
+      "kik_sentence_share": 0.127
+    },
+    {
+      "word": "thĩ",
+      "kik_sentence_share": 0.127
+    },
+    {
+      "word": "ta",
+      "kik_sentence_share": 0.123
+    },
+    {
+      "word": "kana",
+      "kik_sentence_share": 0.119
+    },
+    {
+      "word": "iria",
+      "kik_sentence_share": 0.116
+    },
+    {
+      "word": "kĩa",
+      "kik_sentence_share": 0.116
+    },
+    {
+      "word": "atĩ",
+      "kik_sentence_share": 0.109
+    },
+    {
+      "word": "ũndũ",
+      "kik_sentence_share": 0.103
+    },
+    {
+      "word": "rĩa",
+      "kik_sentence_share": 0.1
+    },
+    {
+      "word": "harĩ",
+      "kik_sentence_share": 0.099
+    },
+    {
+      "word": "ĩrĩa",
+      "kik_sentence_share": 0.098
+    },
+    {
+      "word": "mbere",
+      "kik_sentence_share": 0.098
+    },
+    {
+      "word": "andũ",
+      "kik_sentence_share": 0.093
+    },
+    {
+      "word": "mĩrongo",
+      "kik_sentence_share": 0.087
+    },
+    {
+      "word": "hĩndĩ",
+      "kik_sentence_share": 0.079
+    },
+    {
+      "word": "arĩa",
+      "kik_sentence_share": 0.078
+    },
+    {
+      "word": "makĩria",
+      "kik_sentence_share": 0.077
+    },
+    {
+      "word": "njĩra",
+      "kik_sentence_share": 0.076
+    },
+    {
+      "word": "ngiri",
+      "kik_sentence_share": 0.071
+    },
+    {
+      "word": "maũndũ",
+      "kik_sentence_share": 0.071
+    },
+    {
+      "word": "ĩmwe",
+      "kik_sentence_share": 0.07
+    },
+    {
+      "word": "ũcio",
+      "kik_sentence_share": 0.069
+    },
+    {
+      "word": "nginya",
+      "kik_sentence_share": 0.066
+    },
+    {
+      "word": "kuuma",
+      "kik_sentence_share": 0.064
+    },
+    {
+      "word": "rĩrĩa",
+      "kik_sentence_share": 0.062
+    },
+    {
+      "word": "marĩa",
+      "kik_sentence_share": 0.06
+    },
+    {
+      "word": "kũrĩa",
+      "kik_sentence_share": 0.059
+    },
+    {
+      "word": "bũrũri",
+      "kik_sentence_share": 0.059
+    },
+    {
+      "word": "magana",
+      "kik_sentence_share": 0.054
+    },
+    {
+      "word": "igĩrĩ",
+      "kik_sentence_share": 0.051
+    },
+    {
+      "word": "ikũmi",
+      "kik_sentence_share": 0.049
+    },
+    {
+      "word": "ĩrĩ",
+      "kik_sentence_share": 0.048
+    },
+    {
+      "word": "rwa",
+      "kik_sentence_share": 0.048
+    },
+    {
+      "word": "indo",
+      "kik_sentence_share": 0.048
+    },
+    {
+      "word": "ũrĩ",
+      "kik_sentence_share": 0.048
+    },
+    {
+      "word": "kũndũ",
+      "kik_sentence_share": 0.048
+    },
+    {
+      "word": "kuma",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "mũnene",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "ũyũ",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "ĩyo",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "kĩ",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "wĩra",
+      "kik_sentence_share": 0.047
+    },
+    {
+      "word": "mabũrũri",
+      "kik_sentence_share": 0.046
+    },
+    {
+      "word": "igũrũ",
+      "kik_sentence_share": 0.045
+    },
+    {
+      "word": "gĩa",
+      "kik_sentence_share": 0.045
+    },
+    {
+      "word": "ũhoro",
+      "kik_sentence_share": 0.042
+    },
+    {
+      "word": "kaingĩ",
+      "kik_sentence_share": 0.041
+    },
+    {
+      "word": "ũmwe",
+      "kik_sentence_share": 0.04
+    },
+    {
+      "word": "gũkorwo",
+      "kik_sentence_share": 0.04
+    },
+    {
+      "word": "mweri",
+      "kik_sentence_share": 0.039
+    },
+    {
+      "word": "mũthenya",
+      "kik_sentence_share": 0.038
+    },
+    {
+      "word": "kenda",
+      "kik_sentence_share": 0.037
+    },
+    {
+      "word": "bata",
+      "kik_sentence_share": 0.037
+    },
+    {
+      "word": "kĩrĩa",
+      "kik_sentence_share": 0.037
+    },
+    {
+      "word": "ũguo",
+      "kik_sentence_share": 0.036
+    },
+    {
+      "word": "hinya",
+      "kik_sentence_share": 0.035
+    },
+    {
+      "word": "arĩ",
+      "kik_sentence_share": 0.034
+    },
+    {
+      "word": "irĩ",
+      "kik_sentence_share": 0.034
+    },
+    {
+      "word": "mũndũ",
+      "kik_sentence_share": 0.033
+    },
+    {
+      "word": "marĩ",
+      "kik_sentence_share": 0.033
+    },
+    {
+      "word": "thutha",
+      "kik_sentence_share": 0.032
+    },
+    {
+      "word": "nĩguo",
+      "kik_sentence_share": 0.032
+    },
+    {
+      "word": "nja",
+      "kik_sentence_share": 0.032
+    },
+    {
+      "word": "kĩu",
+      "kik_sentence_share": 0.031
+    },
+    {
+      "word": "ka",
+      "kik_sentence_share": 0.031
+    },
+    {
+      "word": "gatagatĩ",
+      "kik_sentence_share": 0.031
+    },
+    {
+      "word": "ngaari",
+      "kik_sentence_share": 0.03
+    },
+    {
+      "word": "watho",
+      "kik_sentence_share": 0.029
+    },
+    {
+      "word": "gwa",
+      "kik_sentence_share": 0.029
+    },
+    {
+      "word": "nene",
+      "kik_sentence_share": 0.029
+    },
+    {
+      "word": "wega",
+      "kik_sentence_share": 0.029
+    },
+    {
+      "word": "ona",
+      "kik_sentence_share": 0.028
+    },
+    {
+      "word": "handũ",
+      "kik_sentence_share": 0.028
+    },
+    {
+      "word": "hamwe",
+      "kik_sentence_share": 0.028
+    },
+    {
+      "word": "maingĩ",
+      "kik_sentence_share": 0.027
+    },
+    {
+      "word": "ikoragwo",
+      "kik_sentence_share": 0.027
+    }
+  ]
+}

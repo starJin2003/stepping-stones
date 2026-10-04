@@ -1,0 +1,21 @@
+{
+  "status": "Provisional, not calibrated. Task 3 calibrates these on the synthetic dev split, never on the test split.",
+  "language": {
+    "min_chars": 15,
+    "min_words": 3,
+    "franc_min_margin": 0.04,
+    "gikuyu_min_share": 0.2
+  },
+  "classify": {
+    "min_score": 0.82,
+    "min_margin": 0.01
+  },
+  "match": {
+    "strong": 0.88,
+    "strong_margin": 0.03,
+    "possible": 0.85,
+    "possible_margin": 0.01,
+    "referral_bonus": 0.01,
+    "top_k": 3
+  }
+}

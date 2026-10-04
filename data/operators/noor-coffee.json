@@ -3,12 +3,178 @@
   "display_name": "Noor's coffee farm",
   "owner_name": "Noor",
   "visit_reasons": [
-    { "id": "coffee_experience", "label": { "sw": "Uzoefu wa kahawa", "en": "Coffee experience" } },
-    { "id": "farm_tour", "label": { "sw": "Ziara ya shamba", "en": "Farm tour" } },
-    { "id": "local_culture", "label": { "sw": "Utamaduni wa eneo hili", "en": "Local culture" } },
-    { "id": "food", "label": { "sw": "Chakula", "en": "Food" } },
-    { "id": "other", "label": { "sw": "Nyingine", "en": "Other" } },
-    { "id": "unclear", "label": { "sw": "Haiko wazi", "en": "Unclear" } }
+    {
+      "id": "coffee_experience",
+      "label": {
+        "sw": "Uzoefu wa kahawa",
+        "en": "Coffee experience"
+      },
+      "prototypes": {
+        "en": [
+          "Tasting fresh coffee from the farm.",
+          "Learning how coffee is picked, dried and roasted.",
+          "Roasting our own coffee beans.",
+          "The best cup of coffee I have had."
+        ],
+        "sw": [
+          "Kuonja kahawa mpya kutoka shambani.",
+          "Kujifunza jinsi kahawa inavyochumwa, kukaushwa na kukaangwa.",
+          "Kukaanga kahawa yetu wenyewe.",
+          "Kikombe bora cha kahawa nilichowahi kunywa."
+        ],
+        "de": [
+          "Frischen Kaffee direkt vom Hof probieren.",
+          "Lernen, wie Kaffee gepflückt, getrocknet und geröstet wird.",
+          "Die eigenen Kaffeebohnen rösten.",
+          "Der beste Kaffee, den ich je getrunken habe."
+        ],
+        "fr": [
+          "Goûter le café frais de la ferme.",
+          "Apprendre comment le café est cueilli, séché et torréfié.",
+          "Torréfier nos propres grains de café.",
+          "Le meilleur café que j'aie jamais bu."
+        ]
+      }
+    },
+    {
+      "id": "farm_tour",
+      "label": {
+        "sw": "Ziara ya shamba",
+        "en": "Farm tour"
+      },
+      "prototypes": {
+        "en": [
+          "Walking around the farm and the fields.",
+          "A walk up the slope with a great view.",
+          "Seeing how a small family farm works.",
+          "The farm walk was steep but beautiful."
+        ],
+        "sw": [
+          "Kutembea kuzunguka shamba na mashamba.",
+          "Matembezi ya kupanda mlima yenye mandhari nzuri.",
+          "Kuona jinsi shamba dogo la familia linavyofanya kazi.",
+          "Matembezi shambani yalikuwa ya mteremko lakini mazuri."
+        ],
+        "de": [
+          "Ein Spaziergang über den Hof und die Felder.",
+          "Eine Wanderung den Hang hinauf mit toller Aussicht.",
+          "Sehen, wie ein kleiner Familienbetrieb funktioniert.",
+          "Die Hofführung war steil, aber wunderschön."
+        ],
+        "fr": [
+          "Se promener dans la ferme et les champs.",
+          "Une marche sur la colline avec une belle vue.",
+          "Voir comment fonctionne une petite ferme familiale.",
+          "La visite de la ferme était raide mais magnifique."
+        ]
+      }
+    },
+    {
+      "id": "local_culture",
+      "label": {
+        "sw": "Utamaduni wa eneo hili",
+        "en": "Local culture"
+      },
+      "prototypes": {
+        "en": [
+          "Meeting a local family and hearing their stories.",
+          "Learning about local traditions and songs.",
+          "The family sang a traditional song with us.",
+          "Learning a few words of the local language."
+        ],
+        "sw": [
+          "Kukutana na familia ya hapa na kusikia hadithi zao.",
+          "Kujifunza kuhusu mila na nyimbo za hapa.",
+          "Familia iliimba wimbo wa jadi pamoja nasi.",
+          "Kujifunza maneno machache ya lugha ya hapa."
+        ],
+        "de": [
+          "Eine einheimische Familie kennenlernen und ihre Geschichten hören.",
+          "Etwas über lokale Traditionen und Lieder lernen.",
+          "Die Familie hat mit uns ein traditionelles Lied gesungen.",
+          "Ein paar Wörter der lokalen Sprache lernen."
+        ],
+        "fr": [
+          "Rencontrer une famille locale et écouter ses histoires.",
+          "Découvrir les traditions et les chants locaux.",
+          "La famille a chanté une chanson traditionnelle avec nous.",
+          "Apprendre quelques mots de la langue locale."
+        ]
+      }
+    },
+    {
+      "id": "food",
+      "label": {
+        "sw": "Chakula",
+        "en": "Food"
+      },
+      "prototypes": {
+        "en": [
+          "A delicious home-cooked lunch.",
+          "Learning to cook a local dish.",
+          "The food was simple and very good.",
+          "Come hungry, the meal is great."
+        ],
+        "sw": [
+          "Chakula kitamu cha mchana kilichopikwa nyumbani.",
+          "Kujifunza kupika chakula cha kienyeji.",
+          "Chakula kilikuwa rahisi na kitamu sana.",
+          "Njoo ukiwa na njaa, mlo ni mzuri."
+        ],
+        "de": [
+          "Ein leckeres hausgemachtes Mittagessen.",
+          "Lernen, ein lokales Gericht zu kochen.",
+          "Das Essen war einfach und sehr gut.",
+          "Hungrig kommen, das Essen ist toll."
+        ],
+        "fr": [
+          "Un délicieux déjeuner fait maison.",
+          "Apprendre à cuisiner un plat local.",
+          "La nourriture était simple et très bonne.",
+          "Venez avec faim, le repas est excellent."
+        ]
+      }
+    },
+    {
+      "id": "other",
+      "label": {
+        "sw": "Nyingine",
+        "en": "Other"
+      },
+      "prototypes": {
+        "en": [
+          "Good for children.",
+          "Bring good shoes and cash.",
+          "Go early in the morning.",
+          "It was a nice break on a long trip."
+        ],
+        "sw": [
+          "Inafaa kwa watoto.",
+          "Beba viatu vizuri na pesa taslimu.",
+          "Nenda asubuhi na mapema.",
+          "Ilikuwa mapumziko mazuri katika safari ndefu."
+        ],
+        "de": [
+          "Gut für Kinder.",
+          "Gute Schuhe und Bargeld mitnehmen.",
+          "Früh am Morgen hingehen.",
+          "Eine schöne Pause auf einer langen Reise."
+        ],
+        "fr": [
+          "Bien pour les enfants.",
+          "Prévoir de bonnes chaussures et de l'argent liquide.",
+          "Y aller tôt le matin.",
+          "Une belle pause pendant un long voyage."
+        ]
+      }
+    },
+    {
+      "id": "unclear",
+      "label": {
+        "sw": "Haiko wazi",
+        "en": "Unclear"
+      }
+    }
   ],
   "card_questions": {
     "en": [
@@ -19,5 +185,48 @@
       "Nani alikuambia kuhusu Noor, na ulisikia nini?",
       "Ungemwambia rafiki nini kuhusu ziara yako?"
     ]
+  },
+  "prototypes_note": "Visit-reason prototype sentences, written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
+  "summary_templates": {
+    "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Each part is sent as one SMS of at most 70 characters (UCS-2). The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
+    "parts": [
+      {
+        "kik": "Noor, kuuma {since}, ageni: {visitors}. Mookire nĩ ũndũ wa ageni a mbere: {referred}.",
+        "en": "Noor, since {since}, visitors: {visitors}. Came because of earlier visitors: {referred}."
+      },
+      {
+        "kik": "Maiguire ũhoro mũno kuuma kũrĩ: {top_referral}.",
+        "en": "Most often heard about it from: {top_referral}."
+      },
+      {
+        "kik": "Mangĩĩra arata mũno ũhoro wa: {top_pass_on}.",
+        "en": "Most would tell friends about: {top_pass_on}."
+      },
+      {
+        "kik": "Ndũmĩrĩri itanathuthurio thimũ-inĩ: {needs_review}.",
+        "en": "Messages not yet checked on the phone: {needs_review}."
+      }
+    ],
+    "labels": {
+      "referral_sources": {
+        "friend_family": "Arata kana andũ a mũciĩ",
+        "guesthouse_staff": "Aruti wĩra a nyũmba ya ageni",
+        "guesthouse_guest": "Ageni a nyũmba ya ageni",
+        "local_guide": "Mũtongoria wa ageni",
+        "social_online": "Intaneti",
+        "other": "Kũngĩ"
+      },
+      "visit_reasons": {
+        "coffee_experience": "Kahũa",
+        "farm_tour": "Gũceerera mũgũnda",
+        "local_culture": "Mĩtugo ya kũndũ gũkũ",
+        "food": "Irio",
+        "other": "Ũndũ ũngĩ"
+      },
+      "none": {
+        "kik": "gũtirĩ",
+        "en": "none yet"
+      }
+    }
   }
 }

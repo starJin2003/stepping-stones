@@ -1,5 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState, type FormEvent } from 'react'
+import { deleteModel, DOWNLOAD_BYTES, useModelStatus } from '../ai/client.ts'
+import { toMB } from '../ai/model.ts'
 import { SampleHistoryButtons } from '../components/SampleHistoryButtons.tsx'
 import { db } from '../db/db.ts'
 import { deleteSetting, setSetting, useSettings } from '../db/settings.ts'
@@ -23,6 +25,7 @@ export function ThisPhoneScreen() {
       <h1>{t('phone_title')}</h1>
       <SyncCode hasCode={Boolean(settings?.sync_token)} />
       <ServerAddress saved={settings?.server_url ?? ''} />
+      <ModelSection />
 
       <section className="section" aria-labelledby="storage-title">
         <h2 id="storage-title">{t('storage_title')}</h2>
@@ -45,6 +48,51 @@ export function ThisPhoneScreen() {
         <p>{t('language_note')}</p>
       </section>
     </>
+  )
+}
+
+function ModelSection() {
+  const { t } = useLanguage()
+  const model = useModelStatus()
+  const [confirming, setConfirming] = useState(false)
+  const [notice, setNotice] = useState<StringKey | null>(null)
+  const mb = toMB(DOWNLOAD_BYTES)
+  const onPhone = model.kind === 'ready' || model.kind === 'opening' || (model.kind === 'failed' && model.during === 'open')
+
+  async function remove() {
+    setConfirming(false)
+    await deleteModel()
+    setNotice('model_deleted')
+  }
+
+  return (
+    <section className="section" aria-labelledby="model-section-title">
+      <h2 id="model-section-title">{t('model_section_title')}</h2>
+      <p>{onPhone ? t('model_on_phone', { mb }) : t('model_not_on_phone')}</p>
+      {onPhone && !confirming && (
+        <div>
+          <button className="button button-secondary" type="button" onClick={() => setConfirming(true)}>
+            {t('model_delete')}
+          </button>
+        </div>
+      )}
+      {onPhone && confirming && (
+        <>
+          <p className="lead">{t('model_delete_confirm', { mb })}</p>
+          <div className="button-row">
+            <button className="button button-primary" type="button" onClick={remove}>
+              {t('model_delete_yes')}
+            </button>
+            <button className="button button-secondary" type="button" onClick={() => setConfirming(false)}>
+              {t('model_delete_no')}
+            </button>
+          </div>
+        </>
+      )}
+      <p className="notice" role="status">
+        {notice && t(notice)}
+      </p>
+    </section>
   )
 }
 

@@ -5,6 +5,7 @@
     "lib": ["ES2023"],
     "types": ["node"],
     "skipLibCheck": true,
+    "resolveJsonModule": true,
 
     /* Node ESM: relative imports need explicit .js extensions (Vercel runs these as ESM) */
     "module": "nodenext",

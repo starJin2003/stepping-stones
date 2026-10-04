@@ -1,9 +1,22 @@
+import { decide, undo, type Decision, type LastDecision, type ReviewStore } from '../lib/review.ts'
 import { loadSampleHistoryFile } from '../operator/active.ts'
 import { db } from './db.ts'
 import { parseSampleHistory } from './seed.ts'
 import { newRecord, type VisitRecord } from './types.ts'
 
 export const MAX_PASTE_CHARS = 1600
+
+const reviewStore: ReviewStore = {
+  get: (id) => db.records.get(id),
+  update: (id, changes) => db.records.update(id, changes),
+}
+
+/** A review button tap, read and written in one transaction. */
+export const decideOnPhone = (id: string, decision: Decision, candidateId?: string): Promise<LastDecision | null> =>
+  db.transaction('rw', db.records, () => decide(reviewStore, id, decision, candidateId))
+
+export const undoOnPhone = (last: LastDecision): Promise<boolean> =>
+  db.transaction('rw', db.records, () => undo(reviewStore, last))
 
 /**
  * Adds records whose record_id is not on this phone yet, in one transaction. Never overwrites.

@@ -1,0 +1,162 @@
+{
+  "description": "Prototype sentences for referral-source classification (who told the visitor). Same for every operator.",
+  "note": "Written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them.",
+  "categories": {
+    "friend_family": {
+      "en": [
+        "A friend told me about it.",
+        "My sister recommended this place.",
+        "My family came before and told me to come.",
+        "A colleague from home said we should go."
+      ],
+      "sw": [
+        "Rafiki yangu aliniambia kuhusu mahali hapa.",
+        "Dada yangu alipendekeza mahali hapa.",
+        "Familia yangu ilikuja hapa kabla na ikaniambia nije.",
+        "Mfanyakazi mwenzangu kutoka nyumbani alisema tuje."
+      ],
+      "de": [
+        "Ein Freund hat mir davon erzählt.",
+        "Meine Schwester hat es empfohlen.",
+        "Meine Familie war schon hier und hat es mir empfohlen.",
+        "Eine Kollegin von zu Hause meinte, wir sollten hingehen."
+      ],
+      "fr": [
+        "Un ami m'en a parlé.",
+        "Ma sœur m'a recommandé cet endroit.",
+        "Ma famille est déjà venue et m'a dit de venir.",
+        "Une collègue m'a dit qu'il fallait y aller."
+      ]
+    },
+    "guesthouse_staff": {
+      "en": [
+        "The owner of our guesthouse suggested it.",
+        "The receptionist at our lodge told us about it.",
+        "The woman who runs our hostel recommended it.",
+        "Staff at the hotel where we stayed told us to go."
+      ],
+      "sw": [
+        "Mwenye nyumba ya wageni tuliyofikia alipendekeza.",
+        "Mpokezi wa hoteli yetu alituambia kuhusu hapa.",
+        "Mama anayeendesha hosteli yetu alipendekeza.",
+        "Wafanyakazi wa hoteli tuliyokaa walituambia twende."
+      ],
+      "de": [
+        "Die Besitzerin unseres Gästehauses hat es vorgeschlagen.",
+        "Die Rezeption unserer Lodge hat uns davon erzählt.",
+        "Der Gastgeber in unserem Hostel hat es empfohlen.",
+        "Das Personal im Hotel hat uns geraten hinzufahren."
+      ],
+      "fr": [
+        "La propriétaire de notre maison d'hôtes nous l'a conseillé.",
+        "La réception de notre lodge nous en a parlé.",
+        "L'hôte de notre auberge nous l'a recommandé.",
+        "Le personnel de l'hôtel nous a dit d'y aller."
+      ]
+    },
+    "guesthouse_guest": {
+      "en": [
+        "Another guest at our guesthouse told us about it.",
+        "A traveller staying at our hostel recommended it.",
+        "Other tourists at the lodge said it was worth it.",
+        "A couple we met at breakfast in the guesthouse told us to go."
+      ],
+      "sw": [
+        "Mgeni mwingine katika nyumba yetu ya wageni alituambia.",
+        "Msafiri aliyekaa hosteli yetu alipendekeza.",
+        "Watalii wengine kwenye loji walisema inafaa.",
+        "Wanandoa tuliokutana nao wakati wa kifungua kinywa walituambia twende."
+      ],
+      "de": [
+        "Ein anderer Gast in unserem Gästehaus hat uns davon erzählt.",
+        "Eine Reisende aus unserem Hostel hat es empfohlen.",
+        "Andere Touristen in der Lodge sagten, es lohnt sich.",
+        "Ein Paar, das wir beim Frühstück trafen, hat es uns empfohlen."
+      ],
+      "fr": [
+        "Un autre client de notre maison d'hôtes nous en a parlé.",
+        "Une voyageuse de notre auberge nous l'a recommandé.",
+        "D'autres touristes au lodge ont dit que ça valait le coup.",
+        "Un couple rencontré au petit-déjeuner nous a dit d'y aller."
+      ]
+    },
+    "local_guide": {
+      "en": [
+        "Our guide took us there.",
+        "Our safari driver suggested it on the way.",
+        "A local guide in town recommended it.",
+        "The tour guide included it in our trip."
+      ],
+      "sw": [
+        "Kiongozi wetu alitupeleka huko.",
+        "Dereva wetu wa safari alipendekeza njiani.",
+        "Kiongozi wa watalii mjini alipendekeza.",
+        "Mwongozaji wa safari aliiweka kwenye safari yetu."
+      ],
+      "de": [
+        "Unser Guide hat uns hingebracht.",
+        "Unser Safarifahrer hat es unterwegs vorgeschlagen.",
+        "Ein lokaler Guide in der Stadt hat es empfohlen.",
+        "Der Reiseleiter hat es in unsere Reise eingeplant."
+      ],
+      "fr": [
+        "Notre guide nous y a emmenés.",
+        "Notre chauffeur de safari l'a proposé en route.",
+        "Un guide local en ville nous l'a recommandé.",
+        "Le guide l'a ajouté à notre voyage."
+      ]
+    },
+    "social_online": {
+      "en": [
+        "I saw it on social media.",
+        "I found this place online.",
+        "I read about it on a travel blog.",
+        "Someone posted photos of it on the internet."
+      ],
+      "sw": [
+        "Niliona kwenye mitandao ya kijamii.",
+        "Nilipata mahali hapa mtandaoni.",
+        "Nilisoma kuhusu hapa kwenye blogu ya usafiri.",
+        "Mtu aliweka picha zake mtandaoni."
+      ],
+      "de": [
+        "Ich habe es in den sozialen Medien gesehen.",
+        "Ich habe es im Internet gefunden.",
+        "Ich habe in einem Reiseblog darüber gelesen.",
+        "Jemand hat Fotos davon online gepostet."
+      ],
+      "fr": [
+        "Je l'ai vu sur les réseaux sociaux.",
+        "J'ai trouvé cet endroit en ligne.",
+        "J'ai lu un article sur un blog de voyage.",
+        "Quelqu'un a publié des photos sur internet."
+      ]
+    },
+    "other": {
+      "en": [
+        "We saw a sign by the road.",
+        "We were just passing by.",
+        "We found it on a map.",
+        "Nobody told us, we just stopped."
+      ],
+      "sw": [
+        "Tuliona bango kando ya barabara.",
+        "Tulikuwa tukipita tu.",
+        "Tuliona mahali hapa kwenye ramani.",
+        "Hakuna aliyetuambia, tulisimama tu."
+      ],
+      "de": [
+        "Wir haben ein Schild an der Straße gesehen.",
+        "Wir sind nur vorbeigekommen.",
+        "Wir haben es auf einer Karte gefunden.",
+        "Niemand hat es uns gesagt, wir haben einfach angehalten."
+      ],
+      "fr": [
+        "Nous avons vu un panneau au bord de la route.",
+        "Nous passions simplement par là.",
+        "Nous l'avons trouvé sur une carte.",
+        "Personne ne nous l'a dit, on s'est arrêtés."
+      ]
+    }
+  }
+}

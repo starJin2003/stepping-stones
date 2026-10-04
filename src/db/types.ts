@@ -27,6 +27,8 @@ export interface VisitRecord {
   confirmed_prior_record_id: string | null
   created_from: CreatedFrom
   synthetic: boolean
+  /** Which analysis produced the fields above; records are redone when prototypes or thresholds change. Null until analysed. */
+  analysis_version: string | null
 }
 
 export type OutboxStatus = 'Queued' | 'Sent' | 'Failed'
@@ -48,6 +50,8 @@ export interface Settings {
   storage_persisted: StoragePersistence
   /** UI language. Record text is never translated. */
   ui_language: Lang
+  /** When the last summary was queued for the owner. The next summary covers visits received after it. */
+  last_summary_at: string
 }
 
 export type SettingKey = keyof Settings
@@ -76,6 +80,7 @@ export function newRecord(fields: NewRecordFields): VisitRecord {
     match_strength: null,
     review_status: 'Pending',
     confirmed_prior_record_id: null,
+    analysis_version: null,
     ...fields,
   }
 }

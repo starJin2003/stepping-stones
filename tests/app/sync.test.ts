@@ -251,6 +251,7 @@ it('newRecord leaves analysis fields null and review Pending', () => {
     'candidate_prior_record_ids',
     'match_strength',
     'confirmed_prior_record_id',
+    'analysis_version',
   ] as const
   for (const field of analysis) expect(r[field]).toBeNull()
   expect(r.review_status).toBe('Pending')

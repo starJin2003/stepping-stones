@@ -38,6 +38,7 @@ body {
 
 h1,
 h2,
+h3,
 p,
 ol,
 blockquote {
@@ -49,7 +50,8 @@ h1 {
   line-height: 1.2;
 }
 
-h2 {
+h2,
+h3 {
   font-size: var(--text-body);
 }
 
@@ -230,6 +232,21 @@ a {
   gap: 0.75rem;
 }
 
+/* A quiet action inside content, e.g. "See another": underlined text with a full-size touch target. */
+.link-button {
+  min-height: 3rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--leaf);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
 input,
 textarea {
   width: 100%;
@@ -343,9 +360,216 @@ textarea {
   color: var(--soil);
 }
 
-.status-pending {
+.checked {
+  display: grid;
+  gap: 0.75rem;
+  padding-top: 1rem;
+}
+
+/* The AI reading: quieter than the visitor's words, words only. */
+
+.reading {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--soil);
+}
+
+.match {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-weight: 700;
+}
+
+/* Level with the first line when the text wraps. */
+.stone-glyph {
+  flex: none;
+  margin-top: 0.2em;
+}
+
+/* Review: the earlier visitor's story sits under the new one, set in from it, for comparison. */
+
+.compare {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 1rem 0 0 0.875rem;
+  border-top: 1px dashed var(--rule);
+}
+
+.sms-earlier {
+  border-left-color: var(--rule);
+  font-size: var(--text-body);
+}
+
+.review-actions {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.review-done {
+  gap: 0.75rem;
+}
+
+/* Stones: each chain is a column of stones across a thin stream, labels beside them. */
+
+.facts {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.chain {
+  display: grid;
+  gap: 0.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--rule);
+}
+
+.chain-steps {
+  padding: 0;
+  list-style: none;
+}
+
+.chain-step {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  column-gap: 0.75rem;
+  align-items: center;
+  min-height: 5.5rem;
+}
+
+/* The stream stretches with the row so it never breaks; the stone keeps its shape. */
+.stream-art {
+  position: relative;
+  align-self: stretch;
+}
+
+.stream-line,
+.stream-stone {
+  position: absolute;
+  left: 0;
+  width: 6rem;
+}
+
+.stream-line {
+  top: 0;
+  height: 100%;
+}
+
+.stream-stone {
+  top: 50%;
+  height: 5.5rem;
+  translate: 0 -50%;
+}
+
+.stream {
+  fill: none;
+  stroke: var(--soil);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.stone {
+  fill: var(--leaf);
+}
+
+.stone-red {
+  fill: var(--stone-red);
+}
+
+.chain-label {
+  display: grid;
+}
+
+/* The small path that replaces a review item after "Same story". */
+.chain-path {
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  height: auto;
+  overflow: visible;
+}
+
+/* The one animation in the app: the new stone settles into the path. */
+.stone-settle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: stone-settle 700ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes stone-settle {
+  0% {
+    opacity: 0;
+    transform: translateY(-1rem) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(0.125rem) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stone-settle {
+    animation: none;
+  }
+}
+
+/* The owner's SMS: each part as its own message, marked with the stone red rule. */
+
+.sms-parts,
+.outbox {
+  display: grid;
+  gap: 1.25rem;
+  padding: 0;
+  list-style: none;
+}
+
+.sms-part {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sms-owner {
+  border-left-color: var(--stone-red);
+}
+
+.meaning {
+  color: var(--soil);
+}
+
+.outbox {
+  gap: 1rem;
+}
+
+.outbox-item {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.outbox-failed .hint {
   color: var(--leaf);
   font-weight: 700;
+}
+
+/* The one-time model download: a ruled block, not a card. */
+
+.model-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+  border-block: 1px solid var(--rule);
+}
+
+.model-card progress {
+  width: 100%;
+  height: 0.75rem;
+  accent-color: var(--leaf);
 }
 
 /* Wide screens: keep the phone-width app and explain the demo beside it. */

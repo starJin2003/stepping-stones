@@ -3,12 +3,178 @@
   "display_name": "Example Hill Guesthouse",
   "owner_name": "Amina",
   "visit_reasons": [
-    { "id": "rooms", "label": { "sw": "Vyumba", "en": "Rooms" } },
-    { "id": "food", "label": { "sw": "Chakula", "en": "Food" } },
-    { "id": "location", "label": { "sw": "Mahali", "en": "Location" } },
-    { "id": "staff", "label": { "sw": "Wafanyakazi", "en": "Staff" } },
-    { "id": "other", "label": { "sw": "Nyingine", "en": "Other" } },
-    { "id": "unclear", "label": { "sw": "Haiko wazi", "en": "Unclear" } }
+    {
+      "id": "rooms",
+      "label": {
+        "sw": "Vyumba",
+        "en": "Rooms"
+      },
+      "prototypes": {
+        "en": [
+          "Clean and comfortable rooms.",
+          "The bed was great and the room was quiet.",
+          "Hot showers and a nice room.",
+          "Big rooms with a view."
+        ],
+        "sw": [
+          "Vyumba safi na vya starehe.",
+          "Kitanda kilikuwa kizuri na chumba kilikuwa kimya.",
+          "Maji ya moto na chumba kizuri.",
+          "Vyumba vikubwa vyenye mandhari."
+        ],
+        "de": [
+          "Saubere und bequeme Zimmer.",
+          "Das Bett war toll und das Zimmer ruhig.",
+          "Warme Duschen und ein schönes Zimmer.",
+          "Große Zimmer mit Aussicht."
+        ],
+        "fr": [
+          "Des chambres propres et confortables.",
+          "Le lit était super et la chambre calme.",
+          "Douches chaudes et belle chambre.",
+          "Grandes chambres avec vue."
+        ]
+      }
+    },
+    {
+      "id": "food",
+      "label": {
+        "sw": "Chakula",
+        "en": "Food"
+      },
+      "prototypes": {
+        "en": [
+          "Great breakfast every morning.",
+          "Delicious home-cooked dinner.",
+          "The food was fresh and tasty.",
+          "Try the local dishes."
+        ],
+        "sw": [
+          "Kifungua kinywa kizuri kila asubuhi.",
+          "Chakula kitamu cha jioni kilichopikwa nyumbani.",
+          "Chakula kilikuwa kipya na kitamu.",
+          "Jaribu vyakula vya kienyeji."
+        ],
+        "de": [
+          "Tolles Frühstück jeden Morgen.",
+          "Leckeres hausgemachtes Abendessen.",
+          "Das Essen war frisch und lecker.",
+          "Die lokalen Gerichte probieren."
+        ],
+        "fr": [
+          "Un excellent petit-déjeuner chaque matin.",
+          "Un délicieux dîner fait maison.",
+          "La nourriture était fraîche et savoureuse.",
+          "Goûtez les plats locaux."
+        ]
+      }
+    },
+    {
+      "id": "location",
+      "label": {
+        "sw": "Mahali",
+        "en": "Location"
+      },
+      "prototypes": {
+        "en": [
+          "Close to the town and the bus stop.",
+          "A quiet place near the hills.",
+          "Easy to find and well located.",
+          "A good base for hikes nearby."
+        ],
+        "sw": [
+          "Karibu na mji na kituo cha basi.",
+          "Mahali tulivu karibu na milima.",
+          "Rahisi kupata na mahali pazuri.",
+          "Mahali pazuri pa kuanzia matembezi ya karibu."
+        ],
+        "de": [
+          "Nah an der Stadt und der Bushaltestelle.",
+          "Ein ruhiger Ort nahe den Hügeln.",
+          "Leicht zu finden und gut gelegen.",
+          "Guter Ausgangspunkt für Wanderungen."
+        ],
+        "fr": [
+          "Près de la ville et de l'arrêt de bus.",
+          "Un endroit calme près des collines.",
+          "Facile à trouver et bien situé.",
+          "Une bonne base pour les randonnées."
+        ]
+      }
+    },
+    {
+      "id": "staff",
+      "label": {
+        "sw": "Wafanyakazi",
+        "en": "Staff"
+      },
+      "prototypes": {
+        "en": [
+          "The staff were very friendly.",
+          "The owner made us feel at home.",
+          "Helpful hosts who arranged everything.",
+          "Kind people who know the area well."
+        ],
+        "sw": [
+          "Wafanyakazi walikuwa wakarimu sana.",
+          "Mwenye nyumba alitufanya tujisikie nyumbani.",
+          "Wenyeji wenye msaada waliopanga kila kitu.",
+          "Watu wema wanaojua eneo hili vizuri."
+        ],
+        "de": [
+          "Das Personal war sehr freundlich.",
+          "Die Besitzerin gab uns das Gefühl, zu Hause zu sein.",
+          "Hilfsbereite Gastgeber, die alles organisiert haben.",
+          "Nette Leute, die die Gegend gut kennen."
+        ],
+        "fr": [
+          "Le personnel était très accueillant.",
+          "La propriétaire nous a fait sentir chez nous.",
+          "Des hôtes serviables qui ont tout organisé.",
+          "Des gens gentils qui connaissent bien la région."
+        ]
+      }
+    },
+    {
+      "id": "other",
+      "label": {
+        "sw": "Nyingine",
+        "en": "Other"
+      },
+      "prototypes": {
+        "en": [
+          "Good value for money.",
+          "Bring cash, there is no card machine.",
+          "Good for families with children.",
+          "Book ahead in the busy season."
+        ],
+        "sw": [
+          "Bei nafuu kwa thamani yake.",
+          "Beba pesa taslimu, hakuna mashine ya kadi.",
+          "Inafaa kwa familia zenye watoto.",
+          "Weka nafasi mapema wakati wa msimu wa wageni wengi."
+        ],
+        "de": [
+          "Gutes Preis-Leistungs-Verhältnis.",
+          "Bargeld mitnehmen, es gibt kein Kartenlesegerät.",
+          "Gut für Familien mit Kindern.",
+          "In der Hauptsaison früh buchen."
+        ],
+        "fr": [
+          "Bon rapport qualité-prix.",
+          "Prévoir du liquide, pas de terminal de carte.",
+          "Bien pour les familles avec enfants.",
+          "Réserver à l'avance en haute saison."
+        ]
+      }
+    },
+    {
+      "id": "unclear",
+      "label": {
+        "sw": "Haiko wazi",
+        "en": "Unclear"
+      }
+    }
   ],
   "card_questions": {
     "en": [
@@ -19,5 +185,48 @@
       "Nani alikuambia kuhusu Example Hill Guesthouse, na ulisikia nini?",
       "Ungemwambia rafiki nini kuhusu kukaa kwako hapa?"
     ]
+  },
+  "prototypes_note": "Visit-reason prototype sentences, written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
+  "summary_templates": {
+    "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Each part is sent as one SMS of at most 70 characters (UCS-2). The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
+    "parts": [
+      {
+        "kik": "Amina, kuuma {since}, ageni: {visitors}. Mookire nĩ ũndũ wa ageni a mbere: {referred}.",
+        "en": "Amina, since {since}, guests: {visitors}. Came because of earlier guests: {referred}."
+      },
+      {
+        "kik": "Mũno maiguire ũhoro kuuma kũrĩ: {top_referral}.",
+        "en": "Most often heard about it from: {top_referral}."
+      },
+      {
+        "kik": "Mangĩĩra arata mũno ũhoro wa: {top_pass_on}.",
+        "en": "Most would tell friends about: {top_pass_on}."
+      },
+      {
+        "kik": "Ndũmĩrĩri itanathuthurio thimũ-inĩ: {needs_review}.",
+        "en": "Messages not yet checked on the phone: {needs_review}."
+      }
+    ],
+    "labels": {
+      "referral_sources": {
+        "friend_family": "Arata kana andũ a mũciĩ",
+        "guesthouse_staff": "Aruti wĩra a nyũmba ya ageni",
+        "guesthouse_guest": "Ageni a nyũmba ya ageni",
+        "local_guide": "Mũtongoria wa ageni",
+        "social_online": "Intaneti",
+        "other": "Kũngĩ"
+      },
+      "visit_reasons": {
+        "rooms": "Kũndũ gwa gũkoma",
+        "food": "Irio",
+        "location": "Kũrĩa ĩrĩ",
+        "staff": "Aruti wĩra",
+        "other": "Ũndũ ũngĩ"
+      },
+      "none": {
+        "kik": "gũtirĩ",
+        "en": "none yet"
+      }
+    }
   }
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useAutoAnalysis } from './ai/analysing.ts'
+import { sendOutboxNow } from './db/outbox.ts'
 import { useLanguage } from './i18n/language.tsx'
 import { LANGUAGE_NAMES, type Lang, type StringKey } from './i18n/strings.ts'
 import { operator } from './operator/active.ts'
@@ -24,6 +26,7 @@ const TABS: { view: View; label: StringKey }[] = [
 function App() {
   const { lang, t, setLang } = useLanguage()
   const [view, setView] = useState<View>(viewFromHash)
+  useAutoAnalysis()
 
   useEffect(() => {
     const onHashChange = () => {
@@ -32,6 +35,14 @@ function App() {
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
+  }, [])
+
+  // Summary parts a person queued go out when the app opens and whenever signal comes back.
+  useEffect(() => {
+    const send = () => void sendOutboxNow().catch(() => {})
+    send()
+    window.addEventListener('online', send)
+    return () => window.removeEventListener('online', send)
   }, [])
 
   const current = (v: View) => (view === v ? ('page' as const) : undefined)
