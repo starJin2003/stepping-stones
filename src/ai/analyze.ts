@@ -5,6 +5,7 @@ import type { Embed } from './embed.ts'
 import { detectLanguage } from './language.ts'
 import { findMatch, type MatchableRecord, type MatchResult } from './match.ts'
 import { parse } from './parse.ts'
+import { referralByRules, splitHeard } from './referral.ts'
 import type { AnalysisSetup } from './setup.ts'
 
 const EMBED_BATCH = 16
@@ -44,13 +45,16 @@ export type TextAnalysis = Pick<
   | 'incoming_embedding'
   | 'outgoing_embedding'
   | 'referral_source_category'
+  | 'referral_rule'
   | 'visit_reason_category'
   | 'pass_on_category'
 >
 
 /**
  * Parses, detects language, embeds and classifies each raw SMS. Record text is only read, never changed.
- * Heard from and Came for come from answer 1; Would tell friends about is the visit-reason taxonomy applied to answer 2.
+ * Answer 1 is split at its first reporting verb. Heard from comes from the source span: fixed word rules first,
+ * the model on that span only when no rule fires. Came for and matching use the content span, what the visitor
+ * heard. Would tell friends about is the same taxonomy applied to the whole of answer 2.
  */
 export async function analyseTexts(
   raws: string[],
@@ -60,24 +64,36 @@ export async function analyseTexts(
   onProgress?: (done: number, total: number) => void,
 ): Promise<TextAnalysis[]> {
   const parsed = raws.map(parse)
+  const heard = parsed.map((p) => (p.incoming_story_text ? splitHeard(p.incoming_story_text, setup.referralRules) : null))
+  const ruled = heard.map((h) => (h ? referralByRules(h.source, setup.referralRules) : null))
   const texts: string[] = []
-  const slot = (text: string) => (text ? texts.push(text) - 1 : -1)
-  const slots = parsed.map((p) => ({ incoming: slot(p.incoming_story_text), outgoing: slot(p.outgoing_story_text) }))
+  const slot = (text: string | undefined) => (text ? texts.push(text) - 1 : -1)
+  const slots = parsed.map((p, i) => ({
+    content: slot(heard[i]?.content),
+    outgoing: slot(p.outgoing_story_text),
+    // The source span is embedded only when no rule named the source.
+    source: ruled[i] ? -1 : slot(heard[i]?.source),
+  }))
   const vectors = await embedInBatches(texts, embed, (done) => onProgress?.(done, texts.length))
+  const vector = (at: number) => (at >= 0 ? vectors[at] : null)
   const th = setup.thresholds
 
   return parsed.map((p, i) => {
-    const incoming = slots[i].incoming >= 0 ? vectors[slots[i].incoming] : null
-    const outgoing = slots[i].outgoing >= 0 ? vectors[slots[i].outgoing] : null
+    const content = vector(slots[i].content)
+    const outgoing = vector(slots[i].outgoing)
+    const source = vector(slots[i].source)
+    const rule = ruled[i]
     return {
       incoming_story_text: p.incoming_story_text,
       outgoing_story_text: p.outgoing_story_text,
       format_ok: p.format_ok,
       detected_language: detectLanguage(raws[i], setup.functionWords, th.language),
-      incoming_embedding: incoming,
+      // Matching compares what this visitor heard (the content span) with what earlier visitors would tell.
+      incoming_embedding: content,
       outgoing_embedding: outgoing,
-      referral_source_category: incoming ? classify(incoming, prototypes.referrals, th.classify).category : UNCLEAR,
-      visit_reason_category: incoming ? classify(incoming, prototypes.visitReasons, th.classify).category : UNCLEAR,
+      referral_source_category: rule ? rule.category : source ? classify(source, prototypes.referrals, th.classify).category : UNCLEAR,
+      referral_rule: rule ? rule.rule : source ? 'embedding' : null,
+      visit_reason_category: content ? classify(content, prototypes.visitReasons, th.classify).category : UNCLEAR,
       pass_on_category: outgoing ? classify(outgoing, prototypes.visitReasons, th.classify).category : UNCLEAR,
     }
   })

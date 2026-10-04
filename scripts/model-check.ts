@@ -12,7 +12,7 @@ import noorCoffee from '../data/operators/noor-coffee.json' with { type: 'json' 
 import seed from '../data/seed/noor-coffee.synthetic.json' with { type: 'json' }
 import { analyseTexts, embedPrototypes, matchRecords } from '../src/ai/analyze.ts'
 import type { AnalysisSetup } from '../src/ai/setup.ts'
-import { KIK_FUNCTION_WORDS, REFERRAL_PROTOTYPES, THRESHOLDS } from '../src/ai/config.ts'
+import { KIK_FUNCTION_WORDS, REFERRAL_PROTOTYPES, REFERRAL_RULES, THRESHOLDS } from '../src/ai/config.ts'
 import { createEmbedder, type Extractor } from '../src/ai/embed.ts'
 import { MODEL } from '../src/ai/model.ts'
 import { parseOperatorConfig, visitReasonPrototypes } from '../src/operator/config.ts'
@@ -35,6 +35,7 @@ const setup: AnalysisSetup = {
   functionWords: KIK_FUNCTION_WORDS,
   visitReasonPrototypes: visitReasonPrototypes(parseOperatorConfig(noorCoffee)),
   referralPrototypes: REFERRAL_PROTOTYPES,
+  referralRules: REFERRAL_RULES,
   modelRevision: MODEL.revision,
 }
 const prototypes = await embedPrototypes(setup, embed)
@@ -48,26 +49,28 @@ const analyses = await analyseTexts(records.map((r) => r.raw), setup, prototypes
 const analysed = records.map((r, i) => ({ ...r, ...analyses[i] }))
 const seedOnly = analysed.filter((r) => !r.record_id.startsWith('demo-'))
 
-console.log('\nSeed readings (heard from / came for / would tell / language):')
-for (const r of seedOnly) {
-  console.log(`  ${r.record_id}  ${r.referral_source_category} / ${r.visit_reason_category} / ${r.pass_on_category} / ${r.detected_language}`)
+const short = (id: string) => (id.startsWith('demo-') ? id : id.slice(-2))
+const describe = (r: (typeof analysed)[number], m: ReturnType<typeof matchRecords> extends Map<string, infer M> ? M : never) => {
+  const top = m.scores.map((x) => `${short(x.record_id)}:${x.score.toFixed(3)}`).join(' ')
+  return [
+    `  ${short(r.record_id).padEnd(6)} heard ${r.referral_source_category} (${r.referral_rule})`,
+    `         came for ${r.visit_reason_category} / would tell ${r.pass_on_category} / ${r.detected_language}`,
+    `         top match ${m.candidate_prior_record_ids[0] ? short(m.candidate_prior_record_ids[0]) : 'none'} ${m.match_strength}  top3 ${top}`,
+  ].join('\n')
 }
 
-console.log('\nSeed chain, each confirmed visit against everything before it:')
+console.log('\nSample visits, each against every earlier visit (heard from with the rule that fired; came for; would tell; top match):')
 const seedMatches = matchRecords(seedOnly, seedOnly.map((r) => r.record_id), THRESHOLDS.match)
-for (const r of seed.records.filter((r) => r.confirmed_prior_record_id)) {
-  const m = seedMatches.get(r.record_id)!
-  const top = m.scores.map((s) => `${s.record_id.slice(-2)}:${s.score.toFixed(3)}`).join(' ')
-  console.log(`  ${r.record_id}  person linked ${r.confirmed_prior_record_id!.slice(-2)}  AI: ${m.match_strength}  top3 ${top}`)
+for (const r of seedOnly) {
+  const linked = seed.records.find((s) => s.record_id === r.record_id)?.confirmed_prior_record_id
+  console.log(describe(r, seedMatches.get(r.record_id)!) + (linked ? `   (person linked ${short(linked)})` : ''))
 }
 
-console.log(`\nDemo SMS against the seed (intended match ${seed.demo_intended_match}):`)
+console.log(`\nDemo SMS against the sample visits (intended match ${short(seed.demo_intended_match)}):`)
 for (const demo of analysed.filter((r) => r.record_id.startsWith('demo-'))) {
   const m = matchRecords([...seedOnly, demo], [demo.record_id], THRESHOLDS.match).get(demo.record_id)!
-  const top = m.scores.map((s) => `${s.record_id.slice(-2)}:${s.score.toFixed(3)}`).join(' ')
   const margin = m.scores.length > 1 ? (m.scores[0].score - m.scores[1].score).toFixed(3) : 'n/a'
-  console.log(`  ${demo.record_id}: ${m.match_strength}, top candidate ${m.candidate_prior_record_ids[0]}, margin ${margin}, top3 ${top}`)
-  console.log(`    reading: ${demo.referral_source_category} / ${demo.visit_reason_category} / ${demo.pass_on_category} / ${demo.detected_language}`)
+  console.log(describe(demo, m) + `   margin ${margin}`)
 }
 
 // Timing: one text at a time (what a single new SMS costs), and in batches of 16.

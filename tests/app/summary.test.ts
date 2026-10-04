@@ -39,9 +39,9 @@ function visit(id: string, date: string, extra: Partial<CountedRecord> = {}): Co
 
 describe('countRecords', () => {
   const records = [
-    visit('a', '08-10', { referral_source_category: 'guesthouse_guest', pass_on_category: 'food' }),
-    visit('b', '08-12', { review_status: 'Confirmed', referral_source_category: 'guesthouse_guest', pass_on_category: 'food' }),
-    visit('c', '08-14', { review_status: 'Confirmed', referral_source_category: 'local_guide', pass_on_category: 'farm_tour' }),
+    visit('a', '08-10', { referral_source_category: 'guesthouse_guest', pass_on_category: 'lunch' }),
+    visit('b', '08-12', { review_status: 'Confirmed', referral_source_category: 'guesthouse_guest', pass_on_category: 'lunch' }),
+    visit('c', '08-14', { review_status: 'Confirmed', referral_source_category: 'local_guide', pass_on_category: 'farm' }),
     visit('d', '08-15', { review_status: 'Pending', referral_source_category: 'unclear', pass_on_category: 'unclear' }),
     visit('e', '08-16', { review_status: 'Pending', referral_source_category: null, pass_on_category: null, analysis_version: null }),
   ]
@@ -51,23 +51,23 @@ describe('countRecords', () => {
       visitors: 5,
       referred: 2,
       topReferral: 'guesthouse_guest',
-      topPassOn: 'food',
+      topPassOn: 'lunch',
       includesSample: false,
     })
   })
 
   it('never picks Unclear as the most common category, and has none when nothing is known', () => {
-    const unclear = [visit('a', '08-10'), visit('b', '08-11'), visit('c', '08-12', { pass_on_category: 'food' })]
-    expect(countRecords(unclear, noor)).toMatchObject({ topReferral: null, topPassOn: 'food' })
+    const unclear = [visit('a', '08-10'), visit('b', '08-11'), visit('c', '08-12', { pass_on_category: 'lunch' })]
+    expect(countRecords(unclear, noor)).toMatchObject({ topReferral: null, topPassOn: 'lunch' })
     expect(countRecords([], noor)).toMatchObject({ visitors: 0, topReferral: null, topPassOn: null })
   })
 
   it('breaks ties by the order of the categories, so the answer is stable', () => {
     const tied = [
-      visit('a', '08-10', { referral_source_category: 'local_guide', pass_on_category: 'food' }),
-      visit('b', '08-11', { referral_source_category: 'friend_family', pass_on_category: 'coffee_experience' }),
+      visit('a', '08-10', { referral_source_category: 'local_guide', pass_on_category: 'lunch' }),
+      visit('b', '08-11', { referral_source_category: 'friend_family', pass_on_category: 'roasting' }),
     ]
-    expect(countRecords(tied, noor)).toMatchObject({ topReferral: 'friend_family', topPassOn: 'coffee_experience' })
+    expect(countRecords(tied, noor)).toMatchObject({ topReferral: 'friend_family', topPassOn: 'roasting' })
   })
 
   it('says when synthetic sample history is part of the count', () => {
@@ -81,7 +81,7 @@ describe('summaryCounts: the period', () => {
     visit('june', '06-14', { synthetic: true, review_status: 'Confirmed', referral_source_category: 'guesthouse_guest' }),
     visit('sept', '09-20', { review_status: 'Pending' }),
     visit('oct-1', '10-02', { review_status: 'Confirmed', referral_source_category: 'friend_family' }),
-    visit('oct-2', '10-03', { referral_source_category: 'friend_family', pass_on_category: 'farm_tour' }),
+    visit('oct-2', '10-03', { referral_source_category: 'friend_family', pass_on_category: 'farm' }),
   ]
 
   it('the first time covers everything, from the earliest visit', () => {
@@ -97,7 +97,7 @@ describe('summaryCounts: the period', () => {
       visitors: 2,
       referred: 1,
       topReferral: 'friend_family',
-      topPassOn: 'farm_tour',
+      topPassOn: 'farm',
     })
   })
 
@@ -119,9 +119,9 @@ describe('composeSummary', () => {
   it('fills the fixed Gĩkũyũ templates from counts, with an English meaning for each part', () => {
     const counts = summaryCounts(
       [
-        visit('a', '10-02', { review_status: 'Confirmed', referral_source_category: 'guesthouse_guest', pass_on_category: 'coffee_experience' }),
-        visit('b', '10-03', { review_status: 'Pending', referral_source_category: 'guesthouse_guest', pass_on_category: 'food' }),
-        visit('c', '10-03', { pass_on_category: 'coffee_experience' }),
+        visit('a', '10-02', { review_status: 'Confirmed', referral_source_category: 'guesthouse_guest', pass_on_category: 'roasting' }),
+        visit('b', '10-03', { review_status: 'Pending', referral_source_category: 'guesthouse_guest', pass_on_category: 'lunch' }),
+        visit('c', '10-03', { pass_on_category: 'roasting' }),
       ],
       noor,
       at('10-01'),
@@ -131,12 +131,12 @@ describe('composeSummary', () => {
     expect(parts.map((p) => p.text)).toEqual([
       'Noor, kuuma 1/10, ageni: 3. Mookire nĩ ũndũ wa ageni a mbere: 1.',
       'Maiguire ũhoro mũno kuuma kũrĩ: Ageni a nyũmba ya ageni.',
-      'Mangĩĩra arata mũno ũhoro wa: Kahũa.',
+      'Mangĩĩra arata mũno ũhoro wa: Gũkaranga mwaki-inĩ.',
     ])
     expect(parts.map((p) => p.meaning)).toEqual([
       'Noor, since 1/10, visitors: 3. Came because of earlier visitors: 1.',
       'Most often heard about it from: Guesthouse guest.',
-      'Most would tell friends about: Coffee experience.',
+      'Most would tell friends about: Roasting over the fire.',
     ])
     for (const part of parts) expect(part).toMatchObject({ length: part.text.length, fits: true })
   })

@@ -9,7 +9,6 @@ import { countKey } from '../i18n/strings.ts'
 import { isKnownReason, reasonLabel, referralLabel } from '../lib/categories.ts'
 import { latestConfirmed } from '../lib/chains.ts'
 import { layoutStones, visiblePebbles, visibleStones } from '../lib/paths.ts'
-import { excerpt } from '../lib/text.ts'
 import { monthLabel, visitorLabels } from '../lib/visitors.ts'
 import { operator } from '../operator/active.ts'
 import { countRecords } from '../summary/summary.ts'
@@ -112,8 +111,8 @@ interface PathProps {
 }
 
 /**
- * One path: its most recent stones across the stream, and between two linked stones the earlier visitor's
- * would-tell story, cut short in its own language. That is what travelled by word of mouth.
+ * One path: its most recent stones across the stream, and between two linked stones the tour part the earlier
+ * visitor passed on, in the UI language. The visitors' own words are in the sheet a stone opens.
  */
 function Path({ chain, n, byId, labels, red, onOpen }: PathProps) {
   const { lang, t } = useLanguage()
@@ -145,9 +144,11 @@ function Path({ chain, n, byId, labels, red, onOpen }: PathProps) {
                   </span>
                   <p className="travel-text">
                     {prior.record_id !== above?.record_id && (
-                      <span className="travel-from">{t('path_from', { visitor: labels.get(prior.record_id) ?? '' })} </span>
+                      <span className="travel-from">{t('path_from', { visitor: labels.get(prior.record_id) ?? '' })}</span>
                     )}
-                    <span lang="">“{excerpt(prior.outgoing_story_text ?? '')}”</span>
+                    <span className={isKnownReason(operator, prior.pass_on_category) ? undefined : 'unclear'}>
+                      {t('passed_on', { topic: reasonLabel(operator, prior.pass_on_category, lang) })}
+                    </span>
                   </p>
                 </div>
               )}
@@ -155,7 +156,7 @@ function Path({ chain, n, byId, labels, red, onOpen }: PathProps) {
                 <StreamStone id={r.record_id} row={row++} red={r.record_id === red} />
                 <span className="stone-label">
                   <span className="stone-name">{labels.get(r.record_id)}</span>
-                  <HeardFromTag record={r} />
+                  <HeardFromTag record={r} hideUnclear />
                   {r.record_id === red && <span className="stone-latest">{t('stones_latest')}</span>}
                 </span>
               </button>

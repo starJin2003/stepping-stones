@@ -121,7 +121,7 @@ describe('sendQueued', () => {
     expect(result).toEqual({ kind: 'unauthorized' })
     expect(fetch).toHaveBeenCalledTimes(1)
     expect(outbox.status()).toEqual(['Queued', 'Queued'])
-    expect(outboxMessage(result, 'en', 'Noor')).toBe("This phone's sync code was not accepted. Check it under This phone.")
+    expect(outboxMessage(result, 'en', 'Noor')).toBe('The sync code was not accepted. Check it in Setup.')
   })
 
   it('no sync code: does not fetch, and the items stay Queued', async () => {
@@ -131,7 +131,7 @@ describe('sendQueued', () => {
     expect(result).toEqual({ kind: 'no_sync_code' })
     expect(fetch).not.toHaveBeenCalled()
     expect(outbox.status()).toEqual(['Queued'])
-    expect(outboxMessage(result, 'en', 'Noor')).toBe("Add this phone's sync code under This phone first.")
+    expect(outboxMessage(result, 'en', 'Noor')).toBe('Add the sync code in Setup first.')
   })
 
   it('leaves Sent and Failed items alone; only Queued ones go', async () => {

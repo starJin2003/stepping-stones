@@ -32,7 +32,7 @@ describe('operator configs', () => {
   it('the example guesthouse has its own categories', () => {
     const coffee = new Set(parseOperatorConfig(noorCoffee).visit_reasons.map((r) => r.id))
     const own = parseOperatorConfig(exampleGuesthouse).visit_reasons.filter((r) => !coffee.has(r.id))
-    expect(own.map((r) => r.label.en)).toEqual(['Rooms', 'Location', 'Staff'])
+    expect(own.map((r) => r.label.en)).toEqual(['The room and the bed', 'Breakfast and dinner', 'Location and walks', 'Hosts and staff'])
   })
 
   it.each([
@@ -41,8 +41,8 @@ describe('operator configs', () => {
     ['one card question', { ...noorCoffee, card_questions: { ...noorCoffee.card_questions, en: ['Only one?'] } }],
     ['no owner name', { ...noorCoffee, owner_name: '' }],
     ['a label without Kiswahili', { ...noorCoffee, visit_reasons: [{ id: 'other', label: { en: 'Other' } }, { id: 'unclear', label: { sw: 'Haiko wazi', en: 'Unclear' } }] }],
-    ['a category without prototypes', { ...noorCoffee, visit_reasons: noorCoffee.visit_reasons.map((r) => (r.id === 'food' ? { ...r, prototypes: undefined } : r)) }],
-    ['two German prototypes only', { ...noorCoffee, visit_reasons: noorCoffee.visit_reasons.map((r) => (r.id === 'food' && r.prototypes ? { ...r, prototypes: { ...r.prototypes, de: r.prototypes.de.slice(0, 2) } } : r)) }],
+    ['a category without prototypes', { ...noorCoffee, visit_reasons: noorCoffee.visit_reasons.map((r) => (r.id === 'lunch' ? { ...r, prototypes: undefined } : r)) }],
+    ['two German prototypes only', { ...noorCoffee, visit_reasons: noorCoffee.visit_reasons.map((r) => (r.id === 'lunch' && r.prototypes ? { ...r, prototypes: { ...r.prototypes, de: r.prototypes.de.slice(0, 2) } } : r)) }],
     ['prototypes on Unclear', { ...noorCoffee, visit_reasons: noorCoffee.visit_reasons.map((r) => (r.id === 'unclear' ? { ...r, prototypes: noorCoffee.visit_reasons[0].prototypes } : r)) }],
     ['a plain string label', { ...noorCoffee, visit_reasons: [{ id: 'other', label: 'Other' }, { id: 'unclear', label: 'Unclear' }] }],
     ['no summary templates', { ...noorCoffee, summary_templates: undefined }],

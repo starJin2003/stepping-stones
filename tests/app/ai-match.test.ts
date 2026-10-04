@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { analyseTexts, matchRecords } from '../../src/ai/analyze.ts'
 import { classify, type EmbeddedPrototype } from '../../src/ai/classify.ts'
-import { KIK_FUNCTION_WORDS, THRESHOLDS, type Thresholds } from '../../src/ai/config.ts'
+import { KIK_FUNCTION_WORDS, REFERRAL_RULES, THRESHOLDS, type Thresholds } from '../../src/ai/config.ts'
 import { createEmbedder, E5_PREFIX, type Extractor } from '../../src/ai/embed.ts'
 import { findMatch, type MatchableRecord } from '../../src/ai/match.ts'
 
@@ -169,6 +169,7 @@ describe('analyseTexts', () => {
       functionWords: KIK_FUNCTION_WORDS,
       visitReasonPrototypes: {},
       referralPrototypes: {},
+      referralRules: REFERRAL_RULES,
       modelRevision: 'test',
     }
     const prototypes = { visitReasons: [{ category: 'food', vector: at(0) }], referrals: [{ category: 'local_guide', vector: at(0) }] }

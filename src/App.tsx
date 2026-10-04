@@ -2,18 +2,20 @@ import { useEffect, useState } from 'react'
 import { useAutoAnalysis } from './ai/analysing.ts'
 import { sendOutboxNow } from './db/outbox.ts'
 import { useLanguage } from './i18n/language.tsx'
-import { LANGUAGE_NAMES, type Lang, type StringKey } from './i18n/strings.ts'
+import type { StringKey } from './i18n/strings.ts'
 import { operator } from './operator/active.ts'
 import { MessagesScreen } from './screens/MessagesScreen.tsx'
 import { StonesScreen } from './screens/StonesScreen.tsx'
 import { SummaryScreen } from './screens/SummaryScreen.tsx'
-import { ThisPhoneScreen } from './screens/ThisPhoneScreen.tsx'
+import { SetupScreen } from './screens/SetupScreen.tsx'
 
-const VIEWS = ['messages', 'stones', 'summary', 'this-phone'] as const
+const VIEWS = ['messages', 'stones', 'summary', 'setup'] as const
 type View = (typeof VIEWS)[number]
 
 function viewFromHash(): View {
   const hash = window.location.hash.slice(1)
+  // #this-phone was the old name for Setup.
+  if (hash === 'this-phone') return 'setup'
   return (VIEWS as readonly string[]).includes(hash) ? (hash as View) : 'messages'
 }
 
@@ -24,7 +26,7 @@ const TABS: { view: View; label: StringKey }[] = [
 ]
 
 function App() {
-  const { lang, t, setLang } = useLanguage()
+  const { t } = useLanguage()
   const [view, setView] = useState<View>(viewFromHash)
   useAutoAnalysis()
 
@@ -56,23 +58,16 @@ function App() {
             <img src="/favicon.svg" alt="" width="32" height="32" />
             <span className="wordmark-name">Stepping Stones</span>
           </a>
-          <a className="phone-link" href="#this-phone" aria-current={current('this-phone')}>
-            {t('this_phone')}
+          <a className="setup-link" href="#setup" aria-current={current('setup')}>
+            {t('setup')}
           </a>
-          <div className="language-toggle" role="group" aria-label={t('language_label')}>
-            {(Object.keys(LANGUAGE_NAMES) as Lang[]).map((code) => (
-              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}>
-                {LANGUAGE_NAMES[code]}
-              </button>
-            ))}
-          </div>
         </header>
 
         <main className="app-main">
           {view === 'messages' && <MessagesScreen />}
           {view === 'stones' && <StonesScreen />}
           {view === 'summary' && <SummaryScreen />}
-          {view === 'this-phone' && <ThisPhoneScreen />}
+          {view === 'setup' && <SetupScreen />}
         </main>
 
         <nav className="tabs" aria-label={t('nav_label')}>

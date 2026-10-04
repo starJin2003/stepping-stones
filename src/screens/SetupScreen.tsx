@@ -9,14 +9,14 @@ import { deleteSetting, setSetting, useSettings } from '../db/settings.ts'
 import { useLanguage } from '../i18n/language.tsx'
 import { countKey, LANGUAGE_NAMES, type Lang, type StringKey } from '../i18n/strings.ts'
 
-/** Settings and demo tools, in three groups: what the family sets up once, language, and demo tools. */
-export function ThisPhoneScreen() {
+/** Setup, in three groups: what the family sets up once, language, and demo tools. */
+export function SetupScreen() {
   const { t } = useLanguage()
   const settings = useSettings()
 
   return (
     <>
-      <h1>{t('phone_title')}</h1>
+      <h1>{t('setup')}</h1>
 
       <section className="group" aria-labelledby="setup-title">
         <h2 id="setup-title">{t('group_setup')}</h2>
@@ -128,9 +128,11 @@ function ModelSection() {
   )
 }
 
+/** With a code saved, only Change and Forget show; the input appears when a person wants to type one. */
 function SyncCode({ hasCode }: { hasCode: boolean }) {
   const { t } = useLanguage()
   const [value, setValue] = useState('')
+  const [changing, setChanging] = useState(false)
   const [notice, setNotice] = useState<StringKey | null>(null)
 
   async function save(event: FormEvent) {
@@ -142,18 +144,44 @@ function SyncCode({ hasCode }: { hasCode: boolean }) {
     }
     await setSetting('sync_token', code)
     setValue('')
+    setChanging(false)
     setNotice(null)
   }
 
   async function forget() {
     await deleteSetting('sync_token')
+    setChanging(false)
     setNotice('code_forgotten')
+  }
+
+  const status = (
+    <p className="notice" role="status">
+      {notice && t(notice)}
+    </p>
+  )
+
+  if (hasCode && !changing) {
+    return (
+      <div className="subgroup">
+        <h3>{t('code_title')}</h3>
+        <p>{t('code_present')}</p>
+        <div className="button-row">
+          <button className="button button-secondary" type="button" onClick={() => setChanging(true)}>
+            {t('code_change')}
+          </button>
+          <button className="button button-secondary" type="button" onClick={forget}>
+            {t('code_forget')}
+          </button>
+        </div>
+        {status}
+      </div>
+    )
   }
 
   return (
     <div className="subgroup">
       <h3>{t('code_title')}</h3>
-      <p>{t(hasCode ? 'code_present' : 'code_missing')}</p>
+      {!hasCode && <p>{t('code_missing')}</p>}
       <form className="stack" onSubmit={save}>
         <label className="field-label" htmlFor="sync-code">
           {t(hasCode ? 'code_replace' : 'code_enter')}
@@ -171,14 +199,12 @@ function SyncCode({ hasCode }: { hasCode: boolean }) {
             {t('code_save')}
           </button>
           {hasCode && (
-            <button className="button button-secondary" type="button" onClick={forget}>
-              {t('code_forget')}
+            <button className="button button-secondary" type="button" onClick={() => setChanging(false)}>
+              {t('code_cancel')}
             </button>
           )}
         </div>
-        <p className="notice" role="status">
-          {notice && t(notice)}
-        </p>
+        {status}
       </form>
     </div>
   )

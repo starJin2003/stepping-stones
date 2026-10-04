@@ -1,24 +1,25 @@
 {
   "synthetic": true,
   "operator_id": "noor-coffee",
-  "description": "Synthetic past visits for demo mode, written for this project. No real visitors, messages, or businesses. Guesthouses are unnamed or fictional. Review decisions were made up to show two paths of confirmed links (one of four visits that started with guesthouse staff, one of three that started with a local guide) and one near miss left unlinked. heard_from records which referral source each text was written to show, so guesthouse guests are the most common, as in the demo SMS; the app never reads it, the on-device model classifies the text itself.",
+  "description": "Synthetic past visits for demo mode, written for this project. No real visitors, messages, or businesses. Guesthouses are unnamed or fictional. Review decisions were made up to show two paths of confirmed links (one of four visits that started with guesthouse staff, one of three that started with a local guide) and one near miss left unlinked. heard_from records which referral source each text was written to show, so guesthouse guests are the most common, as in the demo SMS; would_tell_part names the tour part each 2) answer was written to show. The app never reads either field; it reads the text itself.",
   "demo_intended_match": "seed-noor-coffee-09",
   "demo_sms": [
-    "1) A man staying at our guesthouse told us Noor still has coffee trees her grandmother planted, and that you finish with coffee brewed in a clay pot. 2) It felt like visiting family. Go in the morning when it is cool.",
-    "1) Another guest at our guesthouse said to ask Noor about her grandmother's old coffee trees and to stay for the clay pot coffee. 2) I would tell friends to bring cash for a bag of beans and to take their time."
+    "1) A man staying at our guesthouse told us Noor still has coffee trees her grandmother planted, and that you finish with coffee brewed in a clay pot. 2) Stay for the roasting. Noor roasts the beans in a pan over the fire and you stir them yourself.",
+    "1) Another guest at our guesthouse said to ask Noor about her grandmother's old coffee trees and to stay for the clay pot coffee. 2) Tell your friends to try picking the red coffee cherries on the slope."
   ],
   "records": [
     {
       "record_id": "seed-noor-coffee-01",
       "sender_hash": "synthetic-sender-01",
       "received_at": "2026-06-14T12:40:00.000Z",
-      "raw_text_local": "1) The host at our hostel in Nyeri said a family nearby runs small coffee tours. 2) You pick the ripe red cherries yourself, and Noor shows you how they are pulped and dried on raised beds.",
+      "raw_text_local": "1) The host at our hostel in Nyeri said a family nearby runs small coffee tours. 2) You pick the ripe red cherries yourself, straight from the bushes on the slope.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_staff",
-      "note": "Start of the first path. Heard from hostel staff, no earlier visitor."
+      "note": "Start of the first path. Heard from hostel staff, no earlier visitor. Would tell: picking.",
+      "would_tell_part": "picking"
     },
     {
       "record_id": "seed-noor-coffee-02",
@@ -30,30 +31,33 @@
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "Heard from a guest whose own visit was never texted in, so there is no earlier visitor to link."
+      "note": "Heard from a guest whose own visit was never texted in, so there is no earlier visitor to link.",
+      "would_tell_part": "farm"
     },
     {
       "record_id": "seed-noor-coffee-03",
       "sender_hash": "synthetic-sender-03",
       "received_at": "2026-07-02T13:05:00.000Z",
-      "raw_text_local": "1) Kiongozi wetu wa safari alituambia kuhusu shamba la Noor. 2) Ningewaambia marafiki kwamba chakula cha mchana cha nyumbani kilikuwa kitamu sana, na tulijifunza kupika githeri.",
+      "raw_text_local": "1) Kiongozi wetu wa safari alituambia kuhusu shamba la Noor. 2) Waambieni marafiki kuhusu chakula cha mchana kilichopikwa nyumbani. Kilikuwa kitamu sana, na tulijifunza kupika githeri.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "heard_from": "local_guide"
+      "heard_from": "local_guide",
+      "would_tell_part": "lunch"
     },
     {
       "record_id": "seed-noor-coffee-04",
       "sender_hash": "synthetic-sender-04",
       "received_at": "2026-07-09T10:30:00.000Z",
-      "raw_text_local": "1) Eine Reisende aus unserem Gästehaus hat erzählt, dass man bei Noor die roten Kaffeekirschen selbst pflückt und zusieht, wie sie getrocknet werden. 2) Unbedingt beim Rösten mitmachen! Noor röstet die Bohnen in einer Pfanne über dem Holzfeuer, und man darf selbst rühren.",
+      "raw_text_local": "1) Eine Reisende aus unserem Gästehaus hat erzählt, dass man bei Noor die reifen roten Kaffeekirschen selbst vom Strauch pflückt. 2) Unbedingt beim Rösten mitmachen! Noor röstet die Bohnen in einer Pfanne über dem Holzfeuer, und man darf selbst rühren.",
       "review_status": "Confirmed",
       "confirmed_prior_record_id": "seed-noor-coffee-01",
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "First path, link 1. Heard what visitor 01 would tell: picking cherries, drying."
+      "note": "First path, link 1. Heard what visitor 01 would tell (picking). Would tell: roasting over the fire.",
+      "would_tell_part": "roasting"
     },
     {
       "record_id": "seed-noor-coffee-05",
@@ -64,19 +68,21 @@
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "heard_from": "friend_family"
+      "heard_from": "friend_family",
+      "would_tell_part": "family"
     },
     {
       "record_id": "seed-noor-coffee-12",
       "sender_hash": "synthetic-sender-12",
       "received_at": "2026-07-28T11:30:00.000Z",
-      "raw_text_local": "1) Our local guide took us to Noor's farm on the way back from the waterfall. 2) Learn a few words of Gĩkũyũ from the family. Everyone laughed when we tried to say wĩ mwega, and then they taught us the right way.",
+      "raw_text_local": "1) Our local guide took us to Noor's farm on the way back from the waterfall. 2) Let the family teach you a few words of their language. Everyone laughed when we tried, and then they taught us the right way.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "local_guide",
-      "note": "Start of the second path. Heard from a local guide, no earlier visitor."
+      "note": "Start of the second path. Heard from a local guide, no earlier visitor.",
+      "would_tell_part": "family"
     },
     {
       "record_id": "seed-noor-coffee-06",
@@ -87,7 +93,8 @@
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "heard_from": "social_online"
+      "heard_from": "social_online",
+      "would_tell_part": "farm"
     },
     {
       "record_id": "seed-noor-coffee-07",
@@ -99,19 +106,21 @@
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "First path, link 2. Heard what visitor 04 would tell: roasting over a wood fire."
+      "note": "First path, link 2. Heard what visitor 04 would tell (roasting). Would tell: leaving with coffee you roasted.",
+      "would_tell_part": "roasting"
     },
     {
       "record_id": "seed-noor-coffee-13",
       "sender_hash": "synthetic-sender-13",
       "received_at": "2026-08-16T13:20:00.000Z",
-      "raw_text_local": "1) Ein Paar aus unserem Gästehaus hat erzählt, dass Noors Familie den Besuchern ein paar Wörter Gĩkũyũ beibringt und alle lachen, wenn man es versucht. 2) Bis zum Abend bleiben! Die Familie hat ein Feuer gemacht und erzählt, wie der Hof angefangen hat.",
+      "raw_text_local": "1) Ein Paar aus unserem Gästehaus hat erzählt, dass Noors Familie den Besuchern ein paar Wörter Gĩkũyũ beibringt und alle lachen, wenn man es versucht. 2) Bis zum Abend bleiben! Die Familie erzählt Geschichten darüber, wie der Hof angefangen hat, und singt alte Lieder.",
       "review_status": "Confirmed",
       "confirmed_prior_record_id": "seed-noor-coffee-12",
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "Second path, link 1. Heard what visitor 12 would tell: learning a few words of Gĩkũyũ, everyone laughing."
+      "note": "Second path, link 1. Heard what visitor 12 would tell: learning a few words of Gĩkũyũ. Would tell: the family's stories and songs.",
+      "would_tell_part": "family"
     },
     {
       "record_id": "seed-noor-coffee-08",
@@ -123,19 +132,21 @@
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_staff",
-      "note": "Near miss left unlinked. The heard story resembles what visitor 03 would tell (githeri lunch), but it came from guesthouse staff, and visitor 03 travelled with a safari guide. A person decided: not linked."
+      "note": "Near miss left unlinked. The heard story resembles what visitor 03 would tell (githeri lunch), but it came from guesthouse staff, and visitor 03 travelled with a safari guide. A person decided: not linked.",
+      "would_tell_part": "lunch"
     },
     {
       "record_id": "seed-noor-coffee-14",
       "sender_hash": "synthetic-sender-14",
       "received_at": "2026-08-30T10:10:00.000Z",
-      "raw_text_local": "1) Wageni wenzetu kwenye nyumba ya wageni walituambia tukae hadi jioni, kwa sababu familia ya Noor huwasha moto na kusimulia jinsi shamba lilivyoanza. 2) Waambie marafiki waende na kiongozi wa eneo hili, kwa sababu anatafsiri kila kitu.",
+      "raw_text_local": "1) Wageni wenzetu kwenye nyumba ya wageni walituambia tukae hadi jioni, kwa sababu familia ya Noor husimulia hadithi za jinsi shamba lilivyoanza na kuimba nyimbo za zamani. 2) Waambie marafiki waangalie jinsi kahawa inavyokobolewa na kukaushwa juani kwenye vichanja.",
       "review_status": "Confirmed",
       "confirmed_prior_record_id": "seed-noor-coffee-13",
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "Second path, link 2. Heard what visitor 13 would tell: staying for the evening fire and stories."
+      "note": "Second path, link 2. Heard what visitor 13 would tell: evening stories and songs. Would tell: pulping and drying.",
+      "would_tell_part": "drying"
     },
     {
       "record_id": "seed-noor-coffee-09",
@@ -147,29 +158,32 @@
       "created_from": "Seed",
       "synthetic": true,
       "heard_from": "guesthouse_guest",
-      "note": "First path, link 3. Heard what visitor 07 would tell: leaving with a bag you roasted. Its would-tell story (grandmother's trees, clay pot coffee) is the intended match for demo_sms."
+      "note": "First path, link 3. Heard what visitor 07 would tell: leaving with a bag you roasted. Its would-tell story (grandmother's trees, clay pot coffee) is the intended match for demo_sms. Text unchanged.",
+      "would_tell_part": "farm and tasting"
     },
     {
       "record_id": "seed-noor-coffee-10",
       "sender_hash": "synthetic-sender-10",
       "received_at": "2026-09-14T13:00:00.000Z",
-      "raw_text_local": "1) Saw a short video about the farm online. 2) Buy a bag of beans before you leave. Best coffee I had in Kenya.",
+      "raw_text_local": "1) Saw a short video about the farm online. 2) Best coffee I have ever tasted, brewed fresh at the end of the tour.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "heard_from": "social_online"
+      "heard_from": "social_online",
+      "would_tell_part": "tasting"
     },
     {
       "record_id": "seed-noor-coffee-11",
       "sender_hash": "synthetic-sender-11",
       "received_at": "2026-09-21T09:50:00.000Z",
-      "raw_text_local": "1) Our driver suggested it on the way to the national park. 2) Short and friendly tour, good with kids. They loved picking the cherries.",
+      "raw_text_local": "1) Our driver suggested it on the way to the national park. 2) The children loved picking the red cherries into small baskets.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "heard_from": "other"
+      "heard_from": "other",
+      "would_tell_part": "picking"
     }
   ]
 }

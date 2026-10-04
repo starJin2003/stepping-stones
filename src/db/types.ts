@@ -17,6 +17,8 @@ export interface VisitRecord {
   format_ok: boolean | null
   detected_language: string | null
   referral_source_category: string | null
+  /** Which Heard from rule fired ("lodging+guest", "conflict:guide+online"), "embedding" when the model decided. */
+  referral_rule: string | null
   visit_reason_category: string | null
   pass_on_category: string | null
   incoming_embedding: Float32Array | null
@@ -68,6 +70,7 @@ export function newRecord(fields: NewRecordFields): VisitRecord {
     format_ok: null,
     detected_language: null,
     referral_source_category: null,
+    referral_rule: null,
     visit_reason_category: null,
     pass_on_category: null,
     incoming_embedding: null,

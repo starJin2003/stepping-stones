@@ -1,0 +1,67 @@
+{
+  "description": "Fixed word lists for Heard from, in English, German, French and Kiswahili. Same for every operator. The heard story is split at the first reporting verb: the source span (who told them) is everything before it, the content span (what they heard) everything after. Rules run on the source span; the on-device model is used only when no rule fires.",
+  "note": "Written for this project. Matching ignores case and accents, and apostrophes count as spaces, so l'hôte matches hôte and Gastehaus matches Gästehaus. A trailing * matches any ending (erzähl* matches erzählt), a leading * any beginning (*blog matches Reiseblog). Kiswahili lists are review pending.",
+  "rules": [
+    "lodging word plus a fellow-guest word: guesthouse_guest",
+    "lodging word plus a staff word: guesthouse_staff",
+    "guide or driver word: local_guide",
+    "friend or family word: friend_family",
+    "online word: social_online",
+    "words for two different categories: unclear"
+  ],
+  "reporting_verbs": {
+    "en": ["told", "tells", "tell", "said", "says", "suggest*", "recommend*", "mention*"],
+    "de": ["erzähl*", "gesagt", "sagte*", "empfohl*", "empfahl*", "empfiehlt", "gemeint", "meinte*", "geraten"],
+    "fr": ["dit", "dite", "disait", "racont*", "conseill*", "recommand*", "parlé"],
+    "sw": [
+      "alituambia",
+      "aliniambia",
+      "walituambia",
+      "waliniambia",
+      "alitueleza",
+      "walitueleza",
+      "alisema",
+      "walisema",
+      "alipendekeza",
+      "walipendekeza",
+      "alitushauri",
+      "walitushauri"
+    ]
+  },
+  "lodging": {
+    "en": ["guesthouse*", "guest house*", "hostel*", "lodge*", "hotel*", "homestay*", "b and b"],
+    "de": ["gästehaus*", "hostel*", "lodge*", "hotel*", "pension", "unterkunft"],
+    "fr": ["maison d'hôtes", "maison d'hôte", "auberge*", "hôtel*", "lodge*", "gîte*"],
+    "sw": ["nyumba ya wageni", "nyumba ya kulala wageni", "hosteli", "hoteli", "loji"]
+  },
+  "fellow_guest": {
+    "en": ["staying", "stayed", "guest", "guests", "traveller*", "traveler*", "couple*", "backpacker*", "tourist*"],
+    "de": ["reisende*", "mitreisende*", "gast", "gäste", "gästen", "paar", "touristen", "touristin"],
+    "fr": ["voyageu*", "couple*", "client*", "touriste*"],
+    "sw": ["wageni", "mgeni", "msafiri", "wasafiri", "mtalii", "watalii"]
+  },
+  "staff": {
+    "en": ["host", "hosts", "hostess", "owner*", "runs", "run", "manager*", "receptionist*", "staff", "landlady", "landlord"],
+    "de": ["gastgeber*", "besitzer*", "inhaber*", "rezeption*", "personal", "wirtin", "wirt"],
+    "fr": ["propriétaire*", "hôte", "hôtesse", "gérant*", "réception*", "personnel"],
+    "sw": ["mwenyeji", "wenyeji", "mmiliki", "mhudumu", "wahudumu", "mpokezi", "mwenye nyumba", "anayeendesha", "wafanyakazi"]
+  },
+  "guide": {
+    "en": ["guide", "guides", "driver*"],
+    "de": ["führer*", "reiseleiter*", "guide", "fahrer*"],
+    "fr": ["guide*", "chauffeur*"],
+    "sw": ["kiongozi", "viongozi", "dereva", "madereva", "mwongozaji"]
+  },
+  "friend_family": {
+    "en": ["friend*", "sister*", "brother*", "mother", "father", "mum", "mom", "dad", "parents", "cousin*", "family", "wife", "husband", "aunt", "uncle", "daughter*", "colleague*"],
+    "de": ["freund*", "schwester*", "bruder", "brüder", "mutter", "vater", "eltern", "familie", "cousin*", "kollege*", "kollegin*", "tante", "onkel", "tochter", "sohn"],
+    "fr": ["ami", "amie", "amis", "amies", "sœur*", "soeur*", "frère*", "mère", "père", "parents", "famille", "cousin*", "collègue*", "tante", "oncle", "fille", "fils"],
+    "sw": ["rafiki", "marafiki", "dada", "kaka", "familia", "ndugu", "binamu", "mama yangu", "baba yangu", "shangazi", "mjomba", "mfanyakazi mwenzangu"]
+  },
+  "online": {
+    "en": ["online", "internet", "video*", "*blog", "blog*", "instagram", "tiktok", "facebook", "youtube", "photos posted", "social media", "website", "tripadvisor"],
+    "de": ["online", "internet", "video*", "*blog", "blog*", "instagram", "tiktok", "facebook", "youtube", "webseite"],
+    "fr": ["en ligne", "internet", "vidéo*", "*blog", "blog*", "instagram", "tiktok", "facebook", "youtube", "site web"],
+    "sw": ["mtandaoni", "intaneti", "mitandao ya kijamii", "video", "instagram", "tiktok", "facebook", "youtube"]
+  }
+}

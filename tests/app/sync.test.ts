@@ -160,7 +160,7 @@ describe('getNewMessages', () => {
     const server = fakeServer(pulled(2), { pullStatus: 401 })
     const result = await getNewMessages(deps(server, memoryStore(server.events).store))
     expect(result).toEqual({ kind: 'unauthorized' })
-    expect(syncMessage(result, 'en')).toBe("This phone's sync code was not accepted. Check it under This phone.")
+    expect(syncMessage(result, 'en')).toBe('The sync code was not accepted. Check it in Setup.')
     expect(server.events).toEqual(['pull'])
   })
 
@@ -244,6 +244,7 @@ it('newRecord leaves analysis fields null and review Pending', () => {
     'format_ok',
     'detected_language',
     'referral_source_category',
+    'referral_rule',
     'visit_reason_category',
     'pass_on_category',
     'incoming_embedding',

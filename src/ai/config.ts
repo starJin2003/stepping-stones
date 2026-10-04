@@ -1,6 +1,7 @@
 // Data the analysis needs, loaded the same way in the browser and in Node scripts.
 import kikWords from '../../data/lid/kik-function-words.json' with { type: 'json' }
 import referralFile from '../../data/ai/referral-prototypes.json' with { type: 'json' }
+import referralRulesFile from '../../data/ai/referral-rules.json' with { type: 'json' }
 import thresholdsFile from './thresholds.json' with { type: 'json' }
 
 export type Language = 'English' | 'Kiswahili' | 'Gikuyu' | 'German' | 'French' | 'Unknown'
@@ -28,6 +29,22 @@ export interface Thresholds {
 export const THRESHOLDS: Thresholds = thresholdsFile
 
 export const REFERRAL_PROTOTYPES: Record<string, PrototypeSentences> = referralFile.categories
+
+/** A word list per language (en, de, fr, sw). */
+export type WordLists = Record<string, string[]>
+
+/** Fixed word lists for Heard from: the reporting verbs that end the source span, and the words each rule needs. */
+export interface ReferralRules {
+  reporting_verbs: WordLists
+  lodging: WordLists
+  fellow_guest: WordLists
+  staff: WordLists
+  guide: WordLists
+  friend_family: WordLists
+  online: WordLists
+}
+
+export const REFERRAL_RULES: ReferralRules = referralRulesFile
 
 /** Accent-free forms, so "uria" matches "ũrĩa" in text typed without ĩ ũ. */
 export const plainWord = (word: string): string => word.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()

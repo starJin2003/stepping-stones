@@ -6,8 +6,8 @@
     {
       "id": "rooms",
       "label": {
-        "sw": "Vyumba",
-        "en": "Rooms"
+        "sw": "Chumba na kitanda",
+        "en": "The room and the bed"
       },
       "prototypes": {
         "en": [
@@ -39,8 +39,8 @@
     {
       "id": "food",
       "label": {
-        "sw": "Chakula",
-        "en": "Food"
+        "sw": "Kifungua kinywa na chakula cha jioni",
+        "en": "Breakfast and dinner"
       },
       "prototypes": {
         "en": [
@@ -72,8 +72,8 @@
     {
       "id": "location",
       "label": {
-        "sw": "Mahali",
-        "en": "Location"
+        "sw": "Mahali na matembezi",
+        "en": "Location and walks"
       },
       "prototypes": {
         "en": [
@@ -105,8 +105,8 @@
     {
       "id": "staff",
       "label": {
-        "sw": "Wafanyakazi",
-        "en": "Staff"
+        "sw": "Wenyeji na wafanyakazi",
+        "en": "Hosts and staff"
       },
       "prototypes": {
         "en": [
@@ -186,7 +186,7 @@
       "Ungemwambia rafiki nini kuhusu kukaa kwako hapa?"
     ]
   },
-  "prototypes_note": "Visit-reason prototype sentences, written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
+  "prototypes_note": "Visit-reason categories are the parts of a stay, so the app can say which part guests pass on. Prototype sentences written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
   "summary_templates": {
     "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Three parts, each sent as one SMS of at most 70 characters (UCS-2), about 5 seconds apart. The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
     "parts": [
@@ -208,15 +208,15 @@
         "friend_family": "Arata kana andũ a mũciĩ",
         "guesthouse_staff": "Aruti wĩra a nyũmba ya ageni",
         "guesthouse_guest": "Ageni a nyũmba ya ageni",
-        "local_guide": "Mũtongoria wa ageni",
+        "local_guide": "Mũtongoria kana ndereba",
         "social_online": "Intaneti",
         "other": "Kũngĩ"
       },
       "visit_reasons": {
         "rooms": "Kũndũ gwa gũkoma",
-        "food": "Irio",
+        "food": "Irio cia rũciinĩ na hwaĩ-inĩ",
         "location": "Kũrĩa ĩrĩ",
-        "staff": "Aruti wĩra",
+        "staff": "Ene nyũmba na aruti wĩra",
         "other": "Ũndũ ũngĩ"
       },
       "none": {

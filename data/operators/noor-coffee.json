@@ -4,134 +4,233 @@
   "owner_name": "Noor",
   "visit_reasons": [
     {
-      "id": "coffee_experience",
+      "id": "picking",
       "label": {
-        "sw": "Uzoefu wa kahawa",
-        "en": "Coffee experience"
+        "en": "Picking cherries",
+        "sw": "Kuchuma kahawa"
       },
       "prototypes": {
         "en": [
-          "Tasting fresh coffee from the farm.",
-          "Learning how coffee is picked, dried and roasted.",
-          "Roasting our own coffee beans.",
-          "The best cup of coffee I have had."
+          "Picking the ripe red coffee cherries by hand.",
+          "You pick the coffee cherries yourself.",
+          "Harvesting coffee berries from the bushes on the slope.",
+          "We filled a basket with red cherries."
         ],
         "sw": [
-          "Kuonja kahawa mpya kutoka shambani.",
-          "Kujifunza jinsi kahawa inavyochumwa, kukaushwa na kukaangwa.",
-          "Kukaanga kahawa yetu wenyewe.",
-          "Kikombe bora cha kahawa nilichowahi kunywa."
+          "Kuchuma matunda mekundu ya kahawa kwa mkono.",
+          "Unachuma matunda ya kahawa mwenyewe.",
+          "Kuvuna matunda ya kahawa kutoka kwenye miti mlimani.",
+          "Tulijaza kikapu kwa matunda mekundu ya kahawa."
         ],
         "de": [
-          "Frischen Kaffee direkt vom Hof probieren.",
-          "Lernen, wie Kaffee gepflückt, getrocknet und geröstet wird.",
-          "Die eigenen Kaffeebohnen rösten.",
-          "Der beste Kaffee, den ich je getrunken habe."
+          "Die reifen roten Kaffeekirschen von Hand pflücken.",
+          "Man pflückt die Kaffeekirschen selbst.",
+          "Kaffeekirschen am Hang von den Sträuchern ernten.",
+          "Wir haben einen Korb mit roten Kirschen gefüllt."
         ],
         "fr": [
-          "Goûter le café frais de la ferme.",
-          "Apprendre comment le café est cueilli, séché et torréfié.",
-          "Torréfier nos propres grains de café.",
-          "Le meilleur café que j'aie jamais bu."
+          "Cueillir à la main les cerises de café bien rouges.",
+          "On cueille soi-même les cerises de café.",
+          "Récolter les cerises de café sur les arbustes de la pente.",
+          "Nous avons rempli un panier de cerises rouges."
         ]
       }
     },
     {
-      "id": "farm_tour",
+      "id": "drying",
       "label": {
-        "sw": "Ziara ya shamba",
-        "en": "Farm tour"
+        "en": "Pulping and drying",
+        "sw": "Kukoboa na kukausha"
       },
       "prototypes": {
         "en": [
-          "Walking around the farm and the fields.",
-          "A walk up the slope with a great view.",
+          "Seeing how the cherries are pulped and washed.",
+          "The beans dry in the sun on raised beds.",
+          "Learning how coffee is processed after picking.",
+          "Turning the drying beans on the wooden racks."
+        ],
+        "sw": [
+          "Kuona jinsi matunda ya kahawa yanavyokobolewa na kuoshwa.",
+          "Maharagwe hukaushwa juani kwenye vichanja.",
+          "Kujifunza jinsi kahawa inavyoshughulikiwa baada ya kuchumwa.",
+          "Kugeuza maharagwe yanayokauka kwenye vichanja vya mbao."
+        ],
+        "de": [
+          "Sehen, wie die Kirschen entpulpt und gewaschen werden.",
+          "Die Bohnen trocknen in der Sonne auf erhöhten Gestellen.",
+          "Lernen, wie der Kaffee nach der Ernte verarbeitet wird.",
+          "Die trocknenden Bohnen auf den Holzgestellen wenden."
+        ],
+        "fr": [
+          "Voir comment les cerises sont dépulpées et lavées.",
+          "Les grains sèchent au soleil sur des claies surélevées.",
+          "Apprendre comment le café est traité après la cueillette.",
+          "Retourner les grains qui sèchent sur les claies en bois."
+        ]
+      }
+    },
+    {
+      "id": "roasting",
+      "label": {
+        "en": "Roasting over the fire",
+        "sw": "Kukaanga motoni"
+      },
+      "prototypes": {
+        "en": [
+          "Roasting the coffee beans in a pan over a wood fire.",
+          "We roasted our own beans and stirred them ourselves.",
+          "The smell of the beans roasting over the fire.",
+          "Taking home a bag of the coffee you roasted yourself."
+        ],
+        "sw": [
+          "Kukaanga kahawa kwenye sufuria juu ya moto wa kuni.",
+          "Tulikaanga kahawa yetu wenyewe na kuikoroga.",
+          "Harufu ya kahawa ikikaangwa motoni.",
+          "Kuondoka na mfuko wa kahawa uliyoikaanga mwenyewe."
+        ],
+        "de": [
+          "Die Kaffeebohnen in einer Pfanne über dem Holzfeuer rösten.",
+          "Wir haben unsere eigenen Bohnen geröstet und selbst gerührt.",
+          "Der Duft der Bohnen, die über dem Feuer rösten.",
+          "Eine Tüte vom selbst gerösteten Kaffee mit nach Hause nehmen."
+        ],
+        "fr": [
+          "Torréfier les grains de café dans une poêle sur un feu de bois.",
+          "Nous avons torréfié et remué nos propres grains.",
+          "L'odeur des grains qui grillent sur le feu.",
+          "Repartir avec un sachet du café qu'on a torréfié soi-même."
+        ]
+      }
+    },
+    {
+      "id": "tasting",
+      "label": {
+        "en": "Tasting and clay pot coffee",
+        "sw": "Kuonja kahawa ya chungu"
+      },
+      "prototypes": {
+        "en": [
+          "Tasting fresh coffee brewed in a clay pot.",
+          "The coffee brewed at the end of the tour.",
+          "The best cup of coffee I have ever tasted.",
+          "Sitting down together to taste the coffee."
+        ],
+        "sw": [
+          "Kuonja kahawa mpya iliyopikwa kwenye chungu.",
+          "Kahawa inayopikwa mwishoni mwa ziara.",
+          "Kikombe bora cha kahawa nilichowahi kuonja.",
+          "Kukaa pamoja kuonja kahawa."
+        ],
+        "de": [
+          "Frischen Kaffee aus dem Tontopf probieren.",
+          "Der Kaffee, der am Ende der Führung gebrüht wird.",
+          "Der beste Kaffee, den ich je getrunken habe.",
+          "Zusammen sitzen und den Kaffee verkosten."
+        ],
+        "fr": [
+          "Goûter le café frais préparé dans un pot en terre.",
+          "Le café préparé à la fin de la visite.",
+          "Le meilleur café que j'aie jamais goûté.",
+          "S'asseoir ensemble pour déguster le café."
+        ]
+      }
+    },
+    {
+      "id": "farm",
+      "label": {
+        "en": "The farm, old trees and views",
+        "sw": "Shamba, miti ya zamani na mandhari"
+      },
+      "prototypes": {
+        "en": [
+          "Walking up the steep slope with a view over the valley.",
+          "The old coffee trees planted long ago.",
           "Seeing how a small family farm works.",
-          "The farm walk was steep but beautiful."
+          "Wear good shoes, the walk up the farm is steep."
         ],
         "sw": [
-          "Kutembea kuzunguka shamba na mashamba.",
-          "Matembezi ya kupanda mlima yenye mandhari nzuri.",
+          "Kupanda mteremko mkali wenye mandhari ya bonde.",
+          "Miti ya zamani ya kahawa iliyopandwa zamani sana.",
           "Kuona jinsi shamba dogo la familia linavyofanya kazi.",
-          "Matembezi shambani yalikuwa ya mteremko lakini mazuri."
+          "Vaa viatu vizuri, matembezi shambani ni ya mteremko."
         ],
         "de": [
-          "Ein Spaziergang über den Hof und die Felder.",
-          "Eine Wanderung den Hang hinauf mit toller Aussicht.",
-          "Sehen, wie ein kleiner Familienbetrieb funktioniert.",
-          "Die Hofführung war steil, aber wunderschön."
+          "Den steilen Hang hinaufgehen mit Blick über das Tal.",
+          "Die alten Kaffeebäume, die vor langer Zeit gepflanzt wurden.",
+          "Sehen, wie ein kleiner Familienhof funktioniert.",
+          "Feste Schuhe anziehen, der Weg über den Hof ist steil."
         ],
         "fr": [
-          "Se promener dans la ferme et les champs.",
-          "Une marche sur la colline avec une belle vue.",
+          "Monter la pente raide avec une vue sur la vallée.",
+          "Les vieux caféiers plantés il y a longtemps.",
           "Voir comment fonctionne une petite ferme familiale.",
-          "La visite de la ferme était raide mais magnifique."
+          "Mettez de bonnes chaussures, la montée dans la ferme est raide."
         ]
       }
     },
     {
-      "id": "local_culture",
+      "id": "lunch",
       "label": {
-        "sw": "Utamaduni wa eneo hili",
-        "en": "Local culture"
-      },
-      "prototypes": {
-        "en": [
-          "Meeting a local family and hearing their stories.",
-          "Learning about local traditions and songs.",
-          "The family sang a traditional song with us.",
-          "Learning a few words of the local language."
-        ],
-        "sw": [
-          "Kukutana na familia ya hapa na kusikia hadithi zao.",
-          "Kujifunza kuhusu mila na nyimbo za hapa.",
-          "Familia iliimba wimbo wa jadi pamoja nasi.",
-          "Kujifunza maneno machache ya lugha ya hapa."
-        ],
-        "de": [
-          "Eine einheimische Familie kennenlernen und ihre Geschichten hören.",
-          "Etwas über lokale Traditionen und Lieder lernen.",
-          "Die Familie hat mit uns ein traditionelles Lied gesungen.",
-          "Ein paar Wörter der lokalen Sprache lernen."
-        ],
-        "fr": [
-          "Rencontrer une famille locale et écouter ses histoires.",
-          "Découvrir les traditions et les chants locaux.",
-          "La famille a chanté une chanson traditionnelle avec nous.",
-          "Apprendre quelques mots de la langue locale."
-        ]
-      }
-    },
-    {
-      "id": "food",
-      "label": {
-        "sw": "Chakula",
-        "en": "Food"
+        "en": "Lunch and cooking",
+        "sw": "Chakula cha mchana na kupika"
       },
       "prototypes": {
         "en": [
           "A delicious home-cooked lunch.",
-          "Learning to cook a local dish.",
+          "Learning to cook githeri with the family.",
           "The food was simple and very good.",
           "Come hungry, the meal is great."
         ],
         "sw": [
           "Chakula kitamu cha mchana kilichopikwa nyumbani.",
-          "Kujifunza kupika chakula cha kienyeji.",
+          "Kujifunza kupika githeri pamoja na familia.",
           "Chakula kilikuwa rahisi na kitamu sana.",
           "Njoo ukiwa na njaa, mlo ni mzuri."
         ],
         "de": [
           "Ein leckeres hausgemachtes Mittagessen.",
-          "Lernen, ein lokales Gericht zu kochen.",
+          "Mit der Familie Githeri kochen lernen.",
           "Das Essen war einfach und sehr gut.",
           "Hungrig kommen, das Essen ist toll."
         ],
         "fr": [
           "Un délicieux déjeuner fait maison.",
-          "Apprendre à cuisiner un plat local.",
+          "Apprendre à cuisiner le githeri avec la famille.",
           "La nourriture était simple et très bonne.",
           "Venez avec faim, le repas est excellent."
+        ]
+      }
+    },
+    {
+      "id": "family",
+      "label": {
+        "en": "Family, songs and stories",
+        "sw": "Familia, nyimbo na hadithi"
+      },
+      "prototypes": {
+        "en": [
+          "The family sang a harvest song with us.",
+          "Hearing the family's stories about the old days.",
+          "Learning a few words of the local language from the family.",
+          "It felt like visiting family."
+        ],
+        "sw": [
+          "Familia iliimba wimbo wa mavuno pamoja nasi.",
+          "Kusikia hadithi za familia kuhusu siku za zamani.",
+          "Kujifunza maneno machache ya lugha ya hapa kutoka kwa familia.",
+          "Ilikuwa kama kutembelea familia."
+        ],
+        "de": [
+          "Die Familie hat mit uns ein Erntelied gesungen.",
+          "Die Geschichten der Familie von früher hören.",
+          "Von der Familie ein paar Wörter der lokalen Sprache lernen.",
+          "Es fühlte sich an wie ein Besuch bei der Familie."
+        ],
+        "fr": [
+          "La famille a chanté un chant de récolte avec nous.",
+          "Écouter les histoires de la famille sur le passé.",
+          "Apprendre quelques mots de la langue locale avec la famille.",
+          "On se sentait comme en visite chez des proches."
         ]
       }
     },
@@ -144,25 +243,25 @@
       "prototypes": {
         "en": [
           "Good for children.",
-          "Bring good shoes and cash.",
+          "Bring cash, there is no card machine.",
           "Go early in the morning.",
           "It was a nice break on a long trip."
         ],
         "sw": [
           "Inafaa kwa watoto.",
-          "Beba viatu vizuri na pesa taslimu.",
+          "Beba pesa taslimu, hakuna mashine ya kadi.",
           "Nenda asubuhi na mapema.",
           "Ilikuwa mapumziko mazuri katika safari ndefu."
         ],
         "de": [
           "Gut für Kinder.",
-          "Gute Schuhe und Bargeld mitnehmen.",
+          "Bargeld mitnehmen, es gibt kein Kartenlesegerät.",
           "Früh am Morgen hingehen.",
           "Eine schöne Pause auf einer langen Reise."
         ],
         "fr": [
           "Bien pour les enfants.",
-          "Prévoir de bonnes chaussures et de l'argent liquide.",
+          "Prévoir de l'argent liquide, pas de terminal de carte.",
           "Y aller tôt le matin.",
           "Une belle pause pendant un long voyage."
         ]
@@ -186,7 +285,7 @@
       "Ungemwambia rafiki nini kuhusu ziara yako?"
     ]
   },
-  "prototypes_note": "Visit-reason prototype sentences, written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
+  "prototypes_note": "Visit-reason categories are the parts of the tour, so the app can say which part visitors pass on. Prototype sentences written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
   "summary_templates": {
     "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Three parts, each sent as one SMS of at most 70 characters (UCS-2), about 5 seconds apart. The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
     "parts": [
@@ -208,15 +307,18 @@
         "friend_family": "Arata kana andũ a mũciĩ",
         "guesthouse_staff": "Aruti wĩra a nyũmba ya ageni",
         "guesthouse_guest": "Ageni a nyũmba ya ageni",
-        "local_guide": "Mũtongoria wa ageni",
+        "local_guide": "Mũtongoria kana ndereba",
         "social_online": "Intaneti",
         "other": "Kũngĩ"
       },
       "visit_reasons": {
-        "coffee_experience": "Kahũa",
-        "farm_tour": "Gũceerera mũgũnda",
-        "local_culture": "Mĩtugo ya kũndũ gũkũ",
-        "food": "Irio",
+        "picking": "Gũtua kahũa",
+        "drying": "Gũthĩa na kwanĩka",
+        "roasting": "Gũkaranga mwaki-inĩ",
+        "tasting": "Gũcama kahũa ka nyũngũ",
+        "farm": "Mũgũnda na mĩtĩ ya tene",
+        "lunch": "Irio na kũruga",
+        "family": "Andũ a mũciĩ, nyĩmbo, ng'ano",
         "other": "Ũndũ ũngĩ"
       },
       "none": {

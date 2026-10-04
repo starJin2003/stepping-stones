@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import exampleGuesthouse from '../../data/operators/example-guesthouse.json'
 import noorCoffee from '../../data/operators/noor-coffee.json'
 import { analysisPatches } from '../../src/ai/analyze.ts'
-import { KIK_FUNCTION_WORDS, THRESHOLDS } from '../../src/ai/config.ts'
+import { KIK_FUNCTION_WORDS, REFERRAL_RULES, THRESHOLDS } from '../../src/ai/config.ts'
 import { newRecord, type VisitRecord } from '../../src/db/types.ts'
 import { sameCategoryKind, sameCategoryLine } from '../../src/lib/categories.ts'
 import { decide, undo, type ReviewStore } from '../../src/lib/review.ts'
@@ -101,6 +101,7 @@ describe('analysis never overwrites a human decision', () => {
     functionWords: KIK_FUNCTION_WORDS,
     visitReasonPrototypes: {},
     referralPrototypes: {},
+    referralRules: REFERRAL_RULES,
     modelRevision: 'test',
   }
   const prototypes = { visitReasons: [{ category: 'food', vector: new Float32Array([1, 0, 0]) }], referrals: [] }
@@ -167,22 +168,22 @@ describe('same-category line', () => {
   const noor = parseOperatorConfig(noorCoffee)
 
   it('says when both stories fall in the same category', () => {
-    expect(sameCategoryLine(noor, 'food', 'food', 'en')).toBe('Same topic: Food')
-    expect(sameCategoryKind(noor, 'food', 'food')).toBe('same')
-    expect(sameCategoryLine(noor, 'food', 'food', 'sw')).toBe('Mada moja: Chakula')
+    expect(sameCategoryLine(noor, 'roasting', 'roasting', 'en')).toBe('Same topic: Roasting over the fire')
+    expect(sameCategoryKind(noor, 'roasting', 'roasting')).toBe('same')
+    expect(sameCategoryLine(noor, 'roasting', 'roasting', 'sw')).toBe('Mada moja: Kukaanga motoni')
   })
 
   it('names both categories when they differ, the new visitor first', () => {
-    expect(sameCategoryLine(noor, 'farm_tour', 'food', 'en')).toBe('Different topics: Farm tour and Food')
-    expect(sameCategoryKind(noor, 'farm_tour', 'food')).toBe('different')
-    expect(sameCategoryLine(noor, 'farm_tour', 'food', 'sw')).toBe('Mada tofauti: Ziara ya shamba na Chakula')
+    expect(sameCategoryLine(noor, 'picking', 'lunch', 'en')).toBe('Different topics: “Picking cherries” and “Lunch and cooking”')
+    expect(sameCategoryKind(noor, 'picking', 'lunch')).toBe('different')
+    expect(sameCategoryLine(noor, 'picking', 'lunch', 'sw')).toBe('Mada tofauti: “Kuchuma kahawa” na “Chakula cha mchana na kupika”')
   })
 
   it.each([
-    ['unclear', 'food'],
-    ['food', 'unclear'],
-    [null, 'food'],
-    ['food', null],
+    ['unclear', 'lunch'],
+    ['lunch', 'unclear'],
+    [null, 'lunch'],
+    ['lunch', null],
     ['unclear', 'unclear'],
     ['not-a-category', 'not-a-category'],
   ])('is plainly unsure when a category is missing or Unclear (%s, %s)', (came, tell) => {
@@ -192,7 +193,7 @@ describe('same-category line', () => {
 
   it("uses only the operator config's labels", () => {
     const guesthouse = parseOperatorConfig(exampleGuesthouse)
-    expect(sameCategoryLine(guesthouse, 'rooms', 'rooms', 'en')).toBe('Same topic: Rooms')
-    expect(sameCategoryLine(guesthouse, 'farm_tour', 'farm_tour', 'en')).toBe('Topic unclear')
+    expect(sameCategoryLine(guesthouse, 'rooms', 'rooms', 'en')).toBe('Same topic: The room and the bed')
+    expect(sameCategoryLine(guesthouse, 'roasting', 'roasting', 'en')).toBe('Topic unclear')
   })
 })

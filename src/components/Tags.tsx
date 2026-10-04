@@ -15,11 +15,11 @@ export function Tag({ label, value, unclear = false }: { label: string; value: s
 
 export const isUnclearReferral = (id: string | null) => !isReferralSource(id) || id === UNCLEAR
 
-/** "Heard from" as one tag, for a stone or a row. */
-export function HeardFromTag({ record }: { record: VisitRecord }) {
+/** "Heard from" as one tag. A stone leaves it out when it says nothing (hideUnclear). */
+export function HeardFromTag({ record, hideUnclear = false }: { record: VisitRecord; hideUnclear?: boolean }) {
   const { lang, t } = useLanguage()
-  if (!record.analysis_version) return null
   const id = record.referral_source_category
+  if (!record.analysis_version || (hideUnclear && isUnclearReferral(id))) return null
   return <Tag label={t('tag_heard')} value={referralLabel(id, lang)} unclear={isUnclearReferral(id)} />
 }
 

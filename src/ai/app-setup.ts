@@ -2,7 +2,7 @@
 // tell which records are out of date without loading the analysis code.
 import { operator } from '../operator/active.ts'
 import { visitReasonPrototypes } from '../operator/config.ts'
-import { KIK_FUNCTION_WORDS, REFERRAL_PROTOTYPES, THRESHOLDS } from './config.ts'
+import { KIK_FUNCTION_WORDS, REFERRAL_PROTOTYPES, REFERRAL_RULES, THRESHOLDS } from './config.ts'
 import { MODEL } from './model.ts'
 import { analysisVersion, type AnalysisSetup } from './setup.ts'
 
@@ -11,6 +11,7 @@ export const SETUP: AnalysisSetup = {
   functionWords: KIK_FUNCTION_WORDS,
   visitReasonPrototypes: visitReasonPrototypes(operator),
   referralPrototypes: REFERRAL_PROTOTYPES,
+  referralRules: REFERRAL_RULES,
   modelRevision: `${MODEL.revision}@${MODEL.measuredAtCommit}`,
 }
 

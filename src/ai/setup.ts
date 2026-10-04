@@ -1,7 +1,7 @@
-import { hashOf, type PrototypeSentences, type Thresholds } from './config.ts'
+import { hashOf, type PrototypeSentences, type ReferralRules, type Thresholds } from './config.ts'
 
-/** Bump when parsing, language ID, classification or matching logic changes. */
-export const PIPELINE_VERSION = 1
+/** Bump when parsing, language ID, classification or matching logic changes. 2: Heard from by rules on the source span; matching on the content span. */
+export const PIPELINE_VERSION = 2
 
 /** Everything the analysis depends on. Shared by the app and Node scripts. */
 export interface AnalysisSetup {
@@ -9,6 +9,7 @@ export interface AnalysisSetup {
   functionWords: ReadonlySet<string>
   visitReasonPrototypes: Record<string, PrototypeSentences>
   referralPrototypes: Record<string, PrototypeSentences>
+  referralRules: ReferralRules
   modelRevision: string
 }
 
@@ -20,6 +21,7 @@ export const analysisVersion = (s: AnalysisSetup): string =>
     words: [...s.functionWords].sort(),
     visit: s.visitReasonPrototypes,
     referral: s.referralPrototypes,
+    rules: s.referralRules,
     model: s.modelRevision,
   })
 

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import type { ReviewStatus } from '../../src/db/types.ts'
 import type { ChainRecord } from '../../src/lib/chains.ts'
 import { layoutStones, PEBBLES_SHOWN, STONES_SHOWN, visiblePebbles, visibleStones } from '../../src/lib/paths.ts'
-import { excerpt, firstLine } from '../../src/lib/text.ts'
+import { firstLine } from '../../src/lib/text.ts'
 
 const DAY = 24 * 60 * 60 * 1000
 const START = Date.parse('2026-01-01T12:00:00.000Z')
@@ -73,31 +73,6 @@ describe('Stones at scale: 60 sample-like visitors', () => {
 
   it('an empty phone has nothing to draw', () => {
     expect(layoutStones([])).toEqual({ active: [], earlier: [], unlinked: [] })
-  })
-})
-
-describe('excerpt', () => {
-  it('keeps short text as written', () => {
-    expect(excerpt('Come hungry. The lunch is simple.')).toBe('Come hungry. The lunch is simple.')
-  })
-
-  it('cuts at a word boundary near 60 characters, in the original language', () => {
-    const german = 'Unbedingt beim Rösten mitmachen! Noor röstet die Bohnen in einer Pfanne über dem Holzfeuer.'
-    const cut = excerpt(german)
-    expect(cut).toBe('Unbedingt beim Rösten mitmachen! Noor röstet die Bohnen in…')
-    expect(cut.length).toBeLessThanOrEqual(61)
-    expect(german.startsWith(cut.slice(0, -1))).toBe(true)
-  })
-
-  it('drops trailing punctuation before the ellipsis and folds spaces', () => {
-    expect(excerpt('One two three, four five six seven eight nine, ten eleven twelve thirteen')).toBe(
-      'One two three, four five six seven eight nine, ten eleven…',
-    )
-    expect(excerpt('  a\n\nb  ')).toBe('a b')
-  })
-
-  it('cuts one very long word where it is', () => {
-    expect(excerpt('x'.repeat(100))).toBe(`${'x'.repeat(60)}…`)
   })
 })
 
