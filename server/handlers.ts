@@ -1,7 +1,7 @@
 import { isAuthorized } from './auth.js'
 import { senderHash } from './hmac.js'
 import type { InboxStore } from './store.js'
-import { errorInfo, isValidTwilioSignature, type TwilioMessaging } from './twilio.js'
+import { errorInfo, isValidTwilioSignature, type EraseFailure, type TwilioMessaging } from './twilio.js'
 
 export interface ServerConfig {
   twilioAuthToken: string
@@ -99,26 +99,24 @@ export const handleAck: Handler = async (request, { config, store, twilio }) => 
 
   const deleted = await store.deleteMany(uniqueIds)
 
-  // Twilio deletes run for every acked id, even ones no longer in Redis, so a retried ack can finish a failed delete.
-  // A failure here is reported and does not undo the Redis delete.
-  const results = await Promise.allSettled(uniqueIds.map((id) => twilio.removeMessage(id)))
+  // Twilio redact and remove run for every acked id, even ones no longer in Redis, so a retried ack can finish a
+  // failed step. Ids run in parallel; eraseMessage keeps the two steps for one id in order and never throws.
+  // A Twilio failure is reported and does not undo the Redis delete.
+  const results = await Promise.all(uniqueIds.map((id) => twilio.eraseMessage(id)))
+  const redacted: string[] = []
   const removed: string[] = []
   const alreadyGone: string[] = []
-  const failed: { id: string; status?: number; code?: number }[] = []
+  const failed: ({ id: string } & EraseFailure)[] = []
   results.forEach((result, i) => {
     const id = uniqueIds[i]
-    if (result.status === 'rejected') {
-      const { status, code } = errorInfo(result.reason)
-      failed.push({ id, status, code })
-    } else if (result.value === 'removed') {
-      removed.push(id)
-    } else {
-      alreadyGone.push(id)
-    }
+    if (result.redacted) redacted.push(id)
+    if (result.removed) removed.push(id)
+    if (result.alreadyGone) alreadyGone.push(id)
+    for (const failure of result.failures) failed.push({ id, ...failure })
   })
-  if (failed.length > 0) console.error('twilio remove failed', failed)
+  if (failed.length > 0) console.error('twilio erase failed', failed)
 
-  return json({ deleted, twilio: { removed, already_gone: alreadyGone, failed } })
+  return json({ deleted, twilio: { redacted, removed, already_gone: alreadyGone, failed } })
 }
 
 /** POST /api/outbox/send {text} */

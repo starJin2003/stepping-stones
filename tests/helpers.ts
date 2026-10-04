@@ -21,20 +21,25 @@ export const newSid = (prefix = 'SM') => prefix + randomBytes(16).toString('hex'
 
 export function makeDeps() {
   const store = new MemoryInboxStore()
+  // Per-SID message calls are recorded as (sid, ...args) so tests can match them to an id.
+  const update = vi.fn(async (_sid: string, _params: { body: string }): Promise<unknown> => ({}))
   const remove = vi.fn(async (_sid: string) => true)
   const create = vi.fn(async (_params: { to: string; from: string; body: string }) => ({
     sid: newSid(),
     status: 'queued',
   }))
   const client: TwilioClientLike = {
-    messages: Object.assign((sid: string) => ({ remove: () => remove(sid) }), { create }),
+    messages: Object.assign(
+      (sid: string) => ({ update: (params: { body: string }) => update(sid, params), remove: () => remove(sid) }),
+      { create },
+    ),
   }
   const deps: Deps = {
     config,
     store,
     twilio: createTwilioMessaging(client, { from: TWILIO_NUMBER, noor: NOOR_NUMBER }),
   }
-  return { deps, store, remove, create }
+  return { deps, store, update, remove, create }
 }
 
 /** Form params shaped like a real Twilio inbound SMS webhook. */
