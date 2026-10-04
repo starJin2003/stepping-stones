@@ -46,15 +46,13 @@ describe('countRecords', () => {
     visit('e', '08-16', { review_status: 'Pending', referral_source_category: null, pass_on_category: null, analysis_version: null }),
   ]
 
-  it('counts visitors, referred visits, items to review, and the most common categories', () => {
+  it('counts visitors, referred visits, and the most common categories', () => {
     expect(countRecords(records, noor)).toEqual({
       visitors: 5,
       referred: 2,
       topReferral: 'guesthouse_guest',
       topPassOn: 'food',
-      needsReview: 2,
       includesSample: false,
-      notRead: 1,
     })
   })
 
@@ -88,7 +86,7 @@ describe('summaryCounts: the period', () => {
 
   it('the first time covers everything, from the earliest visit', () => {
     const counts = summaryCounts(records, noor, null, now)
-    expect(counts).toMatchObject({ first: true, since: at('06-14'), visitors: 4, referred: 2, needsReview: 1, includesSample: true })
+    expect(counts).toMatchObject({ first: true, since: at('06-14'), visitors: 4, referred: 2, includesSample: true })
   })
 
   it('after that, covers only visits received since the last summary', () => {
@@ -103,10 +101,6 @@ describe('summaryCounts: the period', () => {
     })
   })
 
-  it('still counts every message waiting for review, whenever it arrived', () => {
-    expect(summaryCounts(records, noor, at('10-01'), now).needsReview).toBe(1)
-  })
-
   it('counts sample history only while it is loaded, and says so', () => {
     const real = records.filter((r) => !r.synthetic)
     expect(summaryCounts(records, noor, null, now)).toMatchObject({ visitors: 4, includesSample: true })
@@ -117,7 +111,7 @@ describe('summaryCounts: the period', () => {
 
   it('with nothing on the phone, the period starts now and everything is zero', () => {
     const counts = summaryCounts([], noor, null, now)
-    expect(counts).toMatchObject({ since: now.toISOString(), visitors: 0, referred: 0, needsReview: 0 })
+    expect(counts).toMatchObject({ since: now.toISOString(), visitors: 0, referred: 0 })
   })
 })
 
@@ -138,13 +132,11 @@ describe('composeSummary', () => {
       'Noor, kuuma 1/10, ageni: 3. Mookire nĩ ũndũ wa ageni a mbere: 1.',
       'Maiguire ũhoro mũno kuuma kũrĩ: Ageni a nyũmba ya ageni.',
       'Mangĩĩra arata mũno ũhoro wa: Kahũa.',
-      'Ndũmĩrĩri itanathuthurio thimũ-inĩ: 1.',
     ])
     expect(parts.map((p) => p.meaning)).toEqual([
       'Noor, since 1/10, visitors: 3. Came because of earlier visitors: 1.',
       'Most often heard about it from: Guesthouse guest.',
       'Most would tell friends about: Coffee experience.',
-      'Messages not yet checked on the phone: 1.',
     ])
     for (const part of parts) expect(part).toMatchObject({ length: part.text.length, fits: true })
   })
@@ -170,7 +162,6 @@ describe('summary templates fit one SMS each', () => {
       since: '30/12',
       visitors: '99',
       referred: '99',
-      needs_review: '99',
       top_referral: longest([...Object.values(labels.referral_sources), labels.none.kik]),
       top_pass_on: longest([...Object.values(labels.visit_reasons), labels.none.kik]),
     }
@@ -193,6 +184,11 @@ describe('summary templates fit one SMS each', () => {
 
   it.each(CONFIGS)('%s: is marked machine translation, native-speaker validation pending', (_id, config) => {
     expect(config.summary_templates.status).toMatch(/machine translation, native-speaker validation pending/)
+  })
+
+  it.each(CONFIGS)('%s: is three SMS: visitors and referred visits, most often heard from, most often passed on', (_id, config) => {
+    const placeholders = config.summary_templates.parts.map((p) => [...p.kik.matchAll(/\{(\w+)\}/g)].map((m) => m[1]))
+    expect(placeholders).toEqual([['since', 'visitors', 'referred'], ['top_referral'], ['top_pass_on']])
   })
 
   it.each(CONFIGS)('%s: covers every summary fact', (_id, config) => {

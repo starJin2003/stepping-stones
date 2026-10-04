@@ -74,7 +74,7 @@ export async function sendOutboxNow(): Promise<void> {
       const result = await sendQueued({
         fetch: window.fetch.bind(window),
         store,
-        serverUrl: settings.server_url ?? '',
+        serverUrl: '',
         syncToken: settings.sync_token ?? '',
         isOnline: () => navigator.onLine,
       })

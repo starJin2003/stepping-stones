@@ -2,52 +2,76 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useState, type FormEvent } from 'react'
 import { deleteModel, DOWNLOAD_BYTES, useModelStatus } from '../ai/client.ts'
 import { toMB } from '../ai/model.ts'
+import { ModelCard } from '../components/ModelCard.tsx'
 import { SampleHistoryButtons } from '../components/SampleHistoryButtons.tsx'
 import { db } from '../db/db.ts'
 import { deleteSetting, setSetting, useSettings } from '../db/settings.ts'
-import type { StoragePersistence } from '../db/types.ts'
 import { useLanguage } from '../i18n/language.tsx'
-import { countKey, type StringKey } from '../i18n/strings.ts'
+import { countKey, LANGUAGE_NAMES, type Lang, type StringKey } from '../i18n/strings.ts'
 
-const STORAGE_KEYS: Record<StoragePersistence, StringKey> = {
-  granted: 'storage_granted',
-  not_granted: 'storage_not_granted',
-  unsupported: 'storage_unsupported',
-}
-
+/** Settings and demo tools, in three groups: what the family sets up once, language, and demo tools. */
 export function ThisPhoneScreen() {
   const { t } = useLanguage()
   const settings = useSettings()
-  const sampleCount = useLiveQuery(() => db.records.filter((r) => r.synthetic).count())
 
   return (
     <>
       <h1>{t('phone_title')}</h1>
-      <SyncCode hasCode={Boolean(settings?.sync_token)} />
-      <ServerAddress saved={settings?.server_url ?? ''} />
-      <ModelSection />
 
-      <section className="section" aria-labelledby="storage-title">
-        <h2 id="storage-title">{t('storage_title')}</h2>
-        <p>{t(settings?.storage_persisted ? STORAGE_KEYS[settings.storage_persisted] : 'storage_checking')}</p>
+      <section className="group" aria-labelledby="setup-title">
+        <h2 id="setup-title">{t('group_setup')}</h2>
+        <SyncCode hasCode={Boolean(settings?.sync_token)} />
+        <ModelSection />
       </section>
 
-      <section className="section" aria-labelledby="sample-title">
-        <h2 id="sample-title">{t('sample_title')}</h2>
-        <p>{t('sample_body')}</p>
-        <p className="hint">
-          {sampleCount
-            ? t(countKey(sampleCount, 'sample_count_one', 'sample_count_other'), { n: sampleCount })
-            : t('sample_none')}
-        </p>
-        <SampleHistoryButtons showRemove />
-      </section>
-
-      <section className="section" aria-labelledby="language-title">
+      <section className="group" aria-labelledby="language-title">
         <h2 id="language-title">{t('language_title')}</h2>
-        <p>{t('language_note')}</p>
+        <LanguageChoice />
+      </section>
+
+      <section className="group" aria-labelledby="demo-title">
+        <h2 id="demo-title">{t('group_demo')}</h2>
+        <SampleHistory />
       </section>
     </>
+  )
+}
+
+function LanguageChoice() {
+  const { lang, t, setLang } = useLanguage()
+  return (
+    <div className="stack">
+      <div className="choice-row" role="group" aria-label={t('language_label')}>
+        {(Object.keys(LANGUAGE_NAMES) as Lang[]).map((code) => (
+          <button
+            key={code}
+            className={lang === code ? 'button button-primary' : 'button button-secondary'}
+            type="button"
+            lang={code}
+            aria-pressed={lang === code}
+            onClick={() => setLang(code)}
+          >
+            {LANGUAGE_NAMES[code]}
+          </button>
+        ))}
+      </div>
+      <p className="hint">{t('language_note')}</p>
+    </div>
+  )
+}
+
+function SampleHistory() {
+  const { t } = useLanguage()
+  const sampleCount = useLiveQuery(() => db.records.filter((r) => r.synthetic).count())
+  return (
+    <div className="subgroup">
+      <h3>{t('sample_title')}</h3>
+      <p>{t('sample_body')}</p>
+      <p className="hint">
+        {sampleCount ? t(countKey(sampleCount, 'sample_count_one', 'sample_count_other'), { n: sampleCount }) : t('sample_none')}
+      </p>
+      <SampleHistoryButtons showRemove />
+    </div>
   )
 }
 
@@ -65,18 +89,29 @@ function ModelSection() {
     setNotice('model_deleted')
   }
 
+  if (!onPhone) {
+    return (
+      <div className="subgroup">
+        <ModelCard heading="h3" />
+        <p className="notice" role="status">
+          {notice && t(notice)}
+        </p>
+      </div>
+    )
+  }
+
   return (
-    <section className="section" aria-labelledby="model-section-title">
-      <h2 id="model-section-title">{t('model_section_title')}</h2>
-      <p>{onPhone ? t('model_on_phone', { mb }) : t('model_not_on_phone')}</p>
-      {onPhone && !confirming && (
+    <div className="subgroup">
+      <h3>{t('model_section_title')}</h3>
+      <p>{t('model_on_phone', { mb })}</p>
+      {!confirming && (
         <div>
           <button className="button button-secondary" type="button" onClick={() => setConfirming(true)}>
             {t('model_delete')}
           </button>
         </div>
       )}
-      {onPhone && confirming && (
+      {confirming && (
         <>
           <p className="lead">{t('model_delete_confirm', { mb })}</p>
           <div className="button-row">
@@ -89,59 +124,7 @@ function ModelSection() {
           </div>
         </>
       )}
-      <p className="notice" role="status">
-        {notice && t(notice)}
-      </p>
-    </section>
-  )
-}
-
-function ServerAddress({ saved }: { saved: string }) {
-  const { t } = useLanguage()
-  const [value, setValue] = useState<string | null>(null)
-  const [notice, setNotice] = useState<StringKey | null>(null)
-  const shown = value ?? saved
-
-  async function save(event: FormEvent) {
-    event.preventDefault()
-    const address = shown.trim().replace(/\/+$/, '')
-    if (address && !/^https?:\/\/[^\s/]+/.test(address)) {
-      setNotice('server_invalid')
-      return
-    }
-    await setSetting('server_url', address)
-    setValue(null)
-    setNotice(address ? 'server_saved' : 'server_cleared')
-  }
-
-  return (
-    <section className="section" aria-labelledby="server-title">
-      <h2 id="server-title">{t('server_title')}</h2>
-      <form className="stack" onSubmit={save}>
-        <p className="hint" id="server-hint">
-          {t('server_hint')}
-        </p>
-        <input
-          aria-labelledby="server-title"
-          aria-describedby="server-hint"
-          type="url"
-          inputMode="url"
-          autoComplete="off"
-          spellCheck={false}
-          placeholder={t('server_placeholder')}
-          value={shown}
-          onChange={(e) => setValue(e.target.value)}
-        />
-        <div>
-          <button className="button button-secondary" type="submit">
-            {t('server_save')}
-          </button>
-        </div>
-        <p className="notice" role="status">
-          {notice && t(notice)}
-        </p>
-      </form>
-    </section>
+    </div>
   )
 }
 
@@ -159,7 +142,7 @@ function SyncCode({ hasCode }: { hasCode: boolean }) {
     }
     await setSetting('sync_token', code)
     setValue('')
-    setNotice('code_saved')
+    setNotice(null)
   }
 
   async function forget() {
@@ -168,8 +151,8 @@ function SyncCode({ hasCode }: { hasCode: boolean }) {
   }
 
   return (
-    <section className="section" aria-labelledby="code-title">
-      <h2 id="code-title">{t('code_title')}</h2>
+    <div className="subgroup">
+      <h3>{t('code_title')}</h3>
       <p>{t(hasCode ? 'code_present' : 'code_missing')}</p>
       <form className="stack" onSubmit={save}>
         <label className="field-label" htmlFor="sync-code">
@@ -197,6 +180,6 @@ function SyncCode({ hasCode }: { hasCode: boolean }) {
           {notice && t(notice)}
         </p>
       </form>
-    </section>
+    </div>
   )
 }

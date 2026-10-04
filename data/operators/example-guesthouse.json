@@ -188,7 +188,7 @@
   },
   "prototypes_note": "Visit-reason prototype sentences, written for this project. English originals; Kiswahili, German and French are machine translation, review pending. No Gĩkũyũ prototypes, because we cannot validate them. Unclear has none: it is the fallback.",
   "summary_templates": {
-    "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Each part is sent as one SMS of at most 70 characters (UCS-2). The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
+    "status": "Gĩkũyũ text is machine translation, native-speaker validation pending. Three parts, each sent as one SMS of at most 70 characters (UCS-2), about 5 seconds apart. The en field is the English meaning shown under each part in the app. Placeholders are filled from counts on the phone; nothing is generated.",
     "parts": [
       {
         "kik": "Amina, kuuma {since}, ageni: {visitors}. Mookire nĩ ũndũ wa ageni a mbere: {referred}.",
@@ -201,10 +201,6 @@
       {
         "kik": "Mangĩĩra arata mũno ũhoro wa: {top_pass_on}.",
         "en": "Most would tell friends about: {top_pass_on}."
-      },
-      {
-        "kik": "Ndũmĩrĩri itanathuthurio thimũ-inĩ: {needs_review}.",
-        "en": "Messages not yet checked on the phone: {needs_review}."
       }
     ],
     "labels": {

@@ -18,11 +18,8 @@ export interface Counts {
   topReferral: Exclude<ReferralSource, 'unclear'> | null
   /** The visit-reason category most often found in what visitors would tell friends. */
   topPassOn: string | null
-  needsReview: number
   /** Whether any counted record is synthetic sample history. */
   includesSample: boolean
-  /** Records the model has not read yet, so their categories are missing from the counts. */
-  notRead: number
 }
 
 /** The most common value, ignoring missing and Unclear. Ties go to whichever comes first in `order`. */
@@ -48,9 +45,7 @@ export function countRecords(records: readonly CountedRecord[], config: Operator
       read.map((r) => r.pass_on_category).filter((id) => isKnownReason(config, id)),
       config.visit_reasons.map((r) => r.id),
     ),
-    needsReview: records.filter((r) => r.review_status === 'Pending').length,
     includesSample: records.some((r) => r.synthetic),
-    notRead: records.length - read.length,
   }
 }
 
@@ -61,11 +56,7 @@ export interface SummaryCounts extends Counts {
   since: string
 }
 
-/**
- * Counts for the owner's summary. The period is everything received after the last summary was queued,
- * or everything the first time. Items needing review are every record still Pending, whenever it arrived,
- * because an old unchecked message still needs a person.
- */
+/** Counts for the owner's summary: everything received after the last summary was queued, or everything the first time. */
 export function summaryCounts(
   all: readonly CountedRecord[],
   config: OperatorConfig,
@@ -74,13 +65,9 @@ export function summaryCounts(
 ): SummaryCounts {
   const after = lastSummaryAt === null ? null : Date.parse(lastSummaryAt)
   const period = after === null ? [...all] : all.filter((r) => Date.parse(r.received_at) > after)
-  const pending = all.filter((r) => r.review_status === 'Pending')
-  const counts = countRecords(period, config)
   const earliest = period.map((r) => r.received_at).sort((a, b) => Date.parse(a) - Date.parse(b))[0]
   return {
-    ...counts,
-    needsReview: pending.length,
-    includesSample: counts.includesSample || pending.some((r) => r.synthetic),
+    ...countRecords(period, config),
     first: lastSummaryAt === null,
     since: lastSummaryAt ?? earliest ?? now.toISOString(),
   }
@@ -117,7 +104,6 @@ export function summaryValues(config: OperatorConfig, counts: SummaryCounts): { 
     since: shortDate(counts.since),
     visitors: String(counts.visitors),
     referred: String(counts.referred),
-    needs_review: String(counts.needsReview),
   }
   const referral = counts.topReferral && isReferralSource(counts.topReferral) ? counts.topReferral : null
   const passOn = isKnownReason(config, counts.topPassOn) ? counts.topPassOn : null

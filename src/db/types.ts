@@ -41,13 +41,9 @@ export interface OutboxItem {
   sid: string | null
 }
 
-export type StoragePersistence = 'granted' | 'not_granted' | 'unsupported'
-
+/** The app always talks to the site it was loaded from, so there is no server address to set. */
 export interface Settings {
-  /** Empty means the same site the app was loaded from. */
-  server_url: string
   sync_token: string
-  storage_persisted: StoragePersistence
   /** UI language. Record text is never translated. */
   ui_language: Lang
   /** When the last summary was queued for the owner. The next summary covers visits received after it. */

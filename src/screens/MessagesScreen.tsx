@@ -1,7 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo, useState, type FormEvent } from 'react'
 import { useAnalysing } from '../ai/analysing.ts'
-import { AiReading } from '../components/AiReading.tsx'
 import { ModelCard } from '../components/ModelCard.tsx'
 import { ReviewItem, type ReviewView } from '../components/ReviewItem.tsx'
 import { SampleHistoryButtons } from '../components/SampleHistoryButtons.tsx'
@@ -13,7 +12,8 @@ import { useLanguage } from '../i18n/language.tsx'
 import { countKey } from '../i18n/strings.ts'
 import { buildChains } from '../lib/chains.ts'
 import type { Decision, LastDecision } from '../lib/review.ts'
-import { reviewWords, sourceWords, visitorLabels } from '../lib/visitors.ts'
+import { firstLine } from '../lib/text.ts'
+import { visitorLabels } from '../lib/visitors.ts'
 import { operator } from '../operator/active.ts'
 import { getNewMessages, syncMessage } from '../sync/sync.ts'
 
@@ -88,7 +88,7 @@ export function MessagesScreen() {
     const result = await getNewMessages({
       fetch: window.fetch.bind(window),
       store: { saveNew: saveNewRecords },
-      serverUrl: settings?.server_url ?? '',
+      serverUrl: '',
       syncToken: settings?.sync_token ?? '',
       isOnline: () => navigator.onLine,
     })
@@ -127,7 +127,7 @@ export function MessagesScreen() {
       )}
 
       {toReview.length > 0 && (
-        <ol className="messages" aria-label={t('review_list_label')}>
+        <ol className="reviews" aria-label={t('review_list_label')}>
           {toReview.map((r) => (
             <ReviewItem
               key={r.record_id}
@@ -156,25 +156,24 @@ export function MessagesScreen() {
       <PasteBox />
 
       {checked.length > 0 && (
-        <section className="checked" aria-labelledby="checked-title">
-          <h2 id="checked-title">{t('history_title')}</h2>
-          <ol className="messages">
+        <details className="fold">
+          <summary>{t('checked_title', { n: checked.length })}</summary>
+          {checked.some((r) => r.synthetic) && <p className="hint">{t('sample_note')}</p>}
+          <ul className="rows">
             {checked.map((r) => (
-              <li className="message" key={r.record_id}>
-                <h3>{labels.get(r.record_id)}</h3>
-                {/* Exactly as the visitor wrote it, in whatever language: never translated. */}
-                <blockquote className="sms" lang="">
-                  {r.raw_text_local}
-                </blockquote>
-                <AiReading record={r} />
-                <div className="message-meta">
-                  <p>{sourceWords(r, lang)}</p>
-                  <p>{reviewWords(r, labels, lang)}</p>
-                </div>
+              <li className="row" key={r.record_id}>
+                <span className="row-label">{labels.get(r.record_id)}</span>
+                <span className={r.review_status === 'Confirmed' ? 'status-tag status-linked' : 'status-tag'}>
+                  {t(r.review_status === 'Confirmed' ? 'tag_linked' : 'tag_not_linked')}
+                </span>
+                {/* The visitor's own words, cut to one line, never translated. */}
+                <span className="row-text" lang="">
+                  {firstLine(r.raw_text_local)}
+                </span>
               </li>
             ))}
-          </ol>
-        </section>
+          </ul>
+        </details>
       )}
     </>
   )

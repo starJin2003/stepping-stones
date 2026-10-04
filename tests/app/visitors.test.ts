@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { reviewWords, sourceWords, visitorLabels } from '../../src/lib/visitors.ts'
+import { monthLabel, sourceWords, visitorLabels } from '../../src/lib/visitors.ts'
 
 // Mid-month noon UTC, so the month is the same in any time zone the tests run in.
 const at = (day: string) => `2026-${day}T12:00:00.000Z`
@@ -35,8 +35,6 @@ describe('visitorLabels', () => {
 })
 
 describe('words', () => {
-  const labels = new Map([['prior', 'Visitor 2, Jul 2026']])
-
   it('names the source in words', () => {
     expect(sourceWords({ created_from: 'SMS' }, 'en')).toBe('Text message')
     expect(sourceWords({ created_from: 'Paste' }, 'en')).toBe('Pasted')
@@ -44,14 +42,8 @@ describe('words', () => {
     expect(sourceWords({ created_from: 'Seed' }, 'sw')).toBe('Mfano, wa kubuni')
   })
 
-  it('names the review status in words', () => {
-    expect(reviewWords({ review_status: 'Pending', confirmed_prior_record_id: null }, labels, 'en')).toBe('To check')
-    expect(reviewWords({ review_status: 'Rejected', confirmed_prior_record_id: null }, labels, 'en')).toBe('Not linked')
-    expect(reviewWords({ review_status: 'Confirmed', confirmed_prior_record_id: 'prior' }, labels, 'en')).toBe(
-      'Linked to Visitor 2, Jul 2026',
-    )
-    expect(reviewWords({ review_status: 'Confirmed', confirmed_prior_record_id: 'gone' }, labels, 'sw')).toBe(
-      'Umeunganishwa na mgeni wa awali',
-    )
+  it('names a month the same way as visitor labels', () => {
+    expect(monthLabel(at('06-14'), 'en')).toBe('Jun 2026')
+    expect(monthLabel(at('08-14'), 'sw')).toBe('Ago 2026')
   })
 })

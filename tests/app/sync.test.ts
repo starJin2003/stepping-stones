@@ -71,7 +71,7 @@ describe('getNewMessages', () => {
 
     expect(server.events).toEqual(['pull', 'write', 'ack'])
     expect(result).toEqual({ kind: 'saved', saved: 3 })
-    expect(syncMessage(result, 'en')).toBe('3 new messages saved on this phone.')
+    expect(syncMessage(result, 'en')).toBe('3 new messages saved.')
     expect(server.acked).toEqual([pulled(3).map((r) => r.message_id)])
 
     const saved = records.get(pulled(1)[0].message_id)!
@@ -146,7 +146,7 @@ describe('getNewMessages', () => {
     const result = await getNewMessages(deps(server, store))
 
     expect(result).toEqual({ kind: 'ack_failed', saved: 2 })
-    expect(syncMessage(result, 'en')).toBe('Saved on this phone. The server copy will be cleared next time.')
+    expect(syncMessage(result, 'en')).toBe('Saved. The server copy is cleared the next time you sync.')
     expect(records.size).toBe(2)
   })
 
@@ -213,9 +213,9 @@ describe('getNewMessages', () => {
   })
 
   it('uses singular wording for one message, in both languages', () => {
-    expect(syncMessage({ kind: 'saved', saved: 1 }, 'en')).toBe('1 new message saved on this phone.')
-    expect(syncMessage({ kind: 'saved', saved: 1 }, 'sw')).toBe('Ujumbe 1 mpya umehifadhiwa kwenye simu hii.')
-    expect(syncMessage({ kind: 'saved', saved: 3 }, 'sw')).toBe('Jumbe 3 mpya zimehifadhiwa kwenye simu hii.')
+    expect(syncMessage({ kind: 'saved', saved: 1 }, 'en')).toBe('1 new message saved.')
+    expect(syncMessage({ kind: 'saved', saved: 1 }, 'sw')).toBe('Ujumbe 1 mpya umehifadhiwa.')
+    expect(syncMessage({ kind: 'saved', saved: 3 }, 'sw')).toBe('Jumbe 3 mpya zimehifadhiwa.')
   })
 
   it('has a Kiswahili message for every result', () => {

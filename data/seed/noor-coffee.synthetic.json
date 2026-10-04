@@ -1,7 +1,7 @@
 {
   "synthetic": true,
   "operator_id": "noor-coffee",
-  "description": "Synthetic past visits for demo mode, written for this project. No real visitors, messages, or businesses. Guesthouses are unnamed or fictional. Review decisions were made up to show a chain of confirmed links and one near miss left unlinked.",
+  "description": "Synthetic past visits for demo mode, written for this project. No real visitors, messages, or businesses. Guesthouses are unnamed or fictional. Review decisions were made up to show two paths of confirmed links (one of four visits that started with guesthouse staff, one of three that started with a local guide) and one near miss left unlinked. heard_from records which referral source each text was written to show, so guesthouse guests are the most common, as in the demo SMS; the app never reads it, the on-device model classifies the text itself.",
   "demo_intended_match": "seed-noor-coffee-09",
   "demo_sms": [
     "1) A man staying at our guesthouse told us Noor still has coffee trees her grandmother planted, and that you finish with coffee brewed in a clay pot. 2) It felt like visiting family. Go in the morning when it is cool.",
@@ -17,17 +17,20 @@
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
-      "note": "Start of the chain. Heard from hostel staff, no earlier visitor."
+      "heard_from": "guesthouse_staff",
+      "note": "Start of the first path. Heard from hostel staff, no earlier visitor."
     },
     {
       "record_id": "seed-noor-coffee-02",
       "sender_hash": "synthetic-sender-02",
       "received_at": "2026-06-22T09:15:00.000Z",
-      "raw_text_local": "1) Saw photos of the farm that another traveller posted online. 2) The walk up the slope is steep, so wear proper shoes. The view over the valley is worth it.",
+      "raw_text_local": "1) A woman staying at our guesthouse showed us her photos of the farm and said the view from the top of the slope is the best part. 2) The walk up the slope is steep, so wear proper shoes. The view over the valley is worth it.",
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "guesthouse_guest",
+      "note": "Heard from a guest whose own visit was never texted in, so there is no earlier visitor to link."
     },
     {
       "record_id": "seed-noor-coffee-03",
@@ -37,7 +40,8 @@
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "local_guide"
     },
     {
       "record_id": "seed-noor-coffee-04",
@@ -48,7 +52,8 @@
       "confirmed_prior_record_id": "seed-noor-coffee-01",
       "created_from": "Seed",
       "synthetic": true,
-      "note": "Chain link 1. Heard what visitor 01 would tell: picking cherries, drying."
+      "heard_from": "guesthouse_guest",
+      "note": "First path, link 1. Heard what visitor 01 would tell: picking cherries, drying."
     },
     {
       "record_id": "seed-noor-coffee-05",
@@ -58,7 +63,20 @@
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "friend_family"
+    },
+    {
+      "record_id": "seed-noor-coffee-12",
+      "sender_hash": "synthetic-sender-12",
+      "received_at": "2026-07-28T11:30:00.000Z",
+      "raw_text_local": "1) Our local guide took us to Noor's farm on the way back from the waterfall. 2) Learn a few words of Gĩkũyũ from the family. Everyone laughed when we tried to say wĩ mwega, and then they taught us the right way.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true,
+      "heard_from": "local_guide",
+      "note": "Start of the second path. Heard from a local guide, no earlier visitor."
     },
     {
       "record_id": "seed-noor-coffee-06",
@@ -68,7 +86,8 @@
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "social_online"
     },
     {
       "record_id": "seed-noor-coffee-07",
@@ -79,7 +98,20 @@
       "confirmed_prior_record_id": "seed-noor-coffee-04",
       "created_from": "Seed",
       "synthetic": true,
-      "note": "Chain link 2. Heard what visitor 04 would tell: roasting over a wood fire."
+      "heard_from": "guesthouse_guest",
+      "note": "First path, link 2. Heard what visitor 04 would tell: roasting over a wood fire."
+    },
+    {
+      "record_id": "seed-noor-coffee-13",
+      "sender_hash": "synthetic-sender-13",
+      "received_at": "2026-08-16T13:20:00.000Z",
+      "raw_text_local": "1) Ein Paar aus unserem Gästehaus hat erzählt, dass Noors Familie den Besuchern ein paar Wörter Gĩkũyũ beibringt und alle lachen, wenn man es versucht. 2) Bis zum Abend bleiben! Die Familie hat ein Feuer gemacht und erzählt, wie der Hof angefangen hat.",
+      "review_status": "Confirmed",
+      "confirmed_prior_record_id": "seed-noor-coffee-12",
+      "created_from": "Seed",
+      "synthetic": true,
+      "heard_from": "guesthouse_guest",
+      "note": "Second path, link 1. Heard what visitor 12 would tell: learning a few words of Gĩkũyũ, everyone laughing."
     },
     {
       "record_id": "seed-noor-coffee-08",
@@ -90,7 +122,20 @@
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
       "synthetic": true,
+      "heard_from": "guesthouse_staff",
       "note": "Near miss left unlinked. The heard story resembles what visitor 03 would tell (githeri lunch), but it came from guesthouse staff, and visitor 03 travelled with a safari guide. A person decided: not linked."
+    },
+    {
+      "record_id": "seed-noor-coffee-14",
+      "sender_hash": "synthetic-sender-14",
+      "received_at": "2026-08-30T10:10:00.000Z",
+      "raw_text_local": "1) Wageni wenzetu kwenye nyumba ya wageni walituambia tukae hadi jioni, kwa sababu familia ya Noor huwasha moto na kusimulia jinsi shamba lilivyoanza. 2) Waambie marafiki waende na kiongozi wa eneo hili, kwa sababu anatafsiri kila kitu.",
+      "review_status": "Confirmed",
+      "confirmed_prior_record_id": "seed-noor-coffee-13",
+      "created_from": "Seed",
+      "synthetic": true,
+      "heard_from": "guesthouse_guest",
+      "note": "Second path, link 2. Heard what visitor 13 would tell: staying for the evening fire and stories."
     },
     {
       "record_id": "seed-noor-coffee-09",
@@ -101,7 +146,8 @@
       "confirmed_prior_record_id": "seed-noor-coffee-07",
       "created_from": "Seed",
       "synthetic": true,
-      "note": "Chain link 3. Heard what visitor 07 would tell: leaving with a bag you roasted. Its would-tell story (grandmother's trees, clay pot coffee) is the intended match for demo_sms."
+      "heard_from": "guesthouse_guest",
+      "note": "First path, link 3. Heard what visitor 07 would tell: leaving with a bag you roasted. Its would-tell story (grandmother's trees, clay pot coffee) is the intended match for demo_sms."
     },
     {
       "record_id": "seed-noor-coffee-10",
@@ -111,7 +157,8 @@
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "social_online"
     },
     {
       "record_id": "seed-noor-coffee-11",
@@ -121,7 +168,8 @@
       "review_status": "Rejected",
       "confirmed_prior_record_id": null,
       "created_from": "Seed",
-      "synthetic": true
+      "synthetic": true,
+      "heard_from": "other"
     }
   ]
 }

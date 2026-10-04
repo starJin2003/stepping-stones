@@ -10,7 +10,6 @@ import { requestPersistentStorage } from './db/settings.ts'
 import { LanguageProvider } from './i18n/language.tsx'
 
 registerSW({ immediate: true })
-// The answer is shown under This phone. A failure here only means it shows as not supported.
 requestPersistentStorage().catch(() => {})
 // Opens the model if it is already on this phone. Never downloads.
 initModel().catch(() => {})

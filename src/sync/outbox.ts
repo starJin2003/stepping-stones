@@ -2,6 +2,10 @@ import type { OutboxItem } from '../db/types.ts'
 import { translate, type Lang, type StringKey } from '../i18n/strings.ts'
 
 const TIMEOUT_MS = 30_000
+/** Pause between two SMS, so the carrier does not treat a burst of parts as spam. */
+export const SEND_GAP_MS = 5_000
+
+const pause = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms))
 
 export interface OutboxStore {
   /** Items waiting to go, oldest summary first, parts in order. */
@@ -17,6 +21,8 @@ export interface OutboxDeps {
   serverUrl: string
   syncToken: string
   isOnline: () => boolean
+  /** Defaults to SEND_GAP_MS. */
+  gapMs?: number
 }
 
 export type OutboxResult =
@@ -38,7 +44,7 @@ async function readSid(response: Response): Promise<string | null> {
 }
 
 /**
- * Sends each Queued item through the server, one at a time and in order, so the parts arrive in order.
+ * Sends each Queued item through the server, one at a time, in order, about 5 seconds apart.
  * The request carries only the text: the server alone knows who receives it. A sent item becomes Sent with
  * its sid; one the server could not send becomes Failed, which a person can retry. Without signal, or when
  * the sync code is missing or refused, nothing changes and the items stay Queued.
@@ -52,7 +58,8 @@ export async function sendQueued(deps: OutboxDeps): Promise<OutboxResult> {
   const url = `${deps.serverUrl.trim().replace(/\/+$/, '')}/api/outbox/send`
   let sent = 0
   let failed = 0
-  for (const item of items) {
+  for (const [i, item] of items.entries()) {
+    if (i > 0) await pause(deps.gapMs ?? SEND_GAP_MS)
     let response: Response
     try {
       response = await deps.fetch(url, {
@@ -90,4 +97,28 @@ const RESULT_KEYS: Record<Exclude<OutboxResult['kind'], 'nothing_queued'>, Strin
 export function outboxMessage(result: OutboxResult, lang: Lang, owner: string): string | null {
   if (result.kind === 'nothing_queued') return null
   return translate(lang, RESULT_KEYS[result.kind], { owner })
+}
+
+export interface SentSummary {
+  created_at: string
+  parts: OutboxItem[]
+  /** sent: every part went. failed: a part needs a retry. waiting: parts are still queued. */
+  status: 'sent' | 'failed' | 'waiting'
+}
+
+/** The outbox as summaries, newest first: the parts queued by one tap share created_at. */
+export function groupSummaries(items: readonly OutboxItem[]): SentSummary[] {
+  const groups = new Map<string, OutboxItem[]>()
+  for (const item of items) groups.set(item.created_at, [...(groups.get(item.created_at) ?? []), item])
+  return [...groups.entries()]
+    .sort(([a], [b]) => b.localeCompare(a))
+    .map(([created_at, parts]) => ({
+      created_at,
+      parts: parts.sort((a, b) => a.id.localeCompare(b.id)),
+      status: parts.every((p) => p.status === 'Sent')
+        ? 'sent'
+        : parts.some((p) => p.status === 'Failed')
+          ? 'failed'
+          : 'waiting',
+    }))
 }

@@ -4,7 +4,7 @@ import { toMB } from '../ai/model.ts'
 import { useLanguage } from '../i18n/language.tsx'
 
 /** Until the model is on this phone: what it is, what it costs, and a button. It never downloads by itself. */
-export function ModelCard() {
+export function ModelCard({ heading: Heading = 'h2' }: { heading?: 'h2' | 'h3' }) {
   const { t } = useLanguage()
   const model = useModelStatus()
   const [offline, setOffline] = useState(false)
@@ -15,7 +15,7 @@ export function ModelCard() {
   const total = toMB(DOWNLOAD_BYTES)
   return (
     <section className="model-card" aria-labelledby="model-title">
-      <h2 id="model-title">{t('model_title', { mb: total })}</h2>
+      <Heading id="model-title">{t('model_title', { mb: total })}</Heading>
       {model.kind === 'downloading' ? (
         <>
           <progress max={DOWNLOAD_BYTES} value={model.loaded} aria-labelledby="model-title" />

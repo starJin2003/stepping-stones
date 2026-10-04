@@ -42,6 +42,12 @@ describe('UI strings', () => {
     }
   })
 
+  it('speaks plainly: no hedging or warning words in the English table', () => {
+    for (const [key, value] of Object.entries(STRINGS.en)) {
+      expect(value, key).not.toMatch(/\b(may|might|maybe|perhaps|probably|usually|not guaranteed|cannot promise)\b/i)
+    }
+  })
+
   it('operator labels and card questions have no em dash either', () => {
     expect(JSON.stringify([noorCoffee, exampleGuesthouse])).not.toContain(EM_DASH)
   })

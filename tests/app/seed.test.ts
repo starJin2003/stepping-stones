@@ -1,14 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import seedFile from '../../data/seed/noor-coffee.synthetic.json'
 import { parseSampleHistory } from '../../src/db/seed.ts'
+import { buildChains } from '../../src/lib/chains.ts'
 
 describe('noor-coffee sample history', () => {
   const seed = parseSampleHistory(seedFile)
   const byId = new Map(seed.records.map((r) => [r.record_id, r]))
+  // Which source each text was written to show. The app never reads this; the model classifies the text.
+  const heardFrom = new Map(seedFile.records.map((r) => [r.record_id, r.heard_from]))
 
-  it('has 10 to 12 synthetic Seed visits between June and September 2026', () => {
-    expect(seed.records.length).toBeGreaterThanOrEqual(10)
-    expect(seed.records.length).toBeLessThanOrEqual(12)
+  it('has 12 to 16 synthetic Seed visits between June and September 2026', () => {
+    expect(seed.records.length).toBeGreaterThanOrEqual(12)
+    expect(seed.records.length).toBeLessThanOrEqual(16)
     for (const r of seed.records) {
       expect(r).toMatchObject({ synthetic: true, created_from: 'Seed' })
       expect(r.received_at >= '2026-06-01' && r.received_at < '2026-10-01').toBe(true)
@@ -31,6 +34,23 @@ describe('noor-coffee sample history', () => {
     }
     expect(longest).toBeGreaterThanOrEqual(3)
     expect(longest).toBeLessThanOrEqual(4)
+  })
+
+  it('has a second, shorter path of 2 or 3 visits that started with a local guide', () => {
+    const [main, second] = buildChains(seed.records)
+    expect(main).toHaveLength(4)
+    expect(second.length).toBeGreaterThanOrEqual(2)
+    expect(second.length).toBeLessThanOrEqual(3)
+    expect(heardFrom.get(second[0].record_id)).toBe('local_guide')
+  })
+
+  it('was written so guesthouse guests are the most common referral source, as in the demo SMS', () => {
+    const counts = new Map<string, number>()
+    for (const source of heardFrom.values()) counts.set(source, (counts.get(source) ?? 0) + 1)
+    const [top, runnerUp] = [...counts].sort((a, b) => b[1] - a[1])
+    expect(top[0]).toBe('guesthouse_guest')
+    expect(top[1]).toBeGreaterThan(runnerUp[1])
+    for (const text of seed.demo_sms) expect(text).toMatch(/guest/)
   })
 
   it('includes visits a person decided not to link', () => {

@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from './db.ts'
-import type { SettingKey, Settings, StoragePersistence } from './types.ts'
+import type { SettingKey, Settings } from './types.ts'
 
 export async function setSetting<K extends SettingKey>(key: K, value: Settings[K]): Promise<void> {
   await db.settings.put({ key, value })
@@ -18,18 +18,7 @@ export function useSettings(): Partial<Settings> | undefined {
   })
 }
 
-/** Asks the browser to keep this site's data when space runs low, and records the answer. */
-export async function requestPersistentStorage(): Promise<StoragePersistence> {
-  let result: StoragePersistence
-  if (!navigator.storage?.persist) {
-    result = 'unsupported'
-  } else {
-    try {
-      result = (await navigator.storage.persisted()) || (await navigator.storage.persist()) ? 'granted' : 'not_granted'
-    } catch {
-      result = 'unsupported'
-    }
-  }
-  await setSetting('storage_persisted', result)
-  return result
+/** Asks the browser to keep this site's data when space runs low. Silent: the answer is not shown. */
+export async function requestPersistentStorage(): Promise<void> {
+  if (navigator.storage?.persist && !(await navigator.storage.persisted())) await navigator.storage.persist()
 }

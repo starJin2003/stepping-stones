@@ -19,7 +19,7 @@ export interface SummaryTemplates {
 }
 
 /** Placeholders a summary template may use. */
-export const SUMMARY_PLACEHOLDERS = ['since', 'visitors', 'referred', 'top_referral', 'top_pass_on', 'needs_review'] as const
+export const SUMMARY_PLACEHOLDERS = ['since', 'visitors', 'referred', 'top_referral', 'top_pass_on'] as const
 export type SummaryPlaceholder = (typeof SUMMARY_PLACEHOLDERS)[number]
 export const MAX_SUMMARY_PARTS = 6
 

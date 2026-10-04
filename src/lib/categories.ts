@@ -19,16 +19,28 @@ export function reasonLabel(config: OperatorConfig, id: string | null, lang: Lan
 export const isKnownReason = (config: OperatorConfig, id: string | null): id is string =>
   id !== null && id !== UNCLEAR && config.visit_reasons.some((r) => r.id === id)
 
+export type CategoryMatch = 'same' | 'different' | 'unclear'
+
+/** Whether the new visitor's Came for and the earlier visitor's Would tell friends about are one category. */
+export function sameCategoryKind(config: OperatorConfig, came: string | null, tell: string | null): CategoryMatch {
+  if (!isKnownReason(config, came) || !isKnownReason(config, tell)) return 'unclear'
+  return came === tell ? 'same' : 'different'
+}
+
 /**
- * One plain line on whether the new visitor's Came for and the earlier visitor's Would tell friends about
- * are the same category. Built only from category labels, so it helps a reader who cannot read the
- * languages the visitors wrote in.
+ * One short line saying the same thing, built only from category labels, so it helps a reader who cannot
+ * read the languages the visitors wrote in.
  */
 export function sameCategoryLine(config: OperatorConfig, came: string | null, tell: string | null, lang: Lang): string {
-  if (!isKnownReason(config, came) || !isKnownReason(config, tell)) return translate(lang, 'compare_unclear')
-  if (came === tell) return translate(lang, 'compare_same', { topic: reasonLabel(config, came, lang) })
-  return translate(lang, 'compare_different', {
-    came: reasonLabel(config, came, lang),
-    tell: reasonLabel(config, tell, lang),
-  })
+  switch (sameCategoryKind(config, came, tell)) {
+    case 'unclear':
+      return translate(lang, 'compare_unclear')
+    case 'same':
+      return translate(lang, 'compare_same', { topic: reasonLabel(config, came, lang) })
+    case 'different':
+      return translate(lang, 'compare_different', {
+        came: reasonLabel(config, came, lang),
+        tell: reasonLabel(config, tell, lang),
+      })
+  }
 }

@@ -1,6 +1,13 @@
-import { describe, expect, it, vi } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { OutboxItem } from '../../src/db/types.ts'
-import { outboxMessage, sendQueued, type OutboxDeps, type OutboxStore } from '../../src/sync/outbox.ts'
+import {
+  groupSummaries,
+  outboxMessage,
+  SEND_GAP_MS,
+  sendQueued,
+  type OutboxDeps,
+  type OutboxStore,
+} from '../../src/sync/outbox.ts'
 
 const TOKEN = 'test-sync-token'
 
@@ -39,6 +46,8 @@ const deps = (fetch: OutboxDeps['fetch'], store: OutboxStore, overrides: Partial
   serverUrl: '',
   syncToken: TOKEN,
   isOnline: () => true,
+  // No pause in these tests; the spacing has its own test with fake timers.
+  gapMs: 0,
   ...overrides,
 })
 
@@ -94,7 +103,7 @@ describe('sendQueued', () => {
     expect(fetch).not.toHaveBeenCalled()
     expect(outbox.status()).toEqual(['Queued', 'Queued'])
     expect(outboxMessage(result, 'en', 'Noor')).toBe(
-      'No connection. The summary is safe on this phone and will go when there is signal.',
+      'No connection. The summary goes when there is signal.',
     )
   })
 
@@ -144,5 +153,65 @@ describe('sendQueued', () => {
   it('names the owner when sent, in both languages', () => {
     expect(outboxMessage({ kind: 'sent', sent: 4 }, 'en', 'Noor')).toBe('Sent to Noor.')
     expect(outboxMessage({ kind: 'sent', sent: 4 }, 'sw', 'Noor')).toBe('Imetumwa kwa Noor.')
+  })
+})
+
+describe('spacing between parts', () => {
+  afterEach(() => vi.useRealTimers())
+
+  it('sends the parts one at a time, about 5 seconds apart, so the carrier does not see a burst', async () => {
+    vi.useFakeTimers()
+    const outbox = memoryOutbox([item(1), item(2), item(3)])
+    const fetch = fakeServer([200, 200, 200])
+    const { gapMs: _gap, ...normal } = deps(fetch, outbox.store)
+    const done = sendQueued(normal)
+
+    await vi.advanceTimersByTimeAsync(0)
+    expect(fetch).toHaveBeenCalledTimes(1)
+    await vi.advanceTimersByTimeAsync(SEND_GAP_MS - 1)
+    expect(fetch).toHaveBeenCalledTimes(1)
+    await vi.advanceTimersByTimeAsync(1)
+    expect(fetch).toHaveBeenCalledTimes(2)
+    await vi.advanceTimersByTimeAsync(SEND_GAP_MS)
+    expect(fetch).toHaveBeenCalledTimes(3)
+
+    expect(await done).toEqual({ kind: 'sent', sent: 3 })
+    expect(SEND_GAP_MS).toBe(5000)
+  })
+
+  it('does not wait before the first part', async () => {
+    vi.useFakeTimers()
+    const fetch = fakeServer([200])
+    const { gapMs: _gap, ...normal } = deps(fetch, memoryOutbox([item(1)]).store)
+    const done = sendQueued(normal)
+    await vi.advanceTimersByTimeAsync(0)
+    expect(fetch).toHaveBeenCalledTimes(1)
+    expect(await done).toEqual({ kind: 'sent', sent: 1 })
+  })
+})
+
+describe('groupSummaries', () => {
+  const part = (created_at: string, n: number, status: OutboxItem['status']): OutboxItem => ({
+    id: `${created_at}-${n}`,
+    text: `part ${n}`,
+    created_at,
+    status,
+    sid: null,
+  })
+
+  it('groups the parts of each tap, newest summary first, with one status each', () => {
+    const summaries = groupSummaries([
+      part('2026-09-27T08:00:00.000Z', 2, 'Sent'),
+      part('2026-10-04T08:00:00.000Z', 1, 'Sent'),
+      part('2026-09-27T08:00:00.000Z', 1, 'Sent'),
+      part('2026-10-04T08:00:00.000Z', 2, 'Queued'),
+      part('2026-09-20T08:00:00.000Z', 1, 'Failed'),
+    ])
+    expect(summaries.map((s) => [s.created_at.slice(0, 10), s.parts.length, s.status])).toEqual([
+      ['2026-10-04', 2, 'waiting'],
+      ['2026-09-27', 2, 'sent'],
+      ['2026-09-20', 1, 'failed'],
+    ])
+    expect(summaries[1].parts.map((p) => p.text)).toEqual(['part 1', 'part 2'])
   })
 })

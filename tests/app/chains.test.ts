@@ -57,10 +57,11 @@ describe('buildChains', () => {
     ])
   })
 
-  it('finds the sample history chain of four visits', () => {
+  it('finds both sample history paths, the one with the newest stone first', () => {
     const { records } = parseSampleHistory(seedFile)
     expect(ids(buildChains(records))).toEqual([
       ['seed-noor-coffee-01', 'seed-noor-coffee-04', 'seed-noor-coffee-07', 'seed-noor-coffee-09'],
+      ['seed-noor-coffee-12', 'seed-noor-coffee-13', 'seed-noor-coffee-14'],
     ])
     expect(latestConfirmed(records)).toBe('seed-noor-coffee-09')
   })
