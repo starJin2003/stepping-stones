@@ -3,12 +3,12 @@
   "display_name": "Noor's coffee farm",
   "owner_name": "Noor",
   "visit_reasons": [
-    { "id": "coffee_experience", "label": "Coffee experience" },
-    { "id": "farm_tour", "label": "Farm tour" },
-    { "id": "local_culture", "label": "Local culture" },
-    { "id": "food", "label": "Food" },
-    { "id": "other", "label": "Other" },
-    { "id": "unclear", "label": "Unclear" }
+    { "id": "coffee_experience", "label": { "sw": "Uzoefu wa kahawa", "en": "Coffee experience" } },
+    { "id": "farm_tour", "label": { "sw": "Ziara ya shamba", "en": "Farm tour" } },
+    { "id": "local_culture", "label": { "sw": "Utamaduni wa eneo hili", "en": "Local culture" } },
+    { "id": "food", "label": { "sw": "Chakula", "en": "Food" } },
+    { "id": "other", "label": { "sw": "Nyingine", "en": "Other" } },
+    { "id": "unclear", "label": { "sw": "Haiko wazi", "en": "Unclear" } }
   ],
   "card_questions": {
     "en": [

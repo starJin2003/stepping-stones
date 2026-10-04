@@ -1,16 +1,20 @@
 import { useState } from 'react'
 import { loadSampleHistory, removeSampleHistory } from '../db/records.ts'
+import { useLanguage } from '../i18n/language.tsx'
+import type { StringKey } from '../i18n/strings.ts'
 
 export function SampleHistoryButtons({ showRemove }: { showRemove: boolean }) {
+  const { t } = useLanguage()
   const [busy, setBusy] = useState(false)
-  const [notice, setNotice] = useState('')
+  // Kept as a key so the notice follows a language switch.
+  const [notice, setNotice] = useState<{ key: StringKey; n?: number } | null>(null)
 
-  async function run(action: () => Promise<string>) {
+  async function run(action: () => Promise<{ key: StringKey; n?: number }>) {
     setBusy(true)
     try {
       setNotice(await action())
     } catch {
-      setNotice('Could not change sample history on this phone. Try again.')
+      setNotice({ key: 'sample_failed' })
     }
     setBusy(false)
   }
@@ -18,29 +22,26 @@ export function SampleHistoryButtons({ showRemove }: { showRemove: boolean }) {
   const load = () =>
     run(async () => {
       const added = await loadSampleHistory()
-      return added === 0 ? 'Sample history is already on this phone.' : `Sample history loaded: ${added} synthetic visits.`
+      return added === 0 ? { key: 'sample_already' } : { key: 'sample_loaded', n: added }
     })
 
   const remove = () =>
-    run(async () => {
-      const removed = await removeSampleHistory()
-      return removed === 0 ? 'There was no sample history to remove.' : 'Sample history removed.'
-    })
+    run(async () => ((await removeSampleHistory()) === 0 ? { key: 'sample_nothing' } : { key: 'sample_removed' }))
 
   return (
     <div className="stack">
       <div className="button-row">
         <button className="button button-secondary" type="button" onClick={load} disabled={busy}>
-          Load sample history (synthetic)
+          {t('sample_load')}
         </button>
         {showRemove && (
           <button className="button button-secondary" type="button" onClick={remove} disabled={busy}>
-            Remove sample history
+            {t('sample_remove')}
           </button>
         )}
       </div>
       <p className="notice" role="status">
-        {notice}
+        {notice && t(notice.key, { n: notice.n ?? 0 })}
       </p>
     </div>
   )

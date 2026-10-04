@@ -1,3 +1,5 @@
+import type { Lang } from '../i18n/strings.ts'
+
 export type MatchStrength = 'Strong' | 'Possible' | 'Unclear'
 export type ReviewStatus = 'Pending' | 'Confirmed' | 'Rejected'
 export type CreatedFrom = 'SMS' | 'Paste' | 'Seed'
@@ -44,6 +46,8 @@ export interface Settings {
   server_url: string
   sync_token: string
   storage_persisted: StoragePersistence
+  /** UI language. Record text is never translated. */
+  ui_language: Lang
 }
 
 export type SettingKey = keyof Settings

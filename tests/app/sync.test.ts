@@ -71,7 +71,7 @@ describe('getNewMessages', () => {
 
     expect(server.events).toEqual(['pull', 'write', 'ack'])
     expect(result).toEqual({ kind: 'saved', saved: 3 })
-    expect(syncMessage(result)).toBe('3 new messages saved on this phone.')
+    expect(syncMessage(result, 'en')).toBe('3 new messages saved on this phone.')
     expect(server.acked).toEqual([pulled(3).map((r) => r.message_id)])
 
     const saved = records.get(pulled(1)[0].message_id)!
@@ -132,7 +132,7 @@ describe('getNewMessages', () => {
     const again = await getNewMessages(deps(server, store))
 
     expect(again).toEqual({ kind: 'nothing_new' })
-    expect(syncMessage(again)).toBe('No new messages.')
+    expect(syncMessage(again, 'en')).toBe('No new messages.')
     expect(records.size).toBe(3)
     expect(records.get(first)).toMatchObject({ review_status: 'Confirmed', confirmed_prior_record_id: 'seed-1' })
     // Already-saved ids are acked again, so a server copy left by a failed ack gets cleared.
@@ -146,7 +146,7 @@ describe('getNewMessages', () => {
     const result = await getNewMessages(deps(server, store))
 
     expect(result).toEqual({ kind: 'ack_failed', saved: 2 })
-    expect(syncMessage(result)).toBe('Saved on this phone. The server copy will be cleared next time.')
+    expect(syncMessage(result, 'en')).toBe('Saved on this phone. The server copy will be cleared next time.')
     expect(records.size).toBe(2)
   })
 
@@ -160,7 +160,7 @@ describe('getNewMessages', () => {
     const server = fakeServer(pulled(2), { pullStatus: 401 })
     const result = await getNewMessages(deps(server, memoryStore(server.events).store))
     expect(result).toEqual({ kind: 'unauthorized' })
-    expect(syncMessage(result)).toBe("This phone's sync code was not accepted. Check it under This phone.")
+    expect(syncMessage(result, 'en')).toBe("This phone's sync code was not accepted. Check it under This phone.")
     expect(server.events).toEqual(['pull'])
   })
 
@@ -168,7 +168,7 @@ describe('getNewMessages', () => {
     const server = fakeServer(pulled(2), { pullThrows: true })
     const result = await getNewMessages(deps(server, memoryStore(server.events).store))
     expect(result).toEqual({ kind: 'offline' })
-    expect(syncMessage(result)).toBe(
+    expect(syncMessage(result, 'en')).toBe(
       'No connection. Your messages are safe on this phone. Try again when you have signal.',
     )
     expect(server.events).toEqual(['pull'])
@@ -212,8 +212,19 @@ describe('getNewMessages', () => {
     expect(server.acked.flat()).toEqual([pulled(1)[0].message_id])
   })
 
-  it('uses singular wording for one message', () => {
-    expect(syncMessage({ kind: 'saved', saved: 1 })).toBe('1 new message saved on this phone.')
+  it('uses singular wording for one message, in both languages', () => {
+    expect(syncMessage({ kind: 'saved', saved: 1 }, 'en')).toBe('1 new message saved on this phone.')
+    expect(syncMessage({ kind: 'saved', saved: 1 }, 'sw')).toBe('Ujumbe 1 mpya umehifadhiwa kwenye simu hii.')
+    expect(syncMessage({ kind: 'saved', saved: 3 }, 'sw')).toBe('Jumbe 3 mpya zimehifadhiwa kwenye simu hii.')
+  })
+
+  it('has a Kiswahili message for every result', () => {
+    const kinds = ['nothing_new', 'ack_failed', 'unauthorized', 'offline', 'no_sync_code', 'server_error', 'write_failed'] as const
+    for (const kind of kinds) {
+      const sw = syncMessage({ kind, saved: 1 } as Parameters<typeof syncMessage>[0], 'sw')
+      expect(sw).not.toBe(syncMessage({ kind, saved: 1 } as Parameters<typeof syncMessage>[0], 'en'))
+      expect(sw).not.toMatch(/\{\w+\}/)
+    }
   })
 })
 

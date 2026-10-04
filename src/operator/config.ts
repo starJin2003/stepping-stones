@@ -1,3 +1,5 @@
+import type { Lang } from '../i18n/strings.ts'
+
 /** Everything specific to one tourism operator. Components read this; they never name an operator themselves. */
 export interface OperatorConfig {
   id: string
@@ -5,8 +7,8 @@ export interface OperatorConfig {
   display_name: string
   /** The person who receives the SMS summary. */
   owner_name: string
-  /** Always includes Other and Unclear. */
-  visit_reasons: { id: string; label: string }[]
+  /** Always includes Other and Unclear. Labels in both UI languages. */
+  visit_reasons: { id: string; label: Record<Lang, string> }[]
   /** The two questions printed on the tourist card. */
   card_questions: { en: [string, string]; sw: [string, string] }
 }
@@ -32,7 +34,9 @@ export function parseOperatorConfig(raw: unknown): OperatorConfig {
   if (!isText(c.owner_name)) fail('owner_name')
 
   const reasons = c.visit_reasons
-  if (!Array.isArray(reasons) || !reasons.every((r) => isText(r?.id) && isText(r?.label))) fail('visit_reasons')
+  if (!Array.isArray(reasons) || !reasons.every((r) => isText(r?.id) && isText(r?.label?.sw) && isText(r?.label?.en))) {
+    fail('visit_reasons need an id and sw and en labels')
+  }
   const ids = (reasons as { id: string }[]).map((r) => r.id)
   if (new Set(ids).size !== ids.length) fail('visit_reasons has duplicate ids')
   for (const required of REQUIRED_VISIT_REASON_IDS) {

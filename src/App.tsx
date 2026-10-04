@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { useLanguage } from './i18n/language.tsx'
+import { LANGUAGE_NAMES, type Lang, type StringKey } from './i18n/strings.ts'
 import { operator } from './operator/active.ts'
 import { MessagesScreen } from './screens/MessagesScreen.tsx'
 import { StonesScreen } from './screens/StonesScreen.tsx'
@@ -13,13 +15,14 @@ function viewFromHash(): View {
   return (VIEWS as readonly string[]).includes(hash) ? (hash as View) : 'messages'
 }
 
-const TABS: { view: View; label: string }[] = [
-  { view: 'messages', label: 'Messages' },
-  { view: 'stones', label: 'Stones' },
-  { view: 'summary', label: `${operator.owner_name}'s SMS` },
+const TABS: { view: View; label: StringKey }[] = [
+  { view: 'messages', label: 'nav_messages' },
+  { view: 'stones', label: 'nav_stones' },
+  { view: 'summary', label: 'nav_summary' },
 ]
 
 function App() {
+  const { lang, t, setLang } = useLanguage()
   const [view, setView] = useState<View>(viewFromHash)
 
   useEffect(() => {
@@ -32,18 +35,26 @@ function App() {
   }, [])
 
   const current = (v: View) => (view === v ? ('page' as const) : undefined)
+  const owner = operator.owner_name
 
   return (
     <div className="page">
       <div className="app">
         <header className="app-header">
           <a className="wordmark" href="#messages">
-            <img src="/favicon.svg" alt="" width="30" height="30" />
-            Stepping Stones
+            <img src="/favicon.svg" alt="" width="32" height="32" />
+            <span className="wordmark-name">Stepping Stones</span>
           </a>
           <a className="phone-link" href="#this-phone" aria-current={current('this-phone')}>
-            This phone
+            {t('this_phone')}
           </a>
+          <div className="language-toggle" role="group" aria-label={t('language_label')}>
+            {(Object.keys(LANGUAGE_NAMES) as Lang[]).map((code) => (
+              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}>
+                {LANGUAGE_NAMES[code]}
+              </button>
+            ))}
+          </div>
         </header>
 
         <main className="app-main">
@@ -53,29 +64,20 @@ function App() {
           {view === 'this-phone' && <ThisPhoneScreen />}
         </main>
 
-        <nav className="tabs" aria-label="Sections">
+        <nav className="tabs" aria-label={t('nav_label')}>
           {TABS.map((tab) => (
             <a key={tab.view} href={`#${tab.view}`} aria-current={current(tab.view)}>
-              {tab.label}
+              {t(tab.label, { owner })}
             </a>
           ))}
         </nav>
       </div>
 
       <aside className="side-note" aria-labelledby="side-note-title">
-        <h2 id="side-note-title">Demo mode</h2>
-        <p>
-          This is the app from the shared family phone at {operator.display_name}. Visitors text their answers, and the
-          phone gets new messages whenever it has signal.
-        </p>
-        <p>
-          Without a sync code you can still try it: load sample history under This phone, or paste a text message on
-          Messages.
-        </p>
-        <p>
-          Sample history is synthetic. Those visits and messages were made up for this demo, and each one is marked
-          “Sample, synthetic”.
-        </p>
+        <h2 id="side-note-title">{t('side_title')}</h2>
+        <p>{t('side_body_1', { owner })}</p>
+        <p>{t('side_body_2')}</p>
+        <p>{t('side_body_3')}</p>
       </aside>
     </div>
   )

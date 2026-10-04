@@ -3,12 +3,12 @@
   "display_name": "Example Hill Guesthouse",
   "owner_name": "Amina",
   "visit_reasons": [
-    { "id": "rooms", "label": "Rooms" },
-    { "id": "food", "label": "Food" },
-    { "id": "location", "label": "Location" },
-    { "id": "staff", "label": "Staff" },
-    { "id": "other", "label": "Other" },
-    { "id": "unclear", "label": "Unclear" }
+    { "id": "rooms", "label": { "sw": "Vyumba", "en": "Rooms" } },
+    { "id": "food", "label": { "sw": "Chakula", "en": "Food" } },
+    { "id": "location", "label": { "sw": "Mahali", "en": "Location" } },
+    { "id": "staff", "label": { "sw": "Wafanyakazi", "en": "Staff" } },
+    { "id": "other", "label": { "sw": "Nyingine", "en": "Other" } },
+    { "id": "unclear", "label": { "sw": "Haiko wazi", "en": "Unclear" } }
   ],
   "card_questions": {
     "en": [

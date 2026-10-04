@@ -31,7 +31,7 @@ body {
   min-height: 100dvh;
   background: var(--mist);
   color: var(--leaf);
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-family: 'Lexend', system-ui, sans-serif;
   font-size: var(--text-body);
   line-height: 1.5;
 }
@@ -74,29 +74,77 @@ a {
   margin: 0 auto;
 }
 
+/* Mark, then the small This phone link and the language toggle at the top right. */
 .app-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.5rem var(--gutter);
+  gap: 0.75rem;
+  padding: 0.25rem var(--gutter);
   border-bottom: 1px solid var(--rule);
 }
 
 .wordmark {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
   min-height: 3rem;
-  font-size: var(--text-sms);
+  margin-right: auto;
   font-weight: 700;
   text-decoration: none;
+}
+
+/* The name only fits beside the toggle on wider screens; the mark stays as the home link. */
+.wordmark-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .phone-link {
   display: inline-flex;
   align-items: center;
   min-height: 3rem;
+  white-space: nowrap;
+}
+
+.language-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.language-toggle button {
+  min-height: 3rem;
+  padding: 0 0.5rem;
+  border: 0;
+  background: none;
+  color: var(--soil);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* The short rule between "Kiswahili" and "English". */
+.language-toggle button + button {
+  position: relative;
+}
+
+.language-toggle button + button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1.25rem;
+  translate: 0 -50%;
+  border-left: 1px solid var(--soil);
+}
+
+.language-toggle button[aria-pressed='true'] {
+  color: var(--leaf);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.25em;
 }
 
 .phone-link[aria-current='page'] {
@@ -164,6 +212,13 @@ a {
   color: var(--leaf);
 }
 
+/* The one main action on a screen: full width and taller. */
+.button-main {
+  width: 100%;
+  min-height: 3.5rem;
+  font-size: var(--text-sms);
+}
+
 .button:disabled {
   opacity: 0.6;
   cursor: default;
@@ -211,6 +266,16 @@ textarea {
 .lead,
 .notice {
   font-weight: 700;
+}
+
+/* The current to-do opens the Messages screen. */
+.todo {
+  font-size: var(--text-title);
+}
+
+.todo-done {
+  color: var(--soil);
+  font-size: var(--text-sms);
 }
 
 .notice:empty {

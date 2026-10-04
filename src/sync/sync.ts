@@ -1,4 +1,5 @@
 import { newRecord, type VisitRecord } from '../db/types.ts'
+import { countKey, translate, type Lang, type StringKey } from '../i18n/strings.ts'
 
 export const ACK_CHUNK_SIZE = 100
 const TIMEOUT_MS = 30_000
@@ -113,23 +114,19 @@ export async function getNewMessages(deps: SyncDeps): Promise<SyncResult> {
   return saved === 0 ? { kind: 'nothing_new' } : { kind: 'saved', saved }
 }
 
-export function syncMessage(result: SyncResult): string {
-  switch (result.kind) {
-    case 'saved':
-      return `${result.saved} new ${result.saved === 1 ? 'message' : 'messages'} saved on this phone.`
-    case 'nothing_new':
-      return 'No new messages.'
-    case 'ack_failed':
-      return 'Saved on this phone. The server copy will be cleared next time.'
-    case 'unauthorized':
-      return "This phone's sync code was not accepted. Check it under This phone."
-    case 'offline':
-      return 'No connection. Your messages are safe on this phone. Try again when you have signal.'
-    case 'no_sync_code':
-      return "Add this phone's sync code under This phone first."
-    case 'server_error':
-      return 'The server had a problem. Your messages are safe on this phone. Try again later.'
-    case 'write_failed':
-      return 'Could not save on this phone, so nothing was cleared from the server. Try again.'
+const RESULT_KEYS: Record<Exclude<SyncResult['kind'], 'saved'>, StringKey> = {
+  nothing_new: 'sync_nothing_new',
+  ack_failed: 'sync_ack_failed',
+  unauthorized: 'sync_unauthorized',
+  offline: 'sync_offline',
+  no_sync_code: 'sync_no_code',
+  server_error: 'sync_server_error',
+  write_failed: 'sync_write_failed',
+}
+
+export function syncMessage(result: SyncResult, lang: Lang): string {
+  if (result.kind === 'saved') {
+    return translate(lang, countKey(result.saved, 'sync_saved_one', 'sync_saved_other'), { n: result.saved })
   }
+  return translate(lang, RESULT_KEYS[result.kind])
 }
