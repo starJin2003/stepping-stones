@@ -107,6 +107,7 @@ describe('analysis uses the spans', () => {
     visitReasonPrototypes: {},
     referralPrototypes: {},
     referralRules: REFERRAL_RULES,
+    languageMeans: {},
     modelRevision: 'test',
   }
   const prototypes = { visitReasons: [], referrals: [{ category: 'other', vector: E3 }] }

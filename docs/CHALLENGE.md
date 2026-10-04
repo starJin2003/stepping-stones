@@ -6,14 +6,19 @@ Our own summary of the Hack-Nation x World Bank "Small AI for Development" brief
 
 - 38, farms 2 hectares in the highlands: coffee on the upper slope, maize and beans below. Member of a coffee cooperative.
 - Speaks her local language at home, the national language when needed.
-- Two phones in the household: her own basic phone (calls, SMS, mobile money) and her daughter's smartphone, used mostly when the daughter is home on weekends.
+- Two phones in the household: her own basic phone (calls, SMS, mobile money) and her daughter's smartphone.
+- The daughter boards at school in the district town. Noor uses the smartphone when the daughter is home on weekends to set it up and show her how.
 - No Wi-Fi at the house. The family buys 3G data bundles when needed. For most of the day Noor is on the slope and the smartphone stays at the house.
 - In this repo the setting is Kenya's Central Highlands, local language Gĩkũyũ (kik_Latn), national language Swahili.
 
 ## Tourism scenario
 
-- Six or seven visitors a month find the farm by word of mouth. Visitors often arrive with a local guide translating.
+- Noor's farm is not marketed on a digital platform. Six or seven visitors a month find it by word of mouth.
+- Weak digital presence: marketing rarely goes past word of mouth.
+- Visitors often arrive with a local guide translating.
 - Noor has no way of knowing what value she created, what worked during visits, and what did not once visitors leave.
+- Noor needs to turn informal interest into a manageable, trusted customer workflow.
+- Noor needs to communicate with customers who don't speak her language.
 - Challenge: help Noor complete one meaningful business workflow. Examples given include learning from visitor feedback and following up with a guest.
 
 ## Rules
@@ -27,7 +32,9 @@ Our own summary of the Hack-Nation x World Bank "Small AI for Development" brief
 
 - Human in the loop: a person makes the final call. The tool informs a decision and flags what it is unsure of. It does not act on the user's behalf.
 - Avoid hallucinations. Prefer a fixed list of answers.
-- Fail-safe: when the data is not enough for a definitive answer, say "not sure, ask a person" instead of guessing.
+- An agentic workflow must check in with the user.
+- Fail-safe: when the data is not enough for a definitive answer, say "not sure, ask a person". Do not guess.
+- The fail-safe is part of the pass/fail Responsible AI criterion.
 
 ## Data requirements
 
@@ -50,15 +57,15 @@ Hack-Nation additionally requires: public GitHub repo, live demo URL, team photo
 
 ## Judging
 
-| Criterion | Weight |
-|---|---|
-| Built solution: works end to end within the sector's constraints | 25% |
-| Development relevance and impact | 20% |
-| Data grounding: addresses an identified gap, sound data modeling | 15% |
-| Evidence it works | 15% |
-| Clarity, design, inclusivity; value proposition for AI vs simpler tools | 15% |
-| Scalability, replicability, what happens next | 10% |
-| Responsible AI, data and safety: privacy, consent, bias, human oversight | Pass / fail |
+| Criterion | Weight | Question |
+|---|---|---|
+| The built solution (Small AI fidelity) | 25% | Does the tool work end to end within the constraints of the sector? |
+| Development relevance and impact | 20% | Is this a real problem from the sector briefs, and does the outcome matter to the person it is built for? |
+| Data grounding | 15% | Does the tool help address an identified gap in the data, is the data modeling sound? |
+| Evidence it works | 15% | Does the solution fit the challenges identified in the sector, does it add other constraints? |
+| Clarity, design and inclusivity; value proposition for AI | 15% | What the tool does with AI, and would a simpler tool (SMS, a spreadsheet, a search) do the same job? |
+| Scalability, replicability and what happens next | 10% | Could another setting reuse this innovation? |
+| Responsible AI, data and safety | Pass / fail | Are the limits respected, and the account of privacy, consent, bias, and human oversight credible? |
 
 ## Suggested datasets (tourism and common)
 

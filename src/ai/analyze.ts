@@ -3,7 +3,7 @@ import { classify, UNCLEAR, type EmbeddedPrototype } from './classify.ts'
 import { flattenPrototypes, type PrototypeSentences, type Thresholds } from './config.ts'
 import type { Embed } from './embed.ts'
 import { detectLanguage } from './language.ts'
-import { findMatch, type MatchableRecord, type MatchResult } from './match.ts'
+import { buildScorer, findMatch, type MatchableRecord, type MatchOptions, type MatchResult } from './match.ts'
 import { parse } from './parse.ts'
 import { referralByRules, splitHeard } from './referral.ts'
 import type { AnalysisSetup } from './setup.ts'
@@ -125,7 +125,7 @@ export async function analysisPatches(
   const fresh = new Map(stale.map((r, i) => [r.record_id, readings[i]]))
   const merged: VisitRecord[] = all.map((r) => ({ ...r, ...fresh.get(r.record_id) }))
   const targets = merged.filter((r) => fresh.has(r.record_id) || r.review_status === 'Pending').map((r) => r.record_id)
-  const matches = matchRecords(merged, targets, setup.thresholds.match)
+  const matches = matchRecords(merged, targets, setup.thresholds.match, matchOptions(setup))
 
   return new Map(
     targets.map((id) => {
@@ -141,17 +141,25 @@ export async function analysisPatches(
   )
 }
 
+/** The matching switches and language means of a setup, shared by the app, model:check and eval. */
+export const matchOptions = (setup: AnalysisSetup): MatchOptions => ({
+  matching: setup.thresholds.matching,
+  means: setup.languageMeans,
+})
+
 /** Match results for the target records against every earlier record. Sets strength and candidates only. */
 export function matchRecords(
   records: MatchableRecord[],
   targetIds: Iterable<string>,
   thresholds: Thresholds['match'],
+  options?: MatchOptions,
 ): Map<string, MatchResult> {
   const byId = new Map(records.map((r) => [r.record_id, r]))
+  const score = buildScorer(records, options)
   const results = new Map<string, MatchResult>()
   for (const id of targetIds) {
     const target = byId.get(id)
-    if (target) results.set(id, findMatch(target, records, thresholds))
+    if (target) results.set(id, findMatch(target, records, thresholds, score))
   }
   return results
 }

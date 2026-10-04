@@ -2,6 +2,7 @@
 import kikWords from '../../data/lid/kik-function-words.json' with { type: 'json' }
 import referralFile from '../../data/ai/referral-prototypes.json' with { type: 'json' }
 import referralRulesFile from '../../data/ai/referral-rules.json' with { type: 'json' }
+import languageMeansFile from '../../data/ai/language-means.json' with { type: 'json' }
 import thresholdsFile from './thresholds.json' with { type: 'json' }
 
 export type Language = 'English' | 'Kiswahili' | 'Gikuyu' | 'German' | 'French' | 'Unknown'
@@ -24,6 +25,8 @@ export interface Thresholds {
     referral_bonus: number
     top_k: number
   }
+  /** One switch each, kept on only when it improves the synthetic dev split. */
+  matching: { center_by_language: boolean; ratio_margin: boolean; margin_k: number }
 }
 
 export const THRESHOLDS: Thresholds = thresholdsFile
@@ -45,6 +48,9 @@ export interface ReferralRules {
 }
 
 export const REFERRAL_RULES: ReferralRules = referralRulesFile
+
+/** Mean embedding per language from FLORES-200 dev, for centering by language. */
+export const LANGUAGE_MEANS: Record<string, number[]> = (languageMeansFile as { means: Record<string, number[]> }).means
 
 /** Accent-free forms, so "uria" matches "ũrĩa" in text typed without ĩ ũ. */
 export const plainWord = (word: string): string => word.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase()

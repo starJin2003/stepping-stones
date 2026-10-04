@@ -1,0 +1,576 @@
+{
+ "synthetic": true,
+ "split": "dev",
+ "operator_id": "noor-coffee",
+ "description": "Synthetic dev set for the matching pipeline, written for this project. No real visitors, names or businesses. Each set is its own timeline: a record can only link to an earlier record in the same file. Neither the demo SMS nor the sample history appears here.",
+ "gold_labels": {
+  "referral": "referral source of the heard story (Unclear when the text does not say)",
+  "came_for": "tour part named in what the visitor heard (Unclear when generic; null for broken format, not scored)",
+  "would_tell": "tour part named in answer 2 (null for broken format, not scored)",
+  "link": "the earlier record whose would-tell story this visitor heard, or null",
+  "kind": "start: no earlier visitor; link: one earlier visitor told this story; near_miss: an earlier visitor in the same language looks close but is not the source (link is the true source or null); ambiguous: two earlier visitors told the same story, the right output is Unclear; format: answers 1) and 2) not found"
+ },
+ "split_use": "dev: calibration and error analysis only. test: reporting only, never tuned on.",
+ "records": [
+  {
+   "record_id": "dev-01",
+   "received_at": "2026-01-05T09:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) The owner of our lodge in Nyeri mentioned a family coffee farm up the hill. 2) Bite one of the ripe cherries straight from the bush, they taste sweet like a grape.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_staff",
+    "came_for": "unclear",
+    "would_tell": "picking",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-02",
+   "received_at": "2026-01-08T10:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Unser Fahrer hat uns auf dem Weg nach Nyeri davon erzählt. 2) Die Bohnen trocknen auf langen Netztischen in der Sonne, und man darf sie mit einem Holzrechen wenden.",
+   "synthetic": true,
+   "gold": {
+    "referral": "local_guide",
+    "came_for": "unclear",
+    "would_tell": "drying",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-03",
+   "received_at": "2026-01-11T11:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Une amie qui vit à Nairobi nous a conseillé d'y aller. 2) Restez pour la torréfaction : les grains craquent comme du pop-corn dans la poêle.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "unclear",
+    "would_tell": "roasting",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-04",
+   "received_at": "2026-01-14T12:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Tuliona video fupi mtandaoni kuhusu shamba hili la kahawa. 2) Kahawa inamiminwa kutoka kwenye chungu cha udongo hadi kwenye vikombe vya bati.",
+   "synthetic": true,
+   "gold": {
+    "referral": "social_online",
+    "came_for": "unclear",
+    "would_tell": "tasting",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-05",
+   "received_at": "2026-01-17T08:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) Saw photos posted on Instagram by a hiking group. 2) Climb to the top of the slope at sunrise, you can see the mountain above the clouds.",
+   "synthetic": true,
+   "gold": {
+    "referral": "social_online",
+    "came_for": "unclear",
+    "would_tell": "farm",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-06",
+   "received_at": "2026-01-20T09:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Eine Reisende aus unserem Gästehaus hat erzählt, dass die reifen Kirschen direkt vom Strauch süß wie Trauben schmecken. 2) Den Kaffee unbedingt mit einem Löffel Honig von den hofeigenen Bienen probieren.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "picking",
+    "would_tell": "tasting",
+    "link": "dev-01",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-07",
+   "received_at": "2026-01-23T10:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Wageni wenzetu kwenye nyumba ya wageni walituambia kwamba maharagwe hukaushwa juani juu ya meza ndefu za neti, na unaweza kuyageuza kwa reki ya mbao. 2) Waambie marafiki wajaribu kusaga kahawa iliyokaangwa kwenye kinu cha mbao.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "drying",
+    "would_tell": "roasting",
+    "link": "dev-02",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-08",
+   "received_at": "2026-01-26T11:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) A French couple at our guesthouse told us the beans crack like popcorn when you roast them in the pan. 2) Lunch is served on banana leaves instead of plates, and you eat with your hands.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "roasting",
+    "would_tell": "lunch",
+    "link": "dev-03",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-09",
+   "received_at": "2026-01-29T12:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) A friend from my running club said to climb the slope at sunrise to see the mountain above the clouds. 2) The children of the family taught us a clapping game and did not want us to leave.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "farm",
+    "would_tell": "family",
+    "link": "dev-05",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-10",
+   "received_at": "2026-02-01T08:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Un voyageur de notre auberge nous a raconté que le café est versé d'un pot en terre dans des tasses en fer-blanc. 2) À la fin, le grand-père joue d'un petit violon et tout le monde danse.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "tasting",
+    "would_tell": "family",
+    "link": "dev-04",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-11",
+   "received_at": "2026-02-04T09:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Dereva wetu wa teksi alipendekeza tuende kuona miti ya zamani ya kahawa kwenye shamba hili. 2) Chakula cha mchana ni mukimo uliopondwa pamoja na majani ya maboga, kitamu sana.",
+   "synthetic": true,
+   "gold": {
+    "referral": "local_guide",
+    "came_for": "farm",
+    "would_tell": "lunch",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-12",
+   "received_at": "2026-02-07T10:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Ein Paar aus unserer Lodge hat erzählt, dass man den Kaffee mit Honig von den hofeigenen Bienen probiert. 2) Schaut euch die langen Netztische an, auf denen die Bohnen in der Sonne trocknen.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "tasting",
+    "would_tell": "drying",
+    "link": "dev-06",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-13",
+   "received_at": "2026-02-10T11:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) The receptionist at our hotel said the family has lots of children who love meeting visitors. 2) Bring a rain jacket, the afternoon showers come fast in April.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_staff",
+    "came_for": "family",
+    "would_tell": "other",
+    "link": null,
+    "kind": "near_miss"
+   }
+  },
+  {
+   "record_id": "dev-14",
+   "received_at": "2026-02-13T12:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Mgeni mwenzetu kwenye hosteli alituambia kwamba babu wa familia hupiga fidla ndogo na kila mtu hucheza mwishoni. 2) Tembeeni polepole, njia ya mteremko huteleza baada ya mvua.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "family",
+    "would_tell": "farm",
+    "link": "dev-10",
+    "kind": "near_miss"
+   }
+  },
+  {
+   "record_id": "dev-15",
+   "received_at": "2026-02-16T08:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) Another guest at our lodge told us you turn the drying beans on long mesh tables with a wooden rake. 2) Ask to see the old pulping machine that is turned by hand.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "drying",
+    "would_tell": "drying",
+    "link": null,
+    "kind": "ambiguous"
+   }
+  },
+  {
+   "record_id": "dev-16",
+   "received_at": "2026-02-19T09:00:00.000Z",
+   "language": "de",
+   "raw_text": "Wunderschöner Tag auf dem Hof, vielen Dank für alles!",
+   "synthetic": true,
+   "gold": {
+    "referral": "unclear",
+    "came_for": null,
+    "would_tell": null,
+    "link": null,
+    "kind": "format"
+   }
+  },
+  {
+   "record_id": "dev-17",
+   "received_at": "2026-02-22T10:00:00.000Z",
+   "language": "fr",
+   "raw_text": "Merci pour la belle visite, nous avons adoré la torréfaction sur le feu de bois.",
+   "synthetic": true,
+   "gold": {
+    "referral": "unclear",
+    "came_for": null,
+    "would_tell": null,
+    "link": null,
+    "kind": "format"
+   }
+  },
+  {
+   "record_id": "dev-18",
+   "received_at": "2026-02-25T11:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Rafiki yangu alisema chakula cha mchana ni mukimo uliopondwa pamoja na majani ya maboga. 2) Ningewaambia marafiki wakae hadi jioni wasikilize hadithi za jinsi shamba lilivyoanza.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "lunch",
+    "would_tell": "family",
+    "link": "dev-11",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-19",
+   "received_at": "2026-02-28T12:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Ein Gast aus unserem Hostel hat erzählt, dass man die gerösteten Bohnen selbst in einem Holzmörser mahlt. 2) Beim Pflücken trägt man den Korb auf dem Kopf, wie die Pflückerinnen.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "roasting",
+    "would_tell": "picking",
+    "link": "dev-07",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-20",
+   "received_at": "2026-03-03T08:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Des touristes de notre hôtel nous ont dit que le déjeuner est servi sur des feuilles de bananier et qu'on mange avec les mains. 2) Le soir, la famille raconte comment la ferme a commencé.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "lunch",
+    "would_tell": "family",
+    "link": "dev-08",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-21",
+   "received_at": "2026-03-06T09:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) My cousin told me the children of the family teach you a clapping game. 2) Watch the sunset from the old tree that was planted the year the farm began.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "family",
+    "would_tell": "farm",
+    "link": "dev-09",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-22",
+   "received_at": "2026-03-09T10:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Mhudumu wa nyumba ya wageni alituambia kwamba chakula cha jioni hupikwa juu ya moto wa kuni. 2) Nunueni mfuko mdogo wa kahawa mliyoikaanga wenyewe.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_staff",
+    "came_for": "lunch",
+    "would_tell": "roasting",
+    "link": null,
+    "kind": "near_miss"
+   }
+  },
+  {
+   "record_id": "dev-23",
+   "received_at": "2026-03-12T11:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) Two backpackers at our hostel said you carry the picking basket on your head like the pickers do. 2) The grandmother makes tea from coffee leaves, it tastes like green tea.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "picking",
+    "would_tell": "tasting",
+    "link": "dev-19",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-24",
+   "received_at": "2026-03-15T12:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Ein Paar aus unserem Gästehaus hat erzählt, dass man bis zum Abend bleiben soll, weil die Familie dann erzählt, wie der Hof angefangen hat. 2) Unten am Hang gibt es einen kleinen Bach, in dem die Kinder baden.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "family",
+    "would_tell": "farm",
+    "link": null,
+    "kind": "ambiguous"
+   }
+  },
+  {
+   "record_id": "dev-25",
+   "received_at": "2026-03-18T08:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Une touriste de notre maison d'hôtes nous a dit de regarder le coucher du soleil depuis le vieil arbre planté l'année où la ferme a commencé. 2) Le déjeuner se mange sur des feuilles de bananier, avec les mains.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "farm",
+    "would_tell": "lunch",
+    "link": "dev-21",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-26",
+   "received_at": "2026-03-21T09:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Msafiri mwenzetu kwenye hosteli alisema bibi hutengeneza chai kutoka kwa majani ya kahawa, na ladha yake ni kama chai ya kijani. 2) Waambieni marafiki waangalie mashine ya zamani ya kukoboa inayozungushwa kwa mkono.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "tasting",
+    "would_tell": "drying",
+    "link": "dev-23",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-27",
+   "received_at": "2026-03-24T10:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) A couple staying at our hotel said lunch is eaten off banana leaves, with your hands. 2) The family dog walks the whole tour with you.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "lunch",
+    "would_tell": "other",
+    "link": null,
+    "kind": "ambiguous"
+   }
+  },
+  {
+   "record_id": "dev-28",
+   "received_at": "2026-03-27T11:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Wir haben einen Flyer in einem Café in Nyeri gesehen.",
+   "synthetic": true,
+   "gold": {
+    "referral": "other",
+    "came_for": null,
+    "would_tell": null,
+    "link": null,
+    "kind": "format"
+   }
+  },
+  {
+   "record_id": "dev-29",
+   "received_at": "2026-03-30T12:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Wageni wenzetu kwenye hoteli walituambia kwamba unabeba kikapu cha kuchumia kichwani kama wachumaji. 2) Waulizeni kuhusu ng'ombe aliyepewa jina la mgeni wa kwanza.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "picking",
+    "would_tell": "other",
+    "link": "dev-19",
+    "kind": "near_miss"
+   }
+  },
+  {
+   "record_id": "dev-30",
+   "received_at": "2026-04-02T08:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) A traveller at our guesthouse said you can buy a small bag of the coffee you roasted yourself. 2) Stand on the big rock at the top of the farm for the best view of the valley.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "roasting",
+    "would_tell": "farm",
+    "link": "dev-22",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-31",
+   "received_at": "2026-04-05T09:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Des amis nous ont raconté que le chien de la famille fait toute la visite avec vous. 2) Goûtez le thé fait avec les feuilles de caféier.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "other",
+    "would_tell": "tasting",
+    "link": "dev-27",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-32",
+   "received_at": "2026-04-08T10:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Im Reiseführer stand ein kurzer Absatz über den Hof. 2) Am Ende zeigt einem die Familie ihre Kühe und Ziegen.",
+   "synthetic": true,
+   "gold": {
+    "referral": "other",
+    "came_for": "unclear",
+    "would_tell": "other",
+    "link": null,
+    "kind": "start"
+   }
+  },
+  {
+   "record_id": "dev-33",
+   "received_at": "2026-04-11T11:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Rafiki yangu aliniambia kwamba chai ya majani ya kahawa ina ladha kama chai ya kijani. 2) Vaeni viatu vya kupanda mlima, njia ina matope.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "tasting",
+    "would_tell": "farm",
+    "link": null,
+    "kind": "ambiguous"
+   }
+  },
+  {
+   "record_id": "dev-34",
+   "received_at": "2026-04-14T12:00:00.000Z",
+   "language": "en",
+   "raw_text": "1) A guest at our lodge said there is a small stream at the bottom of the slope where children swim. 2) The roasting smoke smells so good that you will want to buy two bags.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "farm",
+    "would_tell": "roasting",
+    "link": "dev-24",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-35",
+   "received_at": "2026-04-17T08:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Un couple de notre hôtel nous a dit de monter sur le gros rocher en haut de la ferme pour voir la vallée. 2) Les enfants de la famille vous apprennent un jeu de mains.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "farm",
+    "would_tell": "family",
+    "link": "dev-30",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-36",
+   "received_at": "2026-04-20T09:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Eine Reisende aus unserem Hostel hat gesagt, man soll Wanderschuhe tragen, weil der Weg schlammig ist. 2) Die Großmutter singt beim Kaffeekochen ein altes Lied.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "farm",
+    "would_tell": "family",
+    "link": "dev-33",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-37",
+   "received_at": "2026-04-23T10:00:00.000Z",
+   "language": "en",
+   "raw_text": "Loved it, thank you so much!",
+   "synthetic": true,
+   "gold": {
+    "referral": "unclear",
+    "came_for": null,
+    "would_tell": null,
+    "link": null,
+    "kind": "format"
+   }
+  },
+  {
+   "record_id": "dev-38",
+   "received_at": "2026-04-26T11:00:00.000Z",
+   "language": "sw",
+   "raw_text": "1) Wageni wenzetu kwenye nyumba ya wageni walisema watoto wa familia hukufundisha mchezo wa kupiga makofi. 2) Onjeni kahawa ya chungu ikiwa bado ni moto.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "family",
+    "would_tell": "tasting",
+    "link": null,
+    "kind": "ambiguous"
+   }
+  },
+  {
+   "record_id": "dev-39",
+   "received_at": "2026-04-29T12:00:00.000Z",
+   "language": "fr",
+   "raw_text": "1) Une amie nous a dit que le grand-père joue du violon à la fin et que tout le monde danse. 2) Les grains sont torréfiés dans une poêle en terre, pas en métal.",
+   "synthetic": true,
+   "gold": {
+    "referral": "friend_family",
+    "came_for": "family",
+    "would_tell": "roasting",
+    "link": "dev-10",
+    "kind": "link"
+   }
+  },
+  {
+   "record_id": "dev-40",
+   "received_at": "2026-05-02T08:00:00.000Z",
+   "language": "de",
+   "raw_text": "1) Ein Gast aus unserem Gästehaus hat erzählt, dass die Großmutter beim Kaffeekochen ein altes Lied singt. 2) Am Ende gibt es den Kaffee mit frischer Milch von den eigenen Kühen.",
+   "synthetic": true,
+   "gold": {
+    "referral": "guesthouse_guest",
+    "came_for": "family",
+    "would_tell": "tasting",
+    "link": "dev-36",
+    "kind": "link"
+   }
+  }
+ ]
+}

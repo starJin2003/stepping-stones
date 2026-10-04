@@ -1,0 +1,185 @@
+{
+  "runtime": "onnxruntime-web (wasm, 1 thread) in Node, same package and version as the phone; Transformers.js tokenizer",
+  "language_id_flores_devtest": {
+    "English": {
+      "n": 1012,
+      "accuracy": 98.8,
+      "unknown": 0.8
+    },
+    "Kiswahili": {
+      "n": 1012,
+      "accuracy": 99.9,
+      "unknown": 0.1
+    },
+    "Gikuyu": {
+      "n": 1012,
+      "accuracy": 99.7,
+      "unknown": 0
+    },
+    "German": {
+      "n": 1012,
+      "accuracy": 99.4,
+      "unknown": 0.2
+    },
+    "French": {
+      "n": 1012,
+      "accuracy": 100,
+      "unknown": 0
+    }
+  },
+  "retrieval_flores_devtest_top1": {
+    "sample": "200 sentences: every 5th line of devtest",
+    "plain": {
+      "Gikuyu": {
+        "en_to_x": 95.5,
+        "x_to_en": 93
+      },
+      "Kiswahili": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "German": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "French": {
+        "en_to_x": 100,
+        "x_to_en": 99.5
+      }
+    },
+    "centered": {
+      "Gikuyu": {
+        "en_to_x": 92.5,
+        "x_to_en": 97.5
+      },
+      "Kiswahili": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "German": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "French": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      }
+    },
+    "centered_margin": {
+      "Gikuyu": {
+        "en_to_x": 97.5,
+        "x_to_en": 98.5
+      },
+      "Kiswahili": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "German": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      },
+      "French": {
+        "en_to_x": 100,
+        "x_to_en": 100
+      }
+    }
+  },
+  "synthetic_test": {
+    "settings": {
+      "matching": {
+        "center_by_language": true,
+        "ratio_margin": true,
+        "margin_k": 4
+      },
+      "match": {
+        "strong": 1.25,
+        "strong_margin": 0.45,
+        "possible": 1,
+        "possible_margin": 0.4,
+        "referral_bonus": 0.01,
+        "top_k": 3
+      },
+      "classify": {
+        "min_score": 0.8,
+        "min_margin": 0.005
+      }
+    },
+    "readings": {
+      "referral": {
+        "n": 40,
+        "correct": 38,
+        "pct": 95,
+        "by_rule": 34,
+        "by_rule_pct": 85,
+        "rule_correct": 34
+      },
+      "came_for": {
+        "n": 36,
+        "correct": 11,
+        "pct": 30.6
+      },
+      "would_tell": {
+        "n": 36,
+        "correct": 14,
+        "pct": 38.9
+      }
+    },
+    "links_switches_on": {
+      "linked": 22,
+      "top1": 20,
+      "top1_pct": 90.9,
+      "same_language": {
+        "n": 6,
+        "top1": 6,
+        "pct": 100
+      },
+      "cross_language": {
+        "n": 16,
+        "top1": 14,
+        "pct": 87.5
+      },
+      "wrong_strong": 1,
+      "wrong_possible": 1,
+      "correct_strong": 10,
+      "correct_possible": 1,
+      "ambiguous": 5,
+      "ambiguous_unclear": 4,
+      "ambiguous_unclear_pct": 80,
+      "near_miss_wrong_same_language_proposed": 1,
+      "near_misses": 4
+    },
+    "links_switches_off": {
+      "thresholds_from_dev": {
+        "strong": 0.797,
+        "strong_margin": 0.08,
+        "possible": 0.797,
+        "possible_margin": 0.03,
+        "referral_bonus": 0.01,
+        "top_k": 3
+      },
+      "linked": 22,
+      "top1": 13,
+      "top1_pct": 59.1,
+      "same_language": {
+        "n": 6,
+        "top1": 6,
+        "pct": 100
+      },
+      "cross_language": {
+        "n": 16,
+        "top1": 7,
+        "pct": 43.8
+      },
+      "wrong_strong": 0,
+      "wrong_possible": 8,
+      "correct_strong": 6,
+      "correct_possible": 6,
+      "ambiguous": 5,
+      "ambiguous_unclear": 2,
+      "ambiguous_unclear_pct": 40,
+      "near_miss_wrong_same_language_proposed": 2,
+      "near_misses": 4
+    }
+  },
+  "embedding_ms_median_of_50": 36.8
+}

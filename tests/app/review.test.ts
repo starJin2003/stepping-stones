@@ -102,6 +102,7 @@ describe('analysis never overwrites a human decision', () => {
     visitReasonPrototypes: {},
     referralPrototypes: {},
     referralRules: REFERRAL_RULES,
+    languageMeans: {},
     modelRevision: 'test',
   }
   const prototypes = { visitReasons: [{ category: 'food', vector: new Float32Array([1, 0, 0]) }], referrals: [] }

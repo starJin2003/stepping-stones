@@ -36,6 +36,7 @@ export function useModelStatus(): ModelStatus {
 let worker: Worker | null = null
 let nextId = 0
 const waiting = new Map<number, { resolve: (v: Float32Array[]) => void; reject: (e: Error) => void }>()
+const counting = new Map<number, (requests: number) => void>()
 
 function startWorker(download: boolean) {
   stopWorker()
@@ -59,6 +60,10 @@ function startWorker(download: boolean) {
       case 'embed-failed':
         waiting.get(message.id)?.reject(new Error('embedding failed'))
         waiting.delete(message.id)
+        break
+      case 'net-count':
+        counting.get(message.id)?.(message.requests)
+        counting.delete(message.id)
         break
     }
   })
@@ -102,6 +107,54 @@ export async function deleteModel(): Promise<void> {
   stopWorker()
   await Promise.all([caches.delete(MODEL_CACHE), caches.delete(WASM_CACHE)])
   setStatus({ kind: 'absent' })
+}
+
+/** Short messages in four languages for the Measure check. Not about any operator. */
+const MEASURE_SAMPLE = [
+  'A couple staying at our guesthouse told us about the walk up the hill and the family lunch.',
+  'Rafiki yangu aliniambia kuhusu matembezi shambani na chakula cha mchana cha familia.',
+  'Eine Reisende aus unserem Hostel hat uns von dem Spaziergang und dem Mittagessen erzählt.',
+  "Notre guide nous a dit que la visite finit par un repas avec la famille.",
+]
+
+export interface Measurement {
+  runs: number
+  /** Median milliseconds to embed one message, from the page's side. */
+  medianMs: number
+  /** Resource requests seen in the page and in the model worker during the runs. Must be 0. */
+  networkRequests: number
+}
+
+/** Embeds a fixed sample `runs` times, one message at a time, and counts network requests in page and worker. */
+export async function measureOnDevice(runs = 20): Promise<Measurement> {
+  if (!worker || status.kind !== 'ready') throw new Error('model not ready')
+  let pageRequests = 0
+  const pageWatch = new PerformanceObserver((list) => {
+    pageRequests += list.getEntries().length
+  })
+  pageWatch.observe({ type: 'resource' })
+  worker.postMessage({ type: 'net-watch-start' } satisfies ToWorker)
+
+  const times: number[] = []
+  try {
+    for (let i = 0; i < runs; i++) {
+      const started = performance.now()
+      await embedOnDevice([MEASURE_SAMPLE[i % MEASURE_SAMPLE.length]])
+      times.push(performance.now() - started)
+    }
+  } finally {
+    pageRequests += pageWatch.takeRecords().length
+    pageWatch.disconnect()
+  }
+  const id = nextId++
+  const workerRequests = await new Promise<number>((resolve) => {
+    counting.set(id, resolve)
+    worker!.postMessage({ type: 'net-watch-stop', id } satisfies ToWorker)
+  })
+  times.sort((a, b) => a - b)
+  const mid = Math.floor(times.length / 2)
+  const medianMs = times.length % 2 ? times[mid] : (times[mid - 1] + times[mid]) / 2
+  return { runs, medianMs: Math.round(medianMs), networkRequests: pageRequests + workerRequests }
 }
 
 /** Sends texts to embed() in the worker, which adds the e5 prefix. */

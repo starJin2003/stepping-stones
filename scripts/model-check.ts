@@ -1,41 +1,40 @@
 /**
  * Real-model check on this computer: downloads the pinned model once into models/ (gitignored), runs the
  * same src/ai pipeline as the phone over the synthetic seed and both demo SMS, and times embeddings.
- * Scores are printed here for development only; the app never shows them.
+ * Runs on onnxruntime-web's wasm backend, like the phone. Scores are printed for development only; the app never shows them.
  *
  *   npm run model:check
  */
 import { readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { env, pipeline } from '@huggingface/transformers'
 import noorCoffee from '../data/operators/noor-coffee.json' with { type: 'json' }
 import seed from '../data/seed/noor-coffee.synthetic.json' with { type: 'json' }
-import { analyseTexts, embedPrototypes, matchRecords } from '../src/ai/analyze.ts'
+import { analyseTexts, embedPrototypes, matchOptions, matchRecords } from '../src/ai/analyze.ts'
 import type { AnalysisSetup } from '../src/ai/setup.ts'
-import { KIK_FUNCTION_WORDS, REFERRAL_PROTOTYPES, REFERRAL_RULES, THRESHOLDS } from '../src/ai/config.ts'
-import { createEmbedder, type Extractor } from '../src/ai/embed.ts'
+import { KIK_FUNCTION_WORDS, LANGUAGE_MEANS, REFERRAL_PROTOTYPES, REFERRAL_RULES, THRESHOLDS } from '../src/ai/config.ts'
+import { createEmbedder } from '../src/ai/embed.ts'
 import { MODEL } from '../src/ai/model.ts'
 import { parseOperatorConfig, visitReasonPrototypes } from '../src/operator/config.ts'
-
-env.cacheDir = 'models'
-env.allowLocalModels = false
+import { wasmExtractor } from './wasm-embed.ts'
 
 const started = performance.now()
-const extractor = await pipeline('feature-extraction', MODEL.id, { revision: MODEL.revision, dtype: MODEL.dtype, device: 'cpu' })
-console.log(`Model ready in ${((performance.now() - started) / 1000).toFixed(1)} s`)
+const extractor = await wasmExtractor()
+console.log(`Matching: ${JSON.stringify(THRESHOLDS.matching)}`)
+console.log(`Model ready in ${((performance.now() - started) / 1000).toFixed(1)} s (onnxruntime-web, wasm)`)
 
 const files = (dir: string): string[] =>
   readdirSync(dir).flatMap((name) => (statSync(join(dir, name)).isDirectory() ? files(join(dir, name)) : [join(dir, name)]))
 console.log('Files in models/:')
 for (const f of files('models')) console.log(`  ${f}  ${statSync(f).size} bytes`)
 
-const embed = createEmbedder(extractor as unknown as Extractor)
+const embed = createEmbedder(extractor)
 const setup: AnalysisSetup = {
   thresholds: THRESHOLDS,
   functionWords: KIK_FUNCTION_WORDS,
   visitReasonPrototypes: visitReasonPrototypes(parseOperatorConfig(noorCoffee)),
   referralPrototypes: REFERRAL_PROTOTYPES,
   referralRules: REFERRAL_RULES,
+  languageMeans: LANGUAGE_MEANS,
   modelRevision: MODEL.revision,
 }
 const prototypes = await embedPrototypes(setup, embed)
@@ -60,7 +59,7 @@ const describe = (r: (typeof analysed)[number], m: ReturnType<typeof matchRecord
 }
 
 console.log('\nSample visits, each against every earlier visit (heard from with the rule that fired; came for; would tell; top match):')
-const seedMatches = matchRecords(seedOnly, seedOnly.map((r) => r.record_id), THRESHOLDS.match)
+const seedMatches = matchRecords(seedOnly, seedOnly.map((r) => r.record_id), THRESHOLDS.match, matchOptions(setup))
 for (const r of seedOnly) {
   const linked = seed.records.find((s) => s.record_id === r.record_id)?.confirmed_prior_record_id
   console.log(describe(r, seedMatches.get(r.record_id)!) + (linked ? `   (person linked ${short(linked)})` : ''))
@@ -68,7 +67,7 @@ for (const r of seedOnly) {
 
 console.log(`\nDemo SMS against the sample visits (intended match ${short(seed.demo_intended_match)}):`)
 for (const demo of analysed.filter((r) => r.record_id.startsWith('demo-'))) {
-  const m = matchRecords([...seedOnly, demo], [demo.record_id], THRESHOLDS.match).get(demo.record_id)!
+  const m = matchRecords([...seedOnly, demo], [demo.record_id], THRESHOLDS.match, matchOptions(setup)).get(demo.record_id)!
   const margin = m.scores.length > 1 ? (m.scores[0].score - m.scores[1].score).toFixed(3) : 'n/a'
   console.log(describe(demo, m) + `   margin ${margin}`)
 }
@@ -85,4 +84,4 @@ single.sort((a, b) => a - b)
 const t = performance.now()
 await embed(sample.slice(0, 13))
 const batch = (performance.now() - t) / 13
-console.log(`\nEmbedding time (Node, onnxruntime-node CPU): median ${single[Math.floor(single.length / 2)].toFixed(1)} ms per single text, ${batch.toFixed(1)} ms per text in a batch of 13`)
+console.log(`\nEmbedding time (Node, onnxruntime-web wasm, 1 thread): median ${single[Math.floor(single.length / 2)].toFixed(1)} ms per single text, ${batch.toFixed(1)} ms per text in a batch of 13`)

@@ -1,5 +1,6 @@
 {
-  "status": "Provisional, not calibrated. Task 3 calibrates these on the synthetic dev split, never on the test split.",
+  "status": "Calibrated on the synthetic dev split (data/eval/dev.synthetic.json) with npm run calibrate, on onnxruntime-web wasm in Node like the phone. Never tuned on the test split.",
+  "note": "Matching: centering by language and ratio margin are both on; on dev they lift top-1 from 15/22 to 19/22 (cross-language 9/16 to 13/16), and margin alone changed nothing. Strong needs a ratio score of at least 1.25 and a lead of at least 0.45 over the runner-up: 13 right, 0 wrong on dev, and the same from 1.20 to 1.30, so it is not balanced on one record. Below Strong, every Possible band on dev added as many wrong links as right ones, so Possible stays narrow (1.00 with a 0.40 lead) and the rest stays Unclear for a person to decide. Classification: 0.80 with a 0.005 margin; with the operator's prototypes before the dev-derived fifth sentence it gave 35 of 72 right on dev (30 at the old 0.82/0.01), and 55 of 72 after it. Margin 0 scores 57 but turns off the runner-up gap, so Unclear would only come from a low score.",
   "language": {
     "min_chars": 15,
     "min_words": 3,
@@ -7,15 +8,20 @@
     "gikuyu_min_share": 0.2
   },
   "classify": {
-    "min_score": 0.82,
-    "min_margin": 0.01
+    "min_score": 0.8,
+    "min_margin": 0.005
   },
   "match": {
-    "strong": 0.88,
-    "strong_margin": 0.03,
-    "possible": 0.85,
-    "possible_margin": 0.01,
+    "strong": 1.25,
+    "strong_margin": 0.45,
+    "possible": 1.0,
+    "possible_margin": 0.4,
     "referral_bonus": 0.01,
     "top_k": 3
+  },
+  "matching": {
+    "center_by_language": true,
+    "ratio_margin": true,
+    "margin_k": 4
   }
 }

@@ -12,7 +12,10 @@
     "webhook:test": "node --disable-warning=ExperimentalWarning scripts/send-test-webhook.ts",
     "icons": "node --disable-warning=ExperimentalWarning scripts/make-icons.ts",
     "model:check": "node --disable-warning=ExperimentalWarning scripts/model-check.ts",
-    "lid:words": "node --disable-warning=ExperimentalWarning scripts/build-kik-function-words.ts"
+    "lid:words": "node --disable-warning=ExperimentalWarning scripts/build-kik-function-words.ts",
+    "ai:means": "node --disable-warning=ExperimentalWarning scripts/build-language-means.ts",
+    "eval": "node --disable-warning=ExperimentalWarning scripts/eval.ts",
+    "calibrate": "node --disable-warning=ExperimentalWarning scripts/calibrate.ts"
   },
   "dependencies": {
     "@fontsource/lexend": "^5.3.0",

@@ -170,6 +170,7 @@ describe('analyseTexts', () => {
       visitReasonPrototypes: {},
       referralPrototypes: {},
       referralRules: REFERRAL_RULES,
+      languageMeans: {},
       modelRevision: 'test',
     }
     const prototypes = { visitReasons: [{ category: 'food', vector: at(0) }], referrals: [{ category: 'local_guide', vector: at(0) }] }

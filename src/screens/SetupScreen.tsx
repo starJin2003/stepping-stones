@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState, type FormEvent } from 'react'
-import { deleteModel, DOWNLOAD_BYTES, useModelStatus } from '../ai/client.ts'
+import { deleteModel, DOWNLOAD_BYTES, measureOnDevice, useModelStatus, type Measurement } from '../ai/client.ts'
 import { toMB } from '../ai/model.ts'
 import { ModelCard } from '../components/ModelCard.tsx'
 import { SampleHistoryButtons } from '../components/SampleHistoryButtons.tsx'
@@ -32,6 +32,7 @@ export function SetupScreen() {
       <section className="group" aria-labelledby="demo-title">
         <h2 id="demo-title">{t('group_demo')}</h2>
         <SampleHistory />
+        <Measure />
       </section>
     </>
   )
@@ -56,6 +57,76 @@ function LanguageChoice() {
         ))}
       </div>
       <p className="hint">{t('language_note')}</p>
+    </div>
+  )
+}
+
+/** JS heap in MB, only where the browser exposes it (Chrome). */
+function jsHeapMB(): number | null {
+  const memory = (performance as Performance & { memory?: { usedJSHeapSize: number } }).memory
+  return memory ? toMB(memory.usedJSHeapSize) : null
+}
+
+/** Runs the model on this phone and shows speed, network use (always 0), model size and, if exposed, memory. */
+function Measure() {
+  const { t } = useLanguage()
+  const model = useModelStatus()
+  const [running, setRunning] = useState(false)
+  const [result, setResult] = useState<(Measurement & { heap: number | null }) | null>(null)
+  const [failed, setFailed] = useState(false)
+  const ready = model.kind === 'ready'
+
+  async function measure() {
+    setRunning(true)
+    setFailed(false)
+    try {
+      setResult({ ...(await measureOnDevice(20)), heap: jsHeapMB() })
+    } catch {
+      setFailed(true)
+    }
+    setRunning(false)
+  }
+
+  return (
+    <div className="subgroup">
+      <h3>{t('measure_title')}</h3>
+      <p>{t('measure_body')}</p>
+      {ready ? (
+        <div>
+          <button className="button button-secondary" type="button" onClick={measure} disabled={running}>
+            {t(running ? 'measure_running' : 'measure_button')}
+          </button>
+        </div>
+      ) : (
+        <p className="hint">{t('measure_needs_model')}</p>
+      )}
+      <dl className="facts">
+        {result && (
+          <>
+            <div>
+              <dt>{t('measure_time')}</dt>
+              <dd>{t('measure_time_value', { ms: result.medianMs })}</dd>
+            </div>
+            <div>
+              <dt>{t('measure_requests')}</dt>
+              <dd>{result.networkRequests}</dd>
+            </div>
+          </>
+        )}
+        <div>
+          <dt>{t('measure_model')}</dt>
+          <dd>{t('measure_mb', { mb: toMB(DOWNLOAD_BYTES) })}</dd>
+        </div>
+        {result?.heap != null && (
+          <div>
+            <dt>{t('measure_heap')}</dt>
+            <dd>{t('measure_mb', { mb: result.heap })}</dd>
+          </div>
+        )}
+      </dl>
+      <p className="notice" role="status">
+        {failed && t('measure_failed')}
+      </p>
     </div>
   )
 }

@@ -14,6 +14,8 @@ ortWasm.numThreads = 1
 ortWasm.proxy = false
 
 let embed: Embed | null = null
+let netWatch: PerformanceObserver | null = null
+let netRequests = 0
 const networkFetch = env.fetch
 /** Used while opening the model from this phone: any attempt to reach the network fails instead of happening. */
 const refuseNetwork: typeof env.fetch = (url) => Promise.reject(new Error(`Not fetching ${String(url)}: the model opens from this phone`))
@@ -100,6 +102,18 @@ self.addEventListener('message', async (event: MessageEvent<ToWorker>) => {
       console.error('Model load failed:', err instanceof Error ? err.message : String(err))
       post({ type: 'load-failed' })
     }
+  } else if (message.type === 'net-watch-start') {
+    netWatch?.disconnect()
+    netRequests = 0
+    netWatch = new PerformanceObserver((list) => {
+      netRequests += list.getEntries().length
+    })
+    netWatch.observe({ type: 'resource' })
+  } else if (message.type === 'net-watch-stop') {
+    netRequests += netWatch?.takeRecords().length ?? 0
+    netWatch?.disconnect()
+    netWatch = null
+    post({ type: 'net-count', id: message.id, requests: netRequests })
   } else if (message.type === 'embed') {
     try {
       if (!embed) throw new Error('model not loaded')
