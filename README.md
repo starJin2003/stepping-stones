@@ -3,9 +3,7 @@
 Stepping Stones turns word-of-mouth texts from tourists into a referral map for a small Kenyan coffee farm, analysed offline on the family phone.
 
 - Live demo: https://stepping-stones-plum.vercel.app
-- Demo video: [link to be added]
-- Technical video: [link to be added]
-- World Bank video: [link to be added]
+- Videos: team, demo and technical walkthrough submitted on HackOS
 - Challenge: Hack-Nation x World Bank, Small AI for Development, Track C: Tourism
 
 ## Judging criteria and evidence
@@ -211,7 +209,7 @@ French to English     ███████████████████�
 | Tokenizer | 17.1 MB |
 | Time per SMS-sized text | 36.8 ms median of 50 runs, Mac, Node, wasm, 1 thread |
 
-Galaxy S22 measured: [to be filled]
+Galaxy S22, airplane mode: 0 network requests during analysis (Setup, Measure).
 
 ## Local language
 
@@ -285,6 +283,7 @@ How Gĩkũyũ fares as the less-supported language:
 | Similar text is not proof of a referral | Two visitors can tell the same story on their own. A person decides. |
 | 162 MB over 3G takes long | The model is meant to be downloaded once on town Wi-Fi. |
 | The demo sends 3 SMS of at most 70 characters | Korean carriers do not join SMS segments; Kenyan carriers do. A Korean SIM plays Noor's basic phone in the demo. |
+| Korean carrier filtering | Twilio reported all 3 summary SMS delivered, but the Korean carrier did not display the third one in our tests. Kenyan carriers were not tested. |
 | Tourists text a US number | They pay international rates. A Kenyan number would be used in service. Outbound to US numbers is blocked (A2P 10DLC unregistered). |
 | Response rate is unknown | No pilot yet. |
 | Gĩkũyũ and Kiswahili text need native-speaker review | Summary templates, interface strings, Kiswahili word lists and prototypes are machine translation. |
@@ -292,7 +291,6 @@ How Gĩkũyũ fares as the less-supported language:
 | MMS photos | [Twilio states](https://www.twilio.com/en-us/blog/new-data-controls-twilio-messaging) that deleting a message log also removes its media objects, unless the media is shared with another message. We never store media URLs, and the card does not ask for photos. |
 | No app lock on the phone | Anyone with the unlocked family phone can open the records. |
 | Language tag for other languages | Text in another language can be tagged English, Kiswahili, German or French. |
-| On-device numbers not measured yet | The Galaxy S22 Measure result is still to be filled. |
 
 ## Reuse and next steps
 
@@ -348,7 +346,6 @@ Next steps:
 | A Kenyan number | Local rates for tourists. Kenyan carriers join SMS segments. |
 | Real pilot data | Replace synthetic evaluation. Learn the response rate. |
 | Better Came for and Would tell | 30.6% and 38.9% on the synthetic test split |
-| Galaxy S22 measurements | Fill the on-device Measure result |
 
 ## Run it yourself
 
