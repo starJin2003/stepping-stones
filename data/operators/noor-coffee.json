@@ -1,0 +1,23 @@
+{
+  "id": "noor-coffee",
+  "display_name": "Noor's coffee farm",
+  "owner_name": "Noor",
+  "visit_reasons": [
+    { "id": "coffee_experience", "label": "Coffee experience" },
+    { "id": "farm_tour", "label": "Farm tour" },
+    { "id": "local_culture", "label": "Local culture" },
+    { "id": "food", "label": "Food" },
+    { "id": "other", "label": "Other" },
+    { "id": "unclear", "label": "Unclear" }
+  ],
+  "card_questions": {
+    "en": [
+      "Who told you about Noor, and what did you hear?",
+      "What would you tell a friend about your visit?"
+    ],
+    "sw": [
+      "Nani alikuambia kuhusu Noor, na ulisikia nini?",
+      "Ungemwambia rafiki nini kuhusu ziara yako?"
+    ]
+  }
+}

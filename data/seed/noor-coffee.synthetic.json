@@ -1,0 +1,127 @@
+{
+  "synthetic": true,
+  "operator_id": "noor-coffee",
+  "description": "Synthetic past visits for demo mode, written for this project. No real visitors, messages, or businesses. Guesthouses are unnamed or fictional. Review decisions were made up to show a chain of confirmed links and one near miss left unlinked.",
+  "demo_intended_match": "seed-noor-coffee-09",
+  "demo_sms": [
+    "1) A man staying at our guesthouse told us Noor still has coffee trees her grandmother planted, and that you finish with coffee brewed in a clay pot. 2) It felt like visiting family. Go in the morning when it is cool.",
+    "1) Another guest at our guesthouse said to ask Noor about her grandmother's old coffee trees and to stay for the clay pot coffee. 2) I would tell friends to bring cash for a bag of beans and to take their time."
+  ],
+  "records": [
+    {
+      "record_id": "seed-noor-coffee-01",
+      "sender_hash": "synthetic-sender-01",
+      "received_at": "2026-06-14T12:40:00.000Z",
+      "raw_text_local": "1) The host at our hostel in Nyeri said a family nearby runs small coffee tours. 2) You pick the ripe red cherries yourself, and Noor shows you how they are pulped and dried on raised beds.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true,
+      "note": "Start of the chain. Heard from hostel staff, no earlier visitor."
+    },
+    {
+      "record_id": "seed-noor-coffee-02",
+      "sender_hash": "synthetic-sender-02",
+      "received_at": "2026-06-22T09:15:00.000Z",
+      "raw_text_local": "1) Saw photos of the farm that another traveller posted online. 2) The walk up the slope is steep, so wear proper shoes. The view over the valley is worth it.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    },
+    {
+      "record_id": "seed-noor-coffee-03",
+      "sender_hash": "synthetic-sender-03",
+      "received_at": "2026-07-02T13:05:00.000Z",
+      "raw_text_local": "1) Kiongozi wetu wa safari alituambia kuhusu shamba la Noor. 2) Ningewaambia marafiki kwamba chakula cha mchana cha nyumbani kilikuwa kitamu sana, na tulijifunza kupika githeri.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    },
+    {
+      "record_id": "seed-noor-coffee-04",
+      "sender_hash": "synthetic-sender-04",
+      "received_at": "2026-07-09T10:30:00.000Z",
+      "raw_text_local": "1) Eine Reisende aus unserem Gästehaus hat erzählt, dass man bei Noor die roten Kaffeekirschen selbst pflückt und zusieht, wie sie getrocknet werden. 2) Unbedingt beim Rösten mitmachen! Noor röstet die Bohnen in einer Pfanne über dem Holzfeuer, und man darf selbst rühren.",
+      "review_status": "Confirmed",
+      "confirmed_prior_record_id": "seed-noor-coffee-01",
+      "created_from": "Seed",
+      "synthetic": true,
+      "note": "Chain link 1. Heard what visitor 01 would tell: picking cherries, drying."
+    },
+    {
+      "record_id": "seed-noor-coffee-05",
+      "sender_hash": "synthetic-sender-05",
+      "received_at": "2026-07-20T14:50:00.000Z",
+      "raw_text_local": "1) My sister came here last year and still talks about it. 2) Noor's family sang a harvest song with us at the end. That was the best part of the day.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    },
+    {
+      "record_id": "seed-noor-coffee-06",
+      "sender_hash": "synthetic-sender-06",
+      "received_at": "2026-08-03T11:20:00.000Z",
+      "raw_text_local": "1) Auf einem Reiseblog über Kenia gelesen. 2) Die Führung über den Hof ist schön, aber der Hang ist steil. Feste Schuhe anziehen.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    },
+    {
+      "record_id": "seed-noor-coffee-07",
+      "sender_hash": "synthetic-sender-07",
+      "received_at": "2026-08-12T12:10:00.000Z",
+      "raw_text_local": "1) Un couple allemand de notre maison d'hôtes nous a dit qu'on torréfie soi-même le café dans une poêle sur un feu de bois chez Noor. 2) Dites à vos amis qu'on repart avec un petit sac du café qu'on a torréfié soi-même.",
+      "review_status": "Confirmed",
+      "confirmed_prior_record_id": "seed-noor-coffee-04",
+      "created_from": "Seed",
+      "synthetic": true,
+      "note": "Chain link 2. Heard what visitor 04 would tell: roasting over a wood fire."
+    },
+    {
+      "record_id": "seed-noor-coffee-08",
+      "sender_hash": "synthetic-sender-08",
+      "received_at": "2026-08-19T15:35:00.000Z",
+      "raw_text_local": "1) The woman who runs our guesthouse said to try the lunch at Noor's and learn to cook githeri. 2) Come hungry. The lunch is simple and very good.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true,
+      "note": "Near miss left unlinked. The heard story resembles what visitor 03 would tell (githeri lunch), but it came from guesthouse staff, and visitor 03 travelled with a safari guide. A person decided: not linked."
+    },
+    {
+      "record_id": "seed-noor-coffee-09",
+      "sender_hash": "synthetic-sender-09",
+      "received_at": "2026-09-05T10:45:00.000Z",
+      "raw_text_local": "1) Two French travellers at our guesthouse said you roast your own coffee at Noor's and leave with a bag of it. 2) Ask Noor about the old coffee trees her grandmother planted, and stay for the coffee she brews in a clay pot at the end.",
+      "review_status": "Confirmed",
+      "confirmed_prior_record_id": "seed-noor-coffee-07",
+      "created_from": "Seed",
+      "synthetic": true,
+      "note": "Chain link 3. Heard what visitor 07 would tell: leaving with a bag you roasted. Its would-tell story (grandmother's trees, clay pot coffee) is the intended match for demo_sms."
+    },
+    {
+      "record_id": "seed-noor-coffee-10",
+      "sender_hash": "synthetic-sender-10",
+      "received_at": "2026-09-14T13:00:00.000Z",
+      "raw_text_local": "1) Saw a short video about the farm online. 2) Buy a bag of beans before you leave. Best coffee I had in Kenya.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    },
+    {
+      "record_id": "seed-noor-coffee-11",
+      "sender_hash": "synthetic-sender-11",
+      "received_at": "2026-09-21T09:50:00.000Z",
+      "raw_text_local": "1) Our driver suggested it on the way to the national park. 2) Short and friendly tour, good with kids. They loved picking the cherries.",
+      "review_status": "Rejected",
+      "confirmed_prior_record_id": null,
+      "created_from": "Seed",
+      "synthetic": true
+    }
+  ]
+}

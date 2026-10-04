@@ -40,7 +40,7 @@ _Machine translation, review pending._
 |---|---|
 | Phone number replaced with a code | `server/hmac.ts`, called in `server/handlers.ts` before storing. The raw `From` is never stored or logged. |
 | Message deleted from our server after sync | `POST /api/sync/ack` deletes from Redis. |
-| Message text erased from Twilio's log after sync | `POST /api/sync/ack` calls `messages(sid).update({ body: '' })` (Twilio redaction) for each id. To check: fetch the message from the Twilio API and see an empty body. |
+| Message text erased from Twilio's log after sync | `POST /api/sync/ack` calls `messages(sid).update({ body: '' })` (Twilio redaction) for each id. Verified on 2026-10-04 with a real SMS: body length 2 before ack, 0 after. The record itself was still readable. |
 | Deletion of the log entry requested after sync | Ack then calls `messages(sid).remove()`. Twilio accepts the delete, but the record can stay readable through the API for a while afterwards. The 7-day retention setting is the backstop. |
 | Deleted from our server after 14 days at the latest | Redis TTL is 14 days (`INBOX_TTL_SECONDS`). |
 | Twilio's log set to its shortest retention, 7 days | Twilio console: message retention 7 days, backup storage off (manual setting, not enforced in code). Twilio may keep data in back-end systems for up to 30 days after that. |

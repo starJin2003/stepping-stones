@@ -1,0 +1,23 @@
+{
+  "id": "example-guesthouse",
+  "display_name": "Example Hill Guesthouse",
+  "owner_name": "Amina",
+  "visit_reasons": [
+    { "id": "rooms", "label": "Rooms" },
+    { "id": "food", "label": "Food" },
+    { "id": "location", "label": "Location" },
+    { "id": "staff", "label": "Staff" },
+    { "id": "other", "label": "Other" },
+    { "id": "unclear", "label": "Unclear" }
+  ],
+  "card_questions": {
+    "en": [
+      "Who told you about Example Hill Guesthouse, and what did you hear?",
+      "What would you tell a friend about your stay?"
+    ],
+    "sw": [
+      "Nani alikuambia kuhusu Example Hill Guesthouse, na ulisikia nini?",
+      "Ungemwambia rafiki nini kuhusu kukaa kwako hapa?"
+    ]
+  }
+}
